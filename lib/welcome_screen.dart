@@ -54,9 +54,8 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
             width: double.infinity,
             height: double.infinity,
           ),
-          //animated bottom sheet  appear automatically when the page opening
           AnimatedPositioned(
-            duration: const Duration(seconds: 2),
+            duration: const Duration(seconds: 3),
             curve: Curves.easeIn,
             bottom: _showBottomSheet ? 0 : -400,
             child: Container(
@@ -73,20 +72,15 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
                         'assets/logo.png',
-                        width: 130,
+                        height: 100 * 2,
+                        width: 50 * 2,
                       ),
                     ],
-                  ),
-                  const SizedBox(
-                    height: 10,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -98,9 +92,6 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       )
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -110,9 +101,6 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                             fontWeight: FontWeight.w500, fontSize: 20),
                       )
                     ],
-                  ),
-                  const SizedBox(
-                    height: 5,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -134,37 +122,29 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       )
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  //sing up button
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SignInScreen()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: const Color(0xff79698e),
-                          // Background color
-                          onPrimary: Colors.white,
-                          // Text Color (Foreground color)
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(32.0)),
-                          minimumSize: const Size(300, 40),
-                        ),
-                        child: const Text(
-                          'Sign Up',
-                          style: TextStyle(fontSize: 25),
-                        ),
-                      ),
+                      SizedBox(
+                        width: 200.0,
+                        child: TextButton(
+                            child: const Text('Sing Up',
+                                style: TextStyle(color: Color(0xffffffff))),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const SignInScreen()));
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: const Color(0xff79698e),
+
+                              // side: const BorderSide(
+                              //     width: 2.0, color: Color(0xff79698e))
+                            )),
+                      )
                     ],
                   ),
-                  //Login button
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     const Text('Already have an account?'),
                     TextButton(

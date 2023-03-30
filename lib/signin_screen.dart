@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
-import 'package:rent/login_screen.dart';
 
 
 
@@ -46,7 +45,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/logo.png",
+                          "assets/logo.jpg",
                           width: 150,
                         ),
                       ],
@@ -112,7 +111,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       } ,
                     ),
 
-                    const SizedBox(height: 10,),
+                    SizedBox(height: 10,),
 
 
                     //text field for email
@@ -191,7 +190,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         if(value!.isEmpty){
                           return("This Field is required");
                         }
-                        else if(!value.isUsername()){
+                        else if(value.isUsername()){
                           return("This is not a valid username");
                         }
                         else{
@@ -259,12 +258,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ElevatedButton(onPressed: (){
                       // Navigator.of(context).pop(_UserNameController.text);
 
-                     if( _key.currentState!.validate()){
-                       {Navigator.pushReplacement(
-                           context,
-                           MaterialPageRoute(
-                               builder: (context) => const  LogInScreen()));}
-                     }
+                      _key.currentState!.validate();
                       print(_FullNameController.text);
                       print(_EmailController.text);
                       print(_UserNameController.text);
@@ -273,11 +267,11 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
 
                       style: ElevatedButton.styleFrom(
-                        primary: const Color(0xff79698e), // Background color
+                        primary: Color(0xff79698e), // Background color
                         onPrimary: Colors.white, // Text Color (Foreground color)
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32.0)),
-                        minimumSize: const Size(300, 40),
+                        minimumSize: Size(300, 40),
                       ),
                       child: const Text('Sign Up',
                         style: TextStyle(fontSize: 30),),
@@ -298,10 +292,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       children: [
                         const Text("You already have an account ?"),
                         TextButton(onPressed:(){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LogInScreen()));
+                          Navigator.of(context).pop();
                         },
                             child: const Text("Log In ",
                               style: TextStyle(color: Color(0xff79698e),),)),
