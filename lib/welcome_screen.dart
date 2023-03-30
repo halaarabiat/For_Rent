@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:rent/login_screen.dart';
-import 'package:rent/signin_screen.dart';
-
 class BottomSheetApp extends StatelessWidget {
   const BottomSheetApp({Key? key}) : super(key: key);
 
@@ -55,7 +52,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
             height: double.infinity,
           ),
           AnimatedPositioned(
-            duration: const Duration(seconds: 3),
+            duration: const Duration(seconds: 2),
             curve: Curves.easeIn,
             bottom: _showBottomSheet ? 0 : -400,
             child: Container(
@@ -72,16 +69,18 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  SizedBox(height: 30,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
                         'assets/logo.png',
-                        height: 100 * 2,
-                        width: 50 * 2,
+                        width: 130,
                       ),
                     ],
                   ),
+
+                  SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -92,6 +91,8 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       )
                     ],
                   ),
+
+                  SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -102,6 +103,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       )
                     ],
                   ),
+                  SizedBox(height: 5,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -122,27 +124,41 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       )
                     ],
                   ),
+
+                  SizedBox(height:10 ,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        width: 200.0,
-                        child: TextButton(
-                            child: const Text('Sing Up',
-                                style: TextStyle(color: Color(0xffffffff))),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const SignInScreen()));
-                            },
-                            style: TextButton.styleFrom(
-                              backgroundColor: const Color(0xff79698e),
 
-                              // side: const BorderSide(
-                              //     width: 2.0, color: Color(0xff79698e))
-                            )),
-                      )
+                      ElevatedButton(onPressed: (){
+                        // Navigator.of(context).pop(_UserNameController.text);
+
+                        //Navigator.of(context).pop(_UserNameController.text);
+                      },
+
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xff79698e), // Background color
+                          onPrimary: Colors.white, // Text Color (Foreground color)
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32.0)),
+                          minimumSize: Size(300, 40),
+                        ),
+                        child: const Text('Sign Up',
+                          style: TextStyle(fontSize: 25),),
+                      ),
+                      // SizedBox(
+                      //   width: 200.0,
+                      //   child: TextButton(
+                      //       child: const Text('Sing Up',
+                      //           style: TextStyle(color: Color(0xffffffff))),
+                      //       onPressed: () {},
+                      //       style: TextButton.styleFrom(
+                      //         backgroundColor: const Color(0xff79698e),
+                      //
+                      //         // side: const BorderSide(
+                      //         //     width: 2.0, color: Color(0xff79698e))
+                      //       )),
+                      // )
                     ],
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -151,10 +167,9 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       child: const Text('Log in',
                           style: TextStyle(color: Color(0xff79698e))),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LogInScreen()));
+                        //Navigator.pushReplacement(
+                        //                               context,
+                        //                               MaterialPageRoute(builder: (context) => const LoginScreen()));
                       },
                     )
                   ])
