@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
+import 'package:rent/signin_screen.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class _LogInScreenState extends State<LogInScreen> {
 
   final FocusNode _UserNameFocuse = FocusNode();
   final FocusNode _PasswordFocuse = FocusNode();
+
+  String? get result => null;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/logo.jpg",
+                          "assets/logo.png",
                           width: 150,
                         ),
                       ],
@@ -210,11 +213,12 @@ class _LogInScreenState extends State<LogInScreen> {
                       children: [
                         const Text("You don't have account ?"),
                         TextButton(
-                            onPressed: () async {
-                              String result = await Navigator.of(context)
-                                  .pushNamed('/SignInScreen') as String;
+                            onPressed: () async {Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignInScreen()));
                               setState(() {
-                                _UserNameController.text = result;
+                                _UserNameController.text = result!;
                               });
                             },
                             child: const Text(

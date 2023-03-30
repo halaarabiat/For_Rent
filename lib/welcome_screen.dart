@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:rent/login_screen.dart';
+import 'package:rent/signin_screen.dart';
+
 class BottomSheetApp extends StatelessWidget {
   const BottomSheetApp({Key? key}) : super(key: key);
 
@@ -127,7 +130,12 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                         child: TextButton(
                             child: const Text('Sing Up',
                                 style: TextStyle(color: Color(0xffffffff))),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const SignInScreen()));
+                            },
                             style: TextButton.styleFrom(
                               backgroundColor: const Color(0xff79698e),
 
@@ -143,9 +151,10 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       child: const Text('Log in',
                           style: TextStyle(color: Color(0xff79698e))),
                       onPressed: () {
-                        //Navigator.pushReplacement(
-                        //                               context,
-                        //                               MaterialPageRoute(builder: (context) => const LoginScreen()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LogInScreen()));
                       },
                     )
                   ])
