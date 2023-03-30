@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
@@ -26,7 +27,7 @@ class SplashScreenState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3),
+    Timer(const Duration(seconds: 4),
             ()=>Navigator.pushReplacement(context,
             MaterialPageRoute(builder:
                 (context) => const BottomSheetApp()
