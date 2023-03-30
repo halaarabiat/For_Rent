@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorSchemeSeed: const Color(0xff79698e),
+
         //primarySwatch: Colors.blue,
       ),
       routes:{
