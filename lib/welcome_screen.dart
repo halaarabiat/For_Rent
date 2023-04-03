@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:rent/login_screen.dart';
+import 'package:rent/signin_screen.dart';
+
 class BottomSheetApp extends StatelessWidget {
   const BottomSheetApp({Key? key}) : super(key: key);
 
@@ -69,7 +72,9 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  SizedBox(height: 30,),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -79,8 +84,9 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       ),
                     ],
                   ),
-
-                  SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -91,8 +97,9 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       )
                     ],
                   ),
-
-                  SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -103,7 +110,9 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       )
                     ],
                   ),
-                  SizedBox(height: 5,),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -124,27 +133,35 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       )
                     ],
                   ),
-
-                  SizedBox(height:10 ,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignInScreen()));
+                          // Navigator.of(context).pop(_UserNameController.text);
 
-                      ElevatedButton(onPressed: (){
-                        // Navigator.of(context).pop(_UserNameController.text);
-
-                        //Navigator.of(context).pop(_UserNameController.text);
-                      },
-
+                          //Navigator.of(context).pop(_UserNameController.text);
+                        },
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xff79698e), // Background color
-                          onPrimary: Colors.white, // Text Color (Foreground color)
+                          primary: const Color(0xff79698e),
+                          // Background color
+                          onPrimary: Colors.white,
+                          // Text Color (Foreground color)
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32.0)),
-                          minimumSize: Size(300, 40),
+                          minimumSize: const Size(300, 40),
                         ),
-                        child: const Text('Sign Up',
-                          style: TextStyle(fontSize: 25),),
+                        child: const Text(
+                          'Sign Up',
+                          style: TextStyle(fontSize: 25),
+                        ),
                       ),
                       // SizedBox(
                       //   width: 200.0,
@@ -167,9 +184,10 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       child: const Text('Log in',
                           style: TextStyle(color: Color(0xff79698e))),
                       onPressed: () {
-                        //Navigator.pushReplacement(
-                        //                               context,
-                        //                               MaterialPageRoute(builder: (context) => const LoginScreen()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LogInScreen()));
                       },
                     )
                   ])
