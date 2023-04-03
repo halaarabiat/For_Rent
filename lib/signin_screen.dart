@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
+import 'package:rent/login_screen.dart';
 
 
 
@@ -45,7 +46,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/logo.jpg",
+                          "assets/logo.png",
                           width: 150,
                         ),
                       ],
@@ -292,7 +293,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       children: [
                         const Text("You already have an account ?"),
                         TextButton(onPressed:(){
-                          Navigator.of(context).pop();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LogInScreen()));
                         },
                             child: const Text("Log In ",
                               style: TextStyle(color: Color(0xff79698e),),)),

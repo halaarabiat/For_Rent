@@ -42,11 +42,11 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
 
 
 
-                         Text("Enter Your Email and we will send you a password  reset link",
+                         const Text("Enter Your Email and we will send you a password  reset link",
                          textAlign: TextAlign.center,
                          style: TextStyle(fontSize: 20),),
 
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
 
 
                     TextFormField(
@@ -86,7 +86,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                         }
                       },
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     
                     ElevatedButton(onPressed: (){
                       _key.currentState!.validate();
@@ -95,10 +95,10 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32.0)),
-                          minimumSize: Size(250, 50),
+                          minimumSize: const Size(250, 50),
                         ),
-                      child: Text("Reset Password",
-                      style: TextStyle(fontSize: 20),),
+                      child: const Text("Reset Password",
+                      style: const TextStyle(fontSize: 20),),
                     )
                   ],
                 ),
