@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
+import 'package:rent/forget_pass_screen.dart';
 import 'package:rent/signin_screen.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -163,8 +164,11 @@ class _LogInScreenState extends State<LogInScreen> {
                     Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                       TextButton(
                           onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed('/ForgetPassScreen');
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ForgetPassScreen()));
+
                           },
                           child: const Text(
                             "Forget your password ? ",
@@ -213,13 +217,13 @@ class _LogInScreenState extends State<LogInScreen> {
                       children: [
                         const Text("You don't have account ?"),
                         TextButton(
-                            onPressed: () async {Navigator.push(
+                            onPressed: () async {Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const SignInScreen()));
-                              setState(() {
-                                _UserNameController.text = result!;
-                              });
+                            setState(() {
+                              _UserNameController.text = result!;
+                            });
                             },
                             child: const Text(
                               "Sign Up ",

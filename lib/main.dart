@@ -38,8 +38,9 @@ class SplashScreenState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return FittedBox(
-      child:  Image.asset("assets/splash_screen.jpg",)
-       , fit: BoxFit.fill );
+        child:  Image.asset("assets/splash_screen.jpg",)
+        , fit: BoxFit.fill );
 
   }
 }
+
