@@ -31,7 +31,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/logo.jpg",
+                          "assets/logo.png",
                           width: 150,
                         ),
                       ],

@@ -131,9 +131,8 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                     children: [
 
                       ElevatedButton(onPressed: (){
-                        // Navigator.of(context).pop(_UserNameController.text);
+                        // Get.to(()=>SignInScreen());
 
-                        //Navigator.of(context).pop(_UserNameController.text);
                       },
 
                         style: ElevatedButton.styleFrom(
@@ -167,6 +166,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       child: const Text('Log in',
                           style: TextStyle(color: Color(0xff79698e))),
                       onPressed: () {
+                        // Get.to(()=>LogInScreen());
                         //Navigator.pushReplacement(
                         //                               context,
                         //                               MaterialPageRoute(builder: (context) => const LoginScreen()));

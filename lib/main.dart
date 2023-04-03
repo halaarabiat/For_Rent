@@ -6,6 +6,10 @@ import 'package:rent/signin_screen.dart';
 import 'package:rent/login_screen.dart';
 
 
+
+import 'forget_pass_screen.dart';
+import 'login_screen.dart';
+
 void main() { runApp(const MyApp());}
 
 class MyApp extends StatelessWidget {
