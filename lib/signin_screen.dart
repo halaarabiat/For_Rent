@@ -112,7 +112,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       } ,
                     ),
 
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
 
 
                     //text field for email
@@ -259,7 +259,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     ElevatedButton(onPressed: (){
                       // Navigator.of(context).pop(_UserNameController.text);
 
-                      _key.currentState!.validate();
+                     if( _key.currentState!.validate()){
+                       {Navigator.pushReplacement(
+                           context,
+                           MaterialPageRoute(
+                               builder: (context) => const  LogInScreen()));}
+                     }
                       print(_FullNameController.text);
                       print(_EmailController.text);
                       print(_UserNameController.text);
@@ -268,11 +273,11 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
 
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xff79698e), // Background color
+                        primary: const Color(0xff79698e), // Background color
                         onPrimary: Colors.white, // Text Color (Foreground color)
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32.0)),
-                        minimumSize: Size(300, 40),
+                        minimumSize: const Size(300, 40),
                       ),
                       child: const Text('Sign Up',
                         style: TextStyle(fontSize: 30),),
