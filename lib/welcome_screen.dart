@@ -54,6 +54,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
             width: double.infinity,
             height: double.infinity,
           ),
+          //animated bottom sheet  appear automatically when the page opening
           AnimatedPositioned(
             duration: const Duration(seconds: 2),
             curve: Curves.easeIn,
@@ -136,6 +137,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                   const SizedBox(
                     height: 10,
                   ),
+                  //sing up button
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -145,9 +147,6 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const SignInScreen()));
-                          // Navigator.of(context).pop(_UserNameController.text);
-
-                          //Navigator.of(context).pop(_UserNameController.text);
                         },
                         style: ElevatedButton.styleFrom(
                           primary: const Color(0xff79698e),
@@ -163,21 +162,9 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                           style: TextStyle(fontSize: 25),
                         ),
                       ),
-                      // SizedBox(
-                      //   width: 200.0,
-                      //   child: TextButton(
-                      //       child: const Text('Sing Up',
-                      //           style: TextStyle(color: Color(0xffffffff))),
-                      //       onPressed: () {},
-                      //       style: TextButton.styleFrom(
-                      //         backgroundColor: const Color(0xff79698e),
-                      //
-                      //         // side: const BorderSide(
-                      //         //     width: 2.0, color: Color(0xff79698e))
-                      //       )),
-                      // )
                     ],
                   ),
+                  //Login button
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     const Text('Already have an account?'),
                     TextButton(
