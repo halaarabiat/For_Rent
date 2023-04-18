@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "752740349166",
+    "firebase_url": "https://rent-4-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "rent-4",
+    "storage_bucket": "rent-4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752740349166:android:0ae9f624b43c68f55e2fff",
+        "android_client_info": {
+          "package_name": "com.example.rent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "752740349166-klsg5cfhpaohsgvb59f0gjked7j88trf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPlfTxIqEQck1RDd3eP-CwcjNA-1kU9I4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "752740349166-klsg5cfhpaohsgvb59f0gjked7j88trf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "752740349166-sqrn2u5o4044gko9aorbo8evdr8if09m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.rent"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
