@@ -188,13 +188,11 @@ class _LogInScreenState extends State<LogInScreen> {
                           print(_PasswordController.text);
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xff79698e),
-                          // Background color
-                          onPrimary: Colors.white,
+                          foregroundColor: Colors.white, backgroundColor: const Color(0xff79698e),
                           // Text Color (Foreground color)
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32.0)),
-                          minimumSize: Size(300, 40),
+                          minimumSize: const Size(300, 40),
                         ),
                         child: const Text(
                           'Log In ',

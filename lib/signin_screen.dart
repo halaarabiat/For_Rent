@@ -191,7 +191,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         if(value!.isEmpty){
                           return("This Field is required");
                         }
-                        else if(value.isUsername()){
+                        else if(!value.isUsername()){
                           return("This is not a valid username");
                         }
                         else{
