@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rent/login_screen.dart';
 
+
+
+final _auth = FirebaseAuth.instance;
 class ForgetPassScreen extends StatefulWidget {
   const ForgetPassScreen({Key? key}) : super(key: key);
 
+  
   @override
   State<ForgetPassScreen> createState() => _ForgetPassScreenState();
 }
@@ -90,7 +96,13 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                     
                     ElevatedButton(onPressed: (){
                       _key.currentState!.validate();
+                      _auth.sendPasswordResetEmail(email: _EmailController.text);
 
+
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const  LogInScreen()));
                     },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

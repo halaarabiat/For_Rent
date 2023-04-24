@@ -1,10 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
 import 'package:rent/login_screen.dart';
-
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -16,23 +16,22 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _key = GlobalKey<FormState>();
   bool _isObscureText = false;
-  final TextEditingController _FullNameController =TextEditingController();
-  final TextEditingController _EmailController =TextEditingController();
-  final TextEditingController _UserNameController =TextEditingController();
-  final TextEditingController _PasswordController =TextEditingController();
-
-  final FocusNode _FullNameFocuse= FocusNode();
-  final FocusNode _EmailFocuse= FocusNode();
-  final FocusNode _UserNameFocuse= FocusNode();
-  final FocusNode _PasswordFocuse= FocusNode();
-
+  final TextEditingController _FullNameController = TextEditingController();
+  final TextEditingController _EmailController = TextEditingController();
+  final TextEditingController _UserNameController = TextEditingController();
+  final TextEditingController _PasswordController = TextEditingController();
+final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FocusNode _FullNameFocuse = FocusNode();
+  final FocusNode _EmailFocuse = FocusNode();
+  final FocusNode _UserNameFocuse = FocusNode();
+  final FocusNode _PasswordFocuse = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child:SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Form(
@@ -68,69 +67,80 @@ class _SignInScreenState extends State<SignInScreen> {
                       ],
                     ),
 
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
 
                     //text field for full name
                     TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(width:3, color: Color(0xff79698e)),),
+                          borderSide: const BorderSide(
+                              width: 3, color: Color(0xff79698e)),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide:const BorderSide(width: 3,color: Color(0xff79698e)), ),
+                          borderSide: const BorderSide(
+                              width: 3, color: Color(0xff79698e)),
+                        ),
                         enabled: true,
                         fillColor: Colors.black12,
                         filled: true,
-                        prefixIcon: const Icon(Icons.verified_user_outlined,color: Color(0xff79698e),),
+                        prefixIcon: const Icon(
+                          Icons.verified_user_outlined,
+                          color: Color(0xff79698e),
+                        ),
                         labelText: "Full Name",
                         labelStyle: const TextStyle(color: Colors.black38),
-
                       ),
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.name,
                       //controller for receive data
                       controller: _FullNameController,
 
-
                       //focus node
                       focusNode: _FullNameFocuse,
-                      onFieldSubmitted: (String value){
+                      onFieldSubmitted: (String value) {
                         FocusScope.of(context).requestFocus(_EmailFocuse);
                         _EmailFocuse.requestFocus();
                       },
 
-
-
-                      validator:(value){
-                        if(value!.isEmpty){
-                          return("This Field is required");
-                        }
-                        else{
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return ("This Field is required");
+                        } else {
                           return null;
                         }
-                      } ,
+                      },
                     ),
 
-                    const SizedBox(height: 10,),
-
+                    const SizedBox(
+                      height: 10,
+                    ),
 
                     //text field for email
                     TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(width:3,color: Color(0xff79698e)),),
+                          borderSide: const BorderSide(
+                              width: 3, color: Color(0xff79698e)),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide:const BorderSide(width: 3,color: Color(0xff79698e)), ),
+                          borderSide: const BorderSide(
+                              width: 3, color: Color(0xff79698e)),
+                        ),
                         enabled: true,
                         fillColor: Colors.black12,
                         filled: true,
-                        prefixIcon: const Icon(Icons.mail_outline,color:Color(0xff79698e),),
+                        prefixIcon: const Icon(
+                          Icons.mail_outline,
+                          color: Color(0xff79698e),
+                        ),
                         labelText: "E-mail",
                         labelStyle: const TextStyle(color: Colors.black38),
-
                       ),
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
@@ -138,40 +148,48 @@ class _SignInScreenState extends State<SignInScreen> {
                       controller: _EmailController,
                       //focuse node
                       focusNode: _EmailFocuse,
-                      onFieldSubmitted: (String value){
+                      onFieldSubmitted: (String value) {
                         FocusScope.of(context).requestFocus(_UserNameFocuse);
                         _UserNameFocuse.requestFocus();
                       },
 
                       //validate input
-                      validator: (value){
-                        if(value!.isEmpty){
-                          return("This field is required");
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return ("This field is required");
                         }
-                        if(!value.isEmail()){
-                          return("This is not a valid email");
-                        }
-                        else{
+                        if (!value.isEmail()) {
+                          return ("This is not a valid email");
+                        } else {
                           return null;
                         }
                       },
                     ),
 
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
 
                     //text field for user name
                     TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(width:3,color:Color(0xff79698e)),),
+                          borderSide: const BorderSide(
+                              width: 3, color: Color(0xff79698e)),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide:const BorderSide(width: 3,color: Color(0xff79698e)), ),
+                          borderSide: const BorderSide(
+                              width: 3, color: Color(0xff79698e)),
+                        ),
                         enabled: true,
                         fillColor: Colors.black12,
                         filled: true,
-                        prefixIcon: const Icon(Icons.account_circle_outlined,color: Color(0xff79698e),),
+                        prefixIcon: const Icon(
+                          Icons.account_circle_outlined,
+                          color: Color(0xff79698e),
+                        ),
                         labelText: "Username",
                         labelStyle: const TextStyle(color: Colors.black38),
                       ),
@@ -182,38 +200,40 @@ class _SignInScreenState extends State<SignInScreen> {
 
                       //focus node
                       focusNode: _UserNameFocuse,
-                      onFieldSubmitted: (String value){
+                      onFieldSubmitted: (String value) {
                         FocusScope.of(context).requestFocus(_PasswordFocuse);
                         _PasswordFocuse.requestFocus();
                       },
 
-                      validator:(value){
-                        if(value!.isEmpty){
-                          return("This Field is required");
-                        }
-                        else if(!value.isUsername()){
-                          return("This is not a valid username");
-                        }
-                        else{
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return ("This Field is required");
+                        } else if (!value.isUsername()) {
+                          return ("This is not a valid username");
+                        } else {
                           return null;
                         }
                       },
-
                     ),
 
-
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
 
                     //text field for password
                     TextFormField(
-                      obscureText:!_isObscureText ,
+                      obscureText: !_isObscureText,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(width:3,color: Color(0xff79698e)),),
+                          borderSide: const BorderSide(
+                              width: 3, color: Color(0xff79698e)),
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide:const BorderSide(width: 3,color: Color(0xff79698e)), ),
+                          borderSide: const BorderSide(
+                              width: 3, color: Color(0xff79698e)),
+                        ),
                         enabled: true,
                         fillColor: Colors.black12,
                         filled: true,
@@ -226,8 +246,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                 _isObscureText = !_isObscureText;
                               });
                             }),
-
-                        prefixIcon: const Icon(Icons.lock_outline,color: Color(0xff79698e),),
+                        prefixIcon: const Icon(
+                          Icons.lock_outline,
+                          color: Color(0xff79698e),
+                        ),
                         labelText: "Password",
                         labelStyle: const TextStyle(color: Colors.black38),
                       ),
@@ -239,52 +261,75 @@ class _SignInScreenState extends State<SignInScreen> {
                       //focus node
                       focusNode: _PasswordFocuse,
 
-                      validator:(value){
-                        if(value!.isEmpty){
-                          return("This Field is required");
-                        }
-                        else if(!value.isPasswordHard()){
-                          return("This is an easy password");
-                        }
-                        else{
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return ("This Field is required");
+                        } else if (!value.isPasswordHard()) {
+                          return ("This is an easy password");
+                        } else {
                           return null;
                         }
                       },
-
                     ),
 
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
 
+                    ElevatedButton(
+                      onPressed: () async {
+                        // Navigator.of(context).pop(_UserNameController.text);
 
-                    ElevatedButton(onPressed: (){
-                      // Navigator.of(context).pop(_UserNameController.text);
+                        if (_key.currentState!.validate()) {
+                          {
+                            try {
+                              // UserModel userModel = await registerUser(_EmailController.text, _PasswordController.text,
+                              //     _FullNameController.text, _UserNameController.text);
+                             final userCredential = await FirebaseAuth.instance
+                                  .createUserWithEmailAndPassword(
+                                      email: _EmailController.text, password: _PasswordController.text);
+                              CollectionReference usersRef= FirebaseFirestore.instance.collection("users");
+                              String userId= userCredential.user!.uid;
+                              usersRef.add({
+                                "userid": userId,
+                                "username":_UserNameController.text.trim(),
+                                "fullname":_FullNameController.text.trim(),
+                                "email":_EmailController.text.trim(),
+                                "password":_PasswordController.text.trim()
+                              });
+                            } catch (e) {
+                              print(e);
+                            }
 
-                     if( _key.currentState!.validate()){
-                       {Navigator.pushReplacement(
-                           context,
-                           MaterialPageRoute(
-                               builder: (context) => const  LogInScreen()));}
-                     }
-                      print(_FullNameController.text);
-                      print(_EmailController.text);
-                      print(_UserNameController.text);
-                      print(_PasswordController.text);
-                      //Navigator.of(context).pop(_UserNameController.text);
-                    },
-
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LogInScreen()));
+                          }
+                        }
+                        print(_FullNameController.text);
+                        print(_EmailController.text);
+                        print(_UserNameController.text);
+                        print(_PasswordController.text);
+                        //Navigator.of(context).pop(_UserNameController.text);
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: const Color(0xff79698e), // Background color
-                        onPrimary: Colors.white, // Text Color (Foreground color)
+                        onPrimary:
+                            Colors.white, // Text Color (Foreground color)
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32.0)),
                         minimumSize: const Size(300, 40),
                       ),
-                      child: const Text('Sign Up',
-                        style: TextStyle(fontSize: 30),),
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(fontSize: 30),
+                      ),
                     ),
 
-
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
 
                     const Divider(
                       thickness: 1,
@@ -297,20 +342,22 @@ class _SignInScreenState extends State<SignInScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("You already have an account ?"),
-                        TextButton(onPressed:(){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LogInScreen()));
-                        },
-                            child: const Text("Log In ",
-                              style: TextStyle(color: Color(0xff79698e),),)),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LogInScreen()));
+                            },
+                            child: const Text(
+                              "Log In ",
+                              style: TextStyle(
+                                color: Color(0xff79698e),
+                              ),
+                            )),
                       ],
                     )
-
-
-
-
                   ],
                 ),
               ),
@@ -321,4 +368,42 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 }
-
+// class UserModel {
+//   String? uid;
+//   String? fullName;
+//   String? username;
+//  String? email;
+//   UserModel({this.uid, this.fullName, this.username,this.email});
+// }
+//
+// Future<UserModel> registerUser(String email, String password, String fullName, String username) async {
+//   try {
+//     UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+// //         email: email,
+// //         password: password
+// //     );
+//     User? user = userCredential.user;
+//     UserModel userModel = UserModel(uid: user?.uid, fullName: fullName, username: username,email:email);
+//     await saveUserData(userModel);
+//     print('User registered: ${userModel.uid}');
+//     return userModel;
+//   } on FirebaseAuthException catch (e) {
+//     if (e.code == 'weak-password') {
+//       print('The password provided is too weak.');
+//     } else if (e.code == 'email-already-in-use') {
+//       print('The account already exists for that email.');
+//     }
+//     throw e;
+//   } catch (e) {
+//     print(e);
+//     throw e;
+//   }
+// }
+//
+// Future<void> saveUserData(UserModel userModel) async {
+//   await FirebaseFirestore.instance.collection('users').doc(userModel.uid).set({
+//     'fullName': userModel.fullName,
+//     'username': userModel.username,
+//     'email':userModel.email
+//   });
+// }
