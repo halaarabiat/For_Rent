@@ -152,7 +152,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,// primary: const Color(0xff79698e),
                           // Text Color (Foreground color)
-                          backgroundColor: Color(0xff79698e),
+                          backgroundColor: const Color(0xff79698e),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32.0)),
                           minimumSize: const Size(300, 40),
