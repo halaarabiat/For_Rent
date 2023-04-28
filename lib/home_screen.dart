@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'NavBar.dart';
+import 'post_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0xff79698e),
+            backgroundColor: const Color(0xff79698e),
 
             title: Row(
                mainAxisAlignment: MainAxisAlignment.center,
@@ -24,8 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(
-              'assets/test.png',
-              height: MediaQuery.of(context).size.height*0.08,
+              'assets/logo_borderless.png',
+              height: MediaQuery.of(context).size.height*0.06,
               //alignment: Alignment.center,
             ),
           ),
@@ -35,7 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
             //   Image.asset("assets/test.png")
 
 
-               IconButton(onPressed: (){}, icon: Icon(Icons.add),
+               IconButton(onPressed: (){
+                 Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                         builder: (context) => const PostScreen()));
+               }, icon: const Icon(Icons.add),
                tooltip: 'Add New Post',)
              ],
             // leading:
@@ -55,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
           //
            ),
 
-          drawer: NavBar(),
+          drawer: const NavBar(),
 
 
       body: Form(
@@ -102,14 +108,14 @@ class _HomeScreenState extends State<HomeScreen> {
               width: MediaQuery.of(context).size.width*0.8,
               color: Colors.grey.withOpacity(0.7),
 
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: TextFormField(
                 decoration: InputDecoration(
-                 border: OutlineInputBorder(
+                 border: const OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Color(0xff79698e),width: 3,
                   ),),
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0xff79698e),width: 3,
                     )
@@ -118,12 +124,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   fillColor: Colors.white70,
                   filled: true,
                   hintText: "search by city or neighborhood",
-                  contentPadding: EdgeInsets.all(5.0),
-                  hintStyle: TextStyle(fontSize: 15,),
+                  contentPadding: const EdgeInsets.all(5.0),
+                  hintStyle: const TextStyle(fontSize: 15,),
 
                   suffixIcon: IconButton(
                     onPressed: (){},
-                    icon: Icon(Icons.search,
+                    icon: const Icon(Icons.search,
                     color: Color(0xff79698e),),
                   )
                 ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:rent/login_screen.dart';
-import 'package:rent/signin_screen.dart';
+import 'package:rent/signup_screen.dart';
 
 class BottomSheetApp extends StatelessWidget {
   const BottomSheetApp({Key? key}) : super(key: key);
@@ -85,7 +85,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                     ],
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -98,7 +98,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                     ],
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -133,9 +133,9 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       )
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -144,16 +144,15 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const SignInScreen()));
+                                  builder: (context) => const SignUpScreen()));
                           // Navigator.of(context).pop(_UserNameController.text);
 
                           //Navigator.of(context).pop(_UserNameController.text);
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: const Color(0xff79698e),
-                          // Background color
-                          onPrimary: Colors.white,
+                          foregroundColor: Colors.white,// primary: const Color(0xff79698e),
                           // Text Color (Foreground color)
+                          backgroundColor: Color(0xff79698e),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32.0)),
                           minimumSize: const Size(300, 40),
@@ -163,19 +162,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                           style: TextStyle(fontSize: 25),
                         ),
                       ),
-                      // SizedBox(
-                      //   width: 200.0,
-                      //   child: TextButton(
-                      //       child: const Text('Sing Up',
-                      //           style: TextStyle(color: Color(0xffffffff))),
-                      //       onPressed: () {},
-                      //       style: TextButton.styleFrom(
-                      //         backgroundColor: const Color(0xff79698e),
-                      //
-                      //         // side: const BorderSide(
-                      //         //     width: 2.0, color: Color(0xff79698e))
-                      //       )),
-                      // )
+
                     ],
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
