@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
 import 'package:rent/forget_pass_screen.dart';
-import 'package:rent/signin_screen.dart';
+import 'package:rent/signup_screen.dart';
 
 
 
@@ -222,7 +222,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             onPressed: () async {Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SignInScreen()));
+                                    builder: (context) => const SignUpScreen()));
                             setState(() {
                               _UserNameController.text = result!;
                             });

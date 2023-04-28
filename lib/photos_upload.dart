@@ -40,7 +40,7 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
     XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image != null) {
       setState(() {
-        _selectedImages = [image];
+        _selectedImages.add(image); // Append the captured image to the list
       });
     }
   }

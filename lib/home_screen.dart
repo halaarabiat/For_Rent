@@ -25,8 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(
-              'assets/test.png',
-              height: MediaQuery.of(context).size.height*0.08,
+              'assets/logo_borderless.png',
+              height: MediaQuery.of(context).size.height*0.06,
               //alignment: Alignment.center,
             ),
           ),

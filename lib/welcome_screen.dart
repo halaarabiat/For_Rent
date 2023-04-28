@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:rent/login_screen.dart';
-import 'package:rent/signin_screen.dart';
+import 'package:rent/signup_screen.dart';
 
 class BottomSheetApp extends StatelessWidget {
   const BottomSheetApp({Key? key}) : super(key: key);
@@ -144,13 +144,13 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const SignInScreen()));
+                                  builder: (context) => const SignUpScreen()));
                           // Navigator.of(context).pop(_UserNameController.text);
 
                           //Navigator.of(context).pop(_UserNameController.text);
                         },
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white70,// primary: const Color(0xff79698e),
+                          foregroundColor: Colors.white,// primary: const Color(0xff79698e),
                           // Text Color (Foreground color)
                           backgroundColor: Color(0xff79698e),
                           shape: RoundedRectangleBorder(

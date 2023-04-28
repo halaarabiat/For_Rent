@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:rent/signin_screen.dart';
+import 'package:rent/photos_upload.dart';
+import 'package:rent/signup_screen.dart';
 import 'package:rent/welcome_screen.dart';
 
 

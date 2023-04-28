@@ -33,6 +33,7 @@ class _PostScreenState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
             appBar: AppBar(
               backgroundColor: const Color(0xff79698e),
@@ -44,7 +45,8 @@ class _PostScreenState extends State<PostScreen> {
                 ),
               ),
             ),
-            body: SafeArea(
+            body:
+            SafeArea(
               child: SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.all(16.0),
