@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
+import 'package:rent/home_screen.dart';
 import 'package:rent/login_screen.dart';
 
 
@@ -191,7 +192,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         if(value!.isEmpty){
                           return("This Field is required");
                         }
-                        else if(value.isUsername()){
+                        else if(!value.isUsername()){
                           return("This is not a valid username");
                         }
                         else{
@@ -258,18 +259,24 @@ class _SignInScreenState extends State<SignInScreen> {
 
                     ElevatedButton(onPressed: (){
                       // Navigator.of(context).pop(_UserNameController.text);
+                         if(
+                      _key.currentState!.validate()){
+                           Navigator.pushAndRemoveUntil(
+                               context,
+                               MaterialPageRoute(
+                                   builder: (context) => const HomeScreen()),
+                      (route)=>false,);
+                         }
+                         else{}
 
-                      _key.currentState!.validate();
-                      print(_FullNameController.text);
-                      print(_EmailController.text);
-                      print(_UserNameController.text);
-                      print(_PasswordController.text);
                       //Navigator.of(context).pop(_UserNameController.text);
                     },
 
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xff79698e), // Background color
-                        onPrimary: Colors.white, // Text Color (Foreground color)
+
+                        foregroundColor: Colors.white70, 
+                        // Text Color (Foreground color)
+                        backgroundColor: Color(0xff79698e),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32.0)),
                         minimumSize: Size(300, 40),

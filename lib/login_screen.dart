@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
 import 'package:rent/forget_pass_screen.dart';
+import 'package:rent/home_screen.dart';
 import 'package:rent/signin_screen.dart';
+
+
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
@@ -18,6 +21,7 @@ class _LogInScreenState extends State<LogInScreen> {
 
   final FocusNode _UserNameFocuse = FocusNode();
   final FocusNode _PasswordFocuse = FocusNode();
+
 
   String? get result => null;
 
@@ -183,14 +187,21 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          _key.currentState!.validate();
-                          print(_UserNameController.text);
-                          print(_PasswordController.text);
+                           if(
+                          _key.currentState!.validate()){
+                               Navigator.pushAndRemoveUntil(
+                                 context,
+                                 MaterialPageRoute(
+                                     builder: (context) => const HomeScreen()),
+                                     (route)=>false,);
+                           }
+
+                           else{}
+                          // print(_UserNameController.text);
+                          // print(_PasswordController.text);
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xff79698e),
-                          // Background color
-                          onPrimary: Colors.white,
+                          foregroundColor: Color(0xff79698e), //primary: Color(0xff79698e),
                           // Text Color (Foreground color)
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32.0)),
