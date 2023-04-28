@@ -191,7 +191,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         if(value!.isEmpty){
                           return("This Field is required");
                         }
-                        else if(value.isUsername()){
+                        else if(!value.isUsername()){
                           return("This is not a valid username");
                         }
                         else{
@@ -268,8 +268,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
 
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xff79698e), // Background color
-                        onPrimary: Colors.white, // Text Color (Foreground color)
+                        foregroundColor: Colors.white70, 
+                        // Text Color (Foreground color)
+                        backgroundColor: Color(0xff79698e),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32.0)),
                         minimumSize: Size(300, 40),

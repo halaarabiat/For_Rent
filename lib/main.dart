@@ -1,6 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:rent/signin_screen.dart';
 import 'package:rent/welcome_screen.dart';
+
+
+import 'forget_pass_screen.dart';
+import 'home_screen.dart';
+import 'login_screen.dart';
 
 void main() { runApp(const MyApp());}
 
@@ -11,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
 
-      home: MyHomePage(),
+      home:HomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
