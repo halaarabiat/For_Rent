@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rent/photos_upload.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+
 
 //void main() => runApp(const PostScreen());
 
@@ -11,10 +13,12 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
-  int? _radioValue;
-  int? _radioValue2;
+  String? _radiovalue;
+  String? _radioValue2;
   final _formKey1 = GlobalKey<FormState>();
   final _formKey = GlobalKey<FormState>();
+  final _formKey2 = GlobalKey<FormState>();
+
   bool _checkboxValue1 = false;
   bool _checkboxValue2 = false;
   bool _checkboxValue3 = false;
@@ -26,8 +30,8 @@ class _PostScreenState extends State<PostScreen> {
   @override
   void initState() {
     super.initState();
-    _radioValue = null;
-    _radioValue2 = null;
+     _radiovalue = null;
+     _radioValue2 = null;
   }
 
   @override
@@ -40,8 +44,8 @@ class _PostScreenState extends State<PostScreen> {
               title: Center(
                 child: Image.asset(
                   'assets/logo.png',
-                  height: 60,
-                  width: 30,
+                  height:MediaQuery.of(context).size.height*0.07,
+                  // width: 30,
                 ),
               ),
             ),
@@ -67,51 +71,38 @@ class _PostScreenState extends State<PostScreen> {
                         ),
                         Form(
                           key: _formKey1,
-                          autovalidateMode: AutovalidateMode.always,
+                          // autovalidateMode: AutovalidateMode.always,
                           child: Column(
                             children: <Widget>[
-                              ListTile(
-                                title: const Text('House'),
-                                leading: Radio<int>(
-                                  value: 0,
-                                  groupValue: _radioValue,
-                                  onChanged: (int? value) {
-                                    setState(() {
-                                      _radioValue = value;
-                                    });
-                                  },
-                                ),
+                              FormBuilderRadioGroup(
+                                onChanged: (value) {
+                                  setState(() {
+                                    _radiovalue = value; // تحديث القيمة المحددة
+                                  });
+                                },
+                                validator: (value){
+                                  if(value==null){
+                                    return'pleas fill the required value';
+                                  }
+                                  else{
+                                    return null;
+                                  }
+                                },
+                                orientation: OptionsOrientation.vertical,
+                                  activeColor: Color(0xff79698e),
+                                  name: "Radio Button ",
+                                  options: [
+                                    'Home',
+                                    'Apartment',
+                                    'student Studio'
+                                  ].map((lang) => FormBuilderFieldOption(value: lang))
+                                      .toList(growable: false),
+
                               ),
-                              ListTile(
-                                title: const Text('Apartment'),
-                                leading: Radio<int>(
-                                  value: 1,
-                                  groupValue: _radioValue,
-                                  onChanged: (int? value) {
-                                    setState(() {
-                                      _radioValue = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                              ListTile(
-                                title: const Text('Student Studio'),
-                                leading: Radio<int>(
-                                  value: 2,
-                                  groupValue: _radioValue,
-                                  onChanged: (int? value) {
-                                    setState(() {
-                                      _radioValue = value;
-                                    });
-                                  },
-                                ),
-                              ),
+
                               const Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: Divider(
-                                  color: Color(0xff79698e),
-                                  thickness: 1,
-                                ),
+
                               ),
                             ],
                           ),
@@ -135,13 +126,19 @@ class _PostScreenState extends State<PostScreen> {
                                         child: TextFormField(
                                           decoration: const InputDecoration(
                                             labelText: "Enter Value",
-                                            labelStyle: TextStyle(fontSize: 10),
+                                            labelStyle: TextStyle(fontSize: 10,color: Colors.black38),
                                             border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(12.0)),
                                               borderSide: BorderSide(
-                                                  width: 2.0,
+                                                  width: 2,
                                                   color: Color(0xff79698e)),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(12.0)),
+                                              borderSide: BorderSide(width: 3,
+                                                  color:Color(0xff79698e) ),
                                             ),
                                             focusColor: Color(0xff79698e),
                                           ),
@@ -166,7 +163,7 @@ class _PostScreenState extends State<PostScreen> {
                                       child: Text(
                                         'm²',
                                         style: TextStyle(
-                                            fontSize: 16, color: Colors.grey),
+                                            fontSize: 16, color: Colors.black),
                                       ),
                                     )
                                   ],
@@ -181,14 +178,15 @@ class _PostScreenState extends State<PostScreen> {
                                       padding: EdgeInsets.only(right: 26.0),
                                       child: Text("Number of rooms: ",
                                           style: TextStyle(
-                                              fontWeight: FontWeight.w700)),
+                                              fontWeight: FontWeight.w700,)),
                                     ),
                                     SizedBox(
                                       width: 140,
                                       child: TextFormField(
                                         decoration: const InputDecoration(
                                           labelText: "Number of rooms",
-                                          labelStyle: TextStyle(fontSize: 10),
+                                          labelStyle: TextStyle(fontSize: 10,
+                                          color: Colors.black38),
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(12.0)),
@@ -196,7 +194,14 @@ class _PostScreenState extends State<PostScreen> {
                                                 width: 3.0,
                                                 color: Color(0xff79698e)),
                                           ),
-                                          focusColor: Color(0xff79698e),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0)),
+                                            borderSide: BorderSide(width: 3,
+                                            color:Color(0xff79698e) ),
+                                          ),
+                                          enabled: true,
+                                          //focusColor: Color(0xff79698e),
                                         ),
                                         keyboardType: TextInputType.number,
                                         validator: (value) {
@@ -228,7 +233,8 @@ class _PostScreenState extends State<PostScreen> {
                                       child: TextFormField(
                                         decoration: const InputDecoration(
                                           labelText: "Number of Bathrooms",
-                                          labelStyle: TextStyle(fontSize: 10),
+                                          labelStyle: TextStyle(fontSize: 10,
+                                          color: Colors.black38),
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(12.0)),
@@ -237,6 +243,12 @@ class _PostScreenState extends State<PostScreen> {
                                                 color: Color(0xff79698e)),
                                           ),
                                           focusColor: Color(0xff79698e),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0)),
+                                            borderSide: BorderSide(width: 3,
+                                                color:Color(0xff79698e) ),
+                                          ),
                                         ),
                                         keyboardType: TextInputType.number,
                                         validator: (value) {
@@ -262,40 +274,71 @@ class _PostScreenState extends State<PostScreen> {
                                   thickness: 1,
                                 ),
                               ),
-                              Column(
-                                children: <Widget>[
-                                  ListTile(
-                                    title: const Text('Furnished'),
-                                    leading: Radio<int>(
-                                      value: 0,
-                                      groupValue: _radioValue2,
-                                      onChanged: (int? value) {
+
+                              Form(
+                                child: Column(
+                                  key: _formKey2,
+                                  // autovalidateMode: AutovalidateMode.always,
+                                  children: <Widget>[
+                                    FormBuilderRadioGroup(
+                                      onChanged: (value) {
                                         setState(() {
-                                          _radioValue2 = value;
+                                          _radioValue2 = value; // تحديث القيمة المحددة
                                         });
                                       },
-                                    ),
-                                  ),
-                                  ListTile(
-                                    title: const Text('UnFurnished'),
-                                    leading: Radio<int>(
-                                      value: 1,
-                                      groupValue: _radioValue2,
-                                      onChanged: (int? value) {
-                                        setState(() {
-                                          _radioValue2 = value;
-                                        });
+                                      validator: (value){
+                                        if(value==null){
+                                          return'pleas fill the required value';
+                                        }
+                                        else{
+                                          return null;
+                                        }
                                       },
+                                      orientation: OptionsOrientation.vertical,
+                                      activeColor: Color(0xff79698e),
+                                      name: "Radio Button2 ",
+                                      options: [
+                                        'Home',
+                                        'Apartment',
+                                      ].map((lang) => FormBuilderFieldOption(value: lang))
+                                          .toList(growable: false),
+
                                     ),
-                                  ),
-                                ],
+
+
+                                    // ListTile(
+                                    //   title: const Text('Furnished'),
+                                    //   leading: Radio<int>(
+                                    //     value: 0,
+                                    //     groupValue: _radioValue2,
+                                    //     onChanged: (int? value) {
+                                    //       setState(() {
+                                    //         _radioValue2 = value;
+                                    //       });
+                                    //     },
+                                    //   ),
+                                    // ),
+                                    // ListTile(
+                                    //   title: const Text('UnFurnished'),
+                                    //   leading: Radio<int>(
+                                    //     value: 1,
+                                    //     groupValue: _radioValue2,
+                                    //     onChanged: (int? value) {
+                                    //       setState(() {
+                                    //         _radioValue2 = value;
+                                    //       });
+                                    //     },
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
                               ),
                               const Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: Divider(
-                                  color: Color(0xff79698e),
-                                  thickness: 1,
-                                ),
+                                // child: Divider(
+                                //   color: Color(0xff79698e),
+                                //   thickness: 1,
+                                // ),
                               ),
                               Column(
                                 children: [

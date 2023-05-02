@@ -25,8 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(
-              'assets/logo_borderless.png',
-              height: MediaQuery.of(context).size.height*0.06,
+              'assets/logo.png',
+              height:MediaQuery.of(context).size.height*0.07,
+
               //alignment: Alignment.center,
             ),
           ),
@@ -41,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
                      context,
                      MaterialPageRoute(
                          builder: (context) => const PostScreen()));
-               }, icon: const Icon(Icons.add),
+               }, icon: const Icon(Icons.add,
+               color: Colors.black,),
                tooltip: 'Add New Post',)
              ],
             // leading:

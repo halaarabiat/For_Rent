@@ -80,8 +80,7 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
         title: Center(
           child: Image.asset(
             'assets/logo.png',
-            height: 60,
-            width: 30,
+            height:MediaQuery.of(context).size.height*0.07,
           ),
         ),
       ),
