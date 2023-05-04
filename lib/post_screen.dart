@@ -27,14 +27,6 @@ class _PostScreenState extends State<PostScreen> {
   String dropdownValue = 'Jordan';
   String dropdownValue1 = 'Amman';
 
-  FocusNode _flatFocuse =FocusNode();
-  FocusNode _numberOfRoomFocuse = FocusNode();
-  FocusNode _numberOfBathroomFocuse = FocusNode();
-  FocusNode _descriptionFocuse = FocusNode();
-  FocusNode _phoneNumberFocuse = FocusNode();
-  FocusNode _priceFocuse = FocusNode();
-
-
   @override
   void initState() {
     super.initState();
@@ -52,7 +44,10 @@ class _PostScreenState extends State<PostScreen> {
               title: Center(
                 child: Image.asset(
                   'assets/logo.png',
-                  height:MediaQuery.of(context).size.height*0.07,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.07,
                   // width: 30,
                 ),
               ),
@@ -66,6 +61,7 @@ class _PostScreenState extends State<PostScreen> {
                     key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
+
                       children: <Widget>[
                         const SizedBox(
                           child: Text(
@@ -77,37 +73,47 @@ class _PostScreenState extends State<PostScreen> {
                         const SizedBox(
                           height: 20,
                         ),
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Property type:',
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
 
                         // autovalidateMode: AutovalidateMode.always,
                         Column(
                           children: <Widget>[
+
                             FormBuilderRadioGroup(
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode
+                                  .onUserInteraction,
                               onChanged: (value) {
                                 setState(() {
                                   _radiovalue = value; // تحديث القيمة المحددة
                                 });
                               },
-                              validator: (value){
-                                if(value==null){
-                                  return'pleas fill the required value';
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'pleas fill the required value';
                                 }
-                                else{
+                                else {
                                   return null;
                                 }
                               },
                               orientation: OptionsOrientation.vertical,
-                              activeColor: Color(0xff79698e),
+                              activeColor: const Color(0xff79698e),
                               name: "Radio Button ",
                               options: [
                                 'Home',
                                 'Apartment',
                                 'student Studio'
-                              ].map((lang) => FormBuilderFieldOption(value: lang))
+                              ].map((lang) =>
+                                  FormBuilderFieldOption(value: lang))
                                   .toList(growable: false),
-
-
-
 
                             ),
 
@@ -121,6 +127,16 @@ class _PostScreenState extends State<PostScreen> {
                         Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              const Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Floorplans:',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(
                                     top: 8.0, bottom: 8.0),
@@ -137,7 +153,8 @@ class _PostScreenState extends State<PostScreen> {
                                         child: TextFormField(
                                           decoration: const InputDecoration(
                                             labelText: "Enter Value",
-                                            labelStyle: TextStyle(fontSize: 10,color: Colors.black38),
+                                            labelStyle: TextStyle(fontSize: 10,
+                                                color: Colors.black38),
                                             border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(12.0)),
@@ -149,7 +166,7 @@ class _PostScreenState extends State<PostScreen> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(12.0)),
                                               borderSide: BorderSide(width: 3,
-                                                  color:Color(0xff79698e) ),
+                                                  color: Color(0xff79698e)),
                                             ),
                                             focusColor: Color(0xff79698e),
                                           ),
@@ -166,11 +183,6 @@ class _PostScreenState extends State<PostScreen> {
                                             }
                                             return null;
                                           },
-                                            textInputAction: TextInputAction.next,
-                                          focusNode: _flatFocuse,
-                                          onFieldSubmitted:(String value){
-                                          FocusScope.of(context).requestFocus(_numberOfRoomFocuse);
-                                          _numberOfRoomFocuse.requestFocus();}
                                         ),
                                       ),
                                     ),
@@ -192,7 +204,7 @@ class _PostScreenState extends State<PostScreen> {
                                   children: [
                                     const Padding(
                                       padding: EdgeInsets.only(right: 26.0),
-                                      child: Text("Number of rooms: ",
+                                      child: Text("No. of rooms: ",
                                           style: TextStyle(
                                             fontWeight: FontWeight.w700,)),
                                     ),
@@ -214,7 +226,7 @@ class _PostScreenState extends State<PostScreen> {
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(12.0)),
                                             borderSide: BorderSide(width: 3,
-                                                color:Color(0xff79698e) ),
+                                                color: Color(0xff79698e)),
                                           ),
                                           enabled: true,
                                           //focusColor: Color(0xff79698e),
@@ -231,11 +243,6 @@ class _PostScreenState extends State<PostScreen> {
                                           }
                                           return null;
                                         },
-                                          textInputAction: TextInputAction.next,
-                                        focusNode: _numberOfRoomFocuse,
-                                          onFieldSubmitted:(String value){
-                                            FocusScope.of(context).requestFocus(_numberOfBathroomFocuse);
-                                            _numberOfBathroomFocuse.requestFocus();}
                                       ),
                                     ),
                                   ],
@@ -244,6 +251,7 @@ class _PostScreenState extends State<PostScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     top: 8.0, bottom: 8.0),
+
                                 child: Row(
                                   children: [
                                     const Text("Number of Bathrooms:",
@@ -268,7 +276,7 @@ class _PostScreenState extends State<PostScreen> {
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(12.0)),
                                             borderSide: BorderSide(width: 3,
-                                                color:Color(0xff79698e) ),
+                                                color: Color(0xff79698e)),
                                           ),
                                         ),
                                         keyboardType: TextInputType.number,
@@ -283,19 +291,16 @@ class _PostScreenState extends State<PostScreen> {
                                           }
                                           return null;
                                         },
-                                        textInputAction: TextInputAction.done,
-                                        focusNode: _numberOfBathroomFocuse,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
+
                               const Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Divider(
-                                  color: Colors.grey,
-                                  indent:1.0,
-                                  endIndent: 1.0,
+                                  color: Color(0xff79698e),
                                   thickness: 1,
                                 ),
                               ),
@@ -304,57 +309,47 @@ class _PostScreenState extends State<PostScreen> {
                               Column(
                                 // autovalidateMode: AutovalidateMode.always,
                                 children: <Widget>[
+                                  const Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Furnishing Status:',
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
                                   FormBuilderRadioGroup(
-                                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                                    autovalidateMode: AutovalidateMode
+                                        .onUserInteraction,
                                     onChanged: (value) {
                                       setState(() {
-                                        _radioValue2 = value; // تحديث القيمة المحددة
+                                        _radioValue2 =
+                                            value; // تحديث القيمة المحددة
                                       });
                                     },
-                                    validator: (value){
-                                      if(value==null){
-                                        return'pleas fill the required value';
+                                    validator: (value) {
+                                      if (value == null) {
+                                        return 'pleas fill the required value';
                                       }
-                                      else{
+                                      else {
                                         return null;
                                       }
                                     },
                                     orientation: OptionsOrientation.vertical,
-                                    activeColor: Color(0xff79698e),
+                                    activeColor: const Color(0xff79698e),
                                     name: "Radio Button2 ",
                                     options: [
-                                      'Furnished',
+                                      'Fully Furnished',
                                       'Unfurnished',
-                                    ].map((lang) => FormBuilderFieldOption(value: lang))
+                                      'Partially Furnished',
+                                    ].map((lang) =>
+                                        FormBuilderFieldOption(value: lang))
                                         .toList(growable: false),
 
                                   ),
 
 
-                                  // ListTile(
-                                  //   title: const Text('Furnished'),
-                                  //   leading: Radio<int>(
-                                  //     value: 0,
-                                  //     groupValue: _radioValue2,
-                                  //     onChanged: (int? value) {
-                                  //       setState(() {
-                                  //         _radioValue2 = value;
-                                  //       });
-                                  //     },
-                                  //   ),
-                                  // ),
-                                  // ListTile(
-                                  //   title: const Text('UnFurnished'),
-                                  //   leading: Radio<int>(
-                                  //     value: 1,
-                                  //     groupValue: _radioValue2,
-                                  //     onChanged: (int? value) {
-                                  //       setState(() {
-                                  //         _radioValue2 = value;
-                                  //       });
-                                  //     },
-                                  //   ),
-                                  // ),
                                 ],
                               ),
 
@@ -365,7 +360,18 @@ class _PostScreenState extends State<PostScreen> {
                                 //   thickness: 1,
                                 // ),
                               ),
+                              const Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Additional Options:',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
                               Column(
+
                                 children: [
                                   CheckboxListTile(
                                       title: const Text('Garden'),
@@ -408,24 +414,24 @@ class _PostScreenState extends State<PostScreen> {
                                           _checkboxValue5 = value!;
                                         });
                                       }),
-                                  //                         ListTile(
-                                  //                           title: const Text('Garden'),leading: CheckboxListTile(value: _checkboxValue1, onChanged: (bool? value) {
-                                  //                           setState(() {
-                                  //                             _checkboxValue1 = value!;
-                                  //                           });
-                                  //
-                                  //                         })
-                                  //
-                                  // )
+
                                 ],
                               ),
                               const Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Divider(
-                                  color: Colors.grey,
-                                  indent:1.0,
-                                  endIndent: 1.0,
+                                  color: Color(0xff79698e),
                                   thickness: 1,
+                                ),
+                              ),
+                              const Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Location:',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
                               Padding(
@@ -545,214 +551,229 @@ class _PostScreenState extends State<PostScreen> {
                                       ),
                                     ),
                                     Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .start,
                                         children: [
-                                          const Text('Neighborhood',
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w500)),
-                                          SizedBox(
-                                              width: 300,
-                                              height: 50,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                    color:
-                                                    const Color(0xff79698e),
-                                                    width: 1.5,
-                                                  ),
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      8.0),
-                                                ),
-                                                child: const TextField(
-                                                    decoration: InputDecoration(
-                                                      hintText: "Neighborhood",
-                                                    )),
-                                              ))
-                                        ]),
-                                    const Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Divider(
-                                        color: Colors.grey,
-                                        indent:1.0,
-                                        endIndent: 1.0,
-                                        thickness: 1,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            const Text('Description',
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                    FontWeight.w500)),
-                                            Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(8.0),
-                                                // Customize the border radius as needed
-                                                side: const BorderSide(
-                                                  color: Color(0xff79698e),
-                                                  // Specify the border color
-                                                  width:
-                                                  1.5, // Specify the border width
-                                                ),
+                                          const Text(
+                                            'Neighborhood',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          TextFormField(
+                                            decoration: const InputDecoration(
+                                              hintText: "Neighborhood",
+                                              border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(12.0)),
+                                                borderSide: BorderSide(
+                                                    width: 2,
+                                                    color: Color(0xff79698e)),
                                               ),
-                                              child: Padding(
-                                                padding:
-                                                const EdgeInsets.all(8.0),
-                                                child: TextFormField(
-                                                  decoration:
-                                                  const InputDecoration(
-                                                    hintText:
-                                                    "EX:3 bedroom, 1 master, 3 bathroom, with parking for two cars, 2 balcony or garden, first floor, with view...",
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(12.0)),
+                                                borderSide: BorderSide(width: 3,
+                                                    color: Color(0xff79698e)),
+                                              ),
+                                              focusColor: Color(0xff79698e),
+                                            ),
+
+                                            validator: (value) {
+                                              if (value == null || value
+                                                  .trim()
+                                                  .isEmpty) {
+                                                return 'Please enter a neighborhood';
+                                              }
+                                              return null;
+                                            },
+                                          ),
+
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Divider(
+                                              color: Color(0xff79698e),
+                                              thickness: 1,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment
+                                                  .start,
+                                              children: [
+                                                const Text(
+                                                  'Description',
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w500,
                                                   ),
-                                                  maxLines: null,
-                                                  // Allow the TextFormField to expand vertically
+                                                ),
+                                                Card(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius
+                                                        .circular(8.0),
+                                                    side: const BorderSide(
+                                                      color: Color(0xff79698e),
+                                                      width: 1.5,
+                                                    ),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .all(8.0),
+                                                    child: TextFormField(
+                                                      decoration: const InputDecoration(
+                                                        hintText: "EX:3 bedroom, 1 master, 3 bathroom, with parking for two cars, 2 balcony or garden, first floor, with view...",
+                                                      ),
+                                                      maxLines: null,
+                                                      validator: (value) {
+                                                        if (value == null ||
+                                                            value.isEmpty) {
+                                                          return 'This field is required.';
+                                                        }
+
+                                                        final RegExp regex = RegExp(
+                                                            r'^(?=.*\d).{80,}$');
+                                                        if (!regex.hasMatch(
+                                                            value)) {
+                                                          return 'Please enter full Description ';
+                                                        }
+
+                                                        return null;
+                                                      },
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment
+                                                  .start,
+                                              children: [
+                                                const Text(
+                                                  'Phone Number',
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                                TextFormField(
+                                                  decoration: const InputDecoration(
+                                                    hintText: "please enter your valid phone number",
+                                                    border: OutlineInputBorder(
+                                                      borderRadius: BorderRadius
+                                                          .all(
+                                                          Radius.circular(
+                                                              12.0)),
+                                                      borderSide: BorderSide(
+                                                          width: 2,
+                                                          color: Color(
+                                                              0xff79698e)),
+                                                    ),
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderRadius: BorderRadius
+                                                          .all(
+                                                          Radius.circular(
+                                                              12.0)),
+                                                      borderSide: BorderSide(
+                                                          width: 3,
+                                                          color: Color(
+                                                              0xff79698e)),
+                                                    ),
+                                                    focusColor: Color(
+                                                        0xff79698e),
+
+                                                  ),
+                                                  keyboardType: TextInputType
+                                                      .phone,
                                                   validator: (value) {
                                                     if (value == null ||
                                                         value.isEmpty) {
                                                       return 'This field is required.';
                                                     }
-
                                                     final RegExp regex = RegExp(
-                                                        r'^(?=.*\d).{80,}$');
-                                                    if (!regex
-                                                        .hasMatch(value)) {
-                                                      return 'Please enter full Description ';
+                                                        r'^07\d{8}$');
+                                                    if (!regex.hasMatch(
+                                                        value)) {
+                                                      return 'Please enter a valid phone number';
                                                     }
-
                                                     return null;
                                                   },
-                                                    textInputAction: TextInputAction.next,
-
-                                                    focusNode: _descriptionFocuse,
-                                                    onFieldSubmitted:(String value){
-                                                      FocusScope.of(context).requestFocus(_phoneNumberFocuse);
-                                                      _phoneNumberFocuse.requestFocus();}
                                                 ),
-                                              ),
-                                            )
-                                          ]),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            const Text('Phone Number',
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                    FontWeight.w500)),
-                                            SizedBox(
-                                                width: 300,
-                                                height: 50,
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color: const Color(
-                                                          0xff79698e),
-                                                      width: 1.5,
-                                                    ),
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                        8.0),
-                                                  ),
-                                                  child: TextFormField(
-                                                      decoration:
-                                                      const InputDecoration(
-                                                        hintText:
-                                                        "please enter your valid phone number",
-                                                      ),
-                                                      keyboardType:
-                                                      TextInputType.phone,
-                                                      validator: (value) {
-                                                        if (value == null ||
-                                                            value.isEmpty) {
-                                                          return 'This field is required.';
-                                                        }
-                                                        final RegExp regex =
-                                                        RegExp(
-                                                            r'^07\d{8}$');
-                                                        if (!regex
-                                                            .hasMatch(value)) {
-                                                          return 'Please enter a valid phone number';
-                                                        }
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                children: [
+                                                  const Text('Price',
+                                                      style: TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                          FontWeight.w500)),
+                                                  SizedBox(
+                                                      width: 350,
+                                                      height: 50,
+                                                      child: TextFormField(
+                                                          decoration:
+                                                          const InputDecoration(
+                                                            hintText:
+                                                            "Monthly rental price ",
+                                                            border: OutlineInputBorder(
+                                                              borderRadius: BorderRadius
+                                                                  .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                      12.0)),
+                                                              borderSide: BorderSide(
+                                                                  width: 2,
+                                                                  color: Color(
+                                                                      0xff79698e)),
+                                                            ),
+                                                            focusedBorder: OutlineInputBorder(
+                                                              borderRadius: BorderRadius
+                                                                  .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                      12.0)),
+                                                              borderSide: BorderSide(
+                                                                  width: 3,
+                                                                  color: Color(
+                                                                      0xff79698e)),
+                                                            ),
+                                                            focusColor: Color(
+                                                                0xff79698e),
 
-                                                        return null;
-                                                      },
-                                                      textInputAction: TextInputAction.next,
-                                                      focusNode: _phoneNumberFocuse,
-                                                      onFieldSubmitted:(String value){
-                                                        FocusScope.of(context).requestFocus(_priceFocuse);
-                                                        _priceFocuse.requestFocus();}
-
-                                                      ),
-                                                ))
-                                          ]),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            const Text('Price',
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                    FontWeight.w500)),
-                                            SizedBox(
-                                                width: 300,
-                                                height: 50,
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color: const Color(
-                                                          0xff79698e),
-                                                      width: 1.5,
-                                                    ),
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                        8.0),
-                                                  ),
-                                                  child: TextFormField(
-                                                      decoration:
-                                                      const InputDecoration(
-                                                        hintText:
-                                                        "Monthly rental price ",
-                                                      ),
-                                                      keyboardType:
-                                                      TextInputType.number,
-                                                      validator: (value) {
-                                                        if (value == null ||
-                                                            value.isEmpty) {
-                                                          return 'This field is required.';
-                                                        }
-                                                        final RegExp regex =
-                                                        RegExp(
-                                                            r'\d+(\.\d+)?');
-                                                        if (!regex
-                                                            .hasMatch(value)) {
-                                                          return 'Please enter a valid price';
-                                                        }
-                                                        return null;
-                                                      },
-                                                    textInputAction: TextInputAction.done,
-                                                    focusNode: _priceFocuse,
-                                                  ),
-                                                ))
-                                          ]),
-                                    )
-                                  ]))
+                                                          ),
+                                                          keyboardType:
+                                                          TextInputType.number,
+                                                          validator: (value) {
+                                                            if (value == null ||
+                                                                value.isEmpty) {
+                                                              return 'This field is required.';
+                                                            }
+                                                            final RegExp regex =
+                                                            RegExp(
+                                                                r'\d+(\.\d+)?');
+                                                            if (!regex
+                                                                .hasMatch(
+                                                                value)) {
+                                                              return 'Please enter a valid price';
+                                                            }
+                                                            return null;
+                                                          }))
+                                                ]),
+                                          )
+                                        ])
+                                  ])
+                              )
                             ]),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -765,14 +786,8 @@ class _PostScreenState extends State<PostScreen> {
                                         builder: (context) =>
                                         const ImageUploadForm()));
                               }
-                              // if (_formKey1.currentState!.validate()) {
-                              //   Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) =>
-                              //           const ImageUploadForm()));
-                              // }
-                              else{}
+
+                              else {}
 
                               // Navigator.push(
                               //     context,
