@@ -27,6 +27,14 @@ class _PostScreenState extends State<PostScreen> {
   String dropdownValue = 'Jordan';
   String dropdownValue1 = 'Amman';
 
+  FocusNode _flatFocuse =FocusNode();
+  FocusNode _numberOfRoomFocuse = FocusNode();
+  FocusNode _numberOfBathroomFocuse = FocusNode();
+  FocusNode _descriptionFocuse = FocusNode();
+  FocusNode _phoneNumberFocuse = FocusNode();
+  FocusNode _priceFocuse = FocusNode();
+
+
   @override
   void initState() {
     super.initState();
@@ -98,6 +106,9 @@ class _PostScreenState extends State<PostScreen> {
                               ].map((lang) => FormBuilderFieldOption(value: lang))
                                   .toList(growable: false),
 
+
+
+
                             ),
 
                             const Padding(
@@ -155,6 +166,11 @@ class _PostScreenState extends State<PostScreen> {
                                             }
                                             return null;
                                           },
+                                            textInputAction: TextInputAction.next,
+                                          focusNode: _flatFocuse,
+                                          onFieldSubmitted:(String value){
+                                          FocusScope.of(context).requestFocus(_numberOfRoomFocuse);
+                                          _numberOfRoomFocuse.requestFocus();}
                                         ),
                                       ),
                                     ),
@@ -215,6 +231,11 @@ class _PostScreenState extends State<PostScreen> {
                                           }
                                           return null;
                                         },
+                                          textInputAction: TextInputAction.next,
+                                        focusNode: _numberOfRoomFocuse,
+                                          onFieldSubmitted:(String value){
+                                            FocusScope.of(context).requestFocus(_numberOfBathroomFocuse);
+                                            _numberOfBathroomFocuse.requestFocus();}
                                       ),
                                     ),
                                   ],
@@ -262,6 +283,8 @@ class _PostScreenState extends State<PostScreen> {
                                           }
                                           return null;
                                         },
+                                        textInputAction: TextInputAction.done,
+                                        focusNode: _numberOfBathroomFocuse,
                                       ),
                                     ),
                                   ],
@@ -270,7 +293,9 @@ class _PostScreenState extends State<PostScreen> {
                               const Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Divider(
-                                  color: Color(0xff79698e),
+                                  color: Colors.grey,
+                                  indent:1.0,
+                                  endIndent: 1.0,
                                   thickness: 1,
                                 ),
                               ),
@@ -397,7 +422,9 @@ class _PostScreenState extends State<PostScreen> {
                               const Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Divider(
-                                  color: Color(0xff79698e),
+                                  color: Colors.grey,
+                                  indent:1.0,
+                                  endIndent: 1.0,
                                   thickness: 1,
                                 ),
                               ),
@@ -548,7 +575,9 @@ class _PostScreenState extends State<PostScreen> {
                                     const Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: Divider(
-                                        color: Color(0xff79698e),
+                                        color: Colors.grey,
+                                        indent:1.0,
+                                        endIndent: 1.0,
                                         thickness: 1,
                                       ),
                                     ),
@@ -601,6 +630,12 @@ class _PostScreenState extends State<PostScreen> {
 
                                                     return null;
                                                   },
+                                                    textInputAction: TextInputAction.next,
+
+                                                    focusNode: _descriptionFocuse,
+                                                    onFieldSubmitted:(String value){
+                                                      FocusScope.of(context).requestFocus(_phoneNumberFocuse);
+                                                      _phoneNumberFocuse.requestFocus();}
                                                 ),
                                               ),
                                             )
@@ -653,7 +688,14 @@ class _PostScreenState extends State<PostScreen> {
                                                         }
 
                                                         return null;
-                                                      }),
+                                                      },
+                                                      textInputAction: TextInputAction.next,
+                                                      focusNode: _phoneNumberFocuse,
+                                                      onFieldSubmitted:(String value){
+                                                        FocusScope.of(context).requestFocus(_priceFocuse);
+                                                        _priceFocuse.requestFocus();}
+
+                                                      ),
                                                 ))
                                           ]),
                                     ),
@@ -703,7 +745,10 @@ class _PostScreenState extends State<PostScreen> {
                                                           return 'Please enter a valid price';
                                                         }
                                                         return null;
-                                                      }),
+                                                      },
+                                                    textInputAction: TextInputAction.done,
+                                                    focusNode: _priceFocuse,
+                                                  ),
                                                 ))
                                           ]),
                                     )
