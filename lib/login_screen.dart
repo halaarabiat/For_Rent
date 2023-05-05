@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
 import 'package:rent/forget_pass_screen.dart';
 import 'package:rent/home_screen.dart';
-import 'package:rent/signin_screen.dart';
+import 'package:rent/signup_screen.dart';
 
 
 

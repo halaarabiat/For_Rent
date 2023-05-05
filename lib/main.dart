@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rent/post_screen.dart';
+import 'package:rent/tast.dart';
 //import 'package:rent/tast.dart';
 import 'package:rent/welcome_screen.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
 
-      home:PostScreen(),
+      home:BottomSheetApp(),
       debugShowCheckedModeBanner: false,
     );
   }

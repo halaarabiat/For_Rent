@@ -46,21 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                color: Colors.black,),
                tooltip: 'Add New Post',)
              ],
-            // leading:
-            // IconButton(onPressed: (){}, icon: Icon(Icons.add,
-            //     color: Colors.black,
-            // )),
 
-
-
-          //   bottom: PreferredSize(
-          //     child: Container(
-          //       height: 1.0,
-          //       color: Colors.grey[300],
-          //     ),
-          //     preferredSize: Size.fromHeight(1.0),
-          //   ),
-          //
            ),
 
           drawer: const NavBar(),
@@ -140,13 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
 
-            // Positioned(
-            //     child: Container(
-            //       alignment: Alignment.topRight,
-            //       child: Image.asset("assets/test.png",
-            //       width: MediaQuery.of(context).size.width*0.15,
-            //       height: MediaQuery.of(context).size.height*0.15,),
-            //     ))
+
 
                ],
              ),

@@ -144,7 +144,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen()));
+                                  builder: (context) => const SignInScreen()));
                           // Navigator.of(context).pop(_UserNameController.text);
 
                           //Navigator.of(context).pop(_UserNameController.text);
