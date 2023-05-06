@@ -91,7 +91,7 @@ class _PostScreenState extends State<PostScreen> {
                             ),
                           ),
                         ),
-
+                    //Radio buttons for property type:
                         FormBuilderRadioGroup(
                           autovalidateMode: AutovalidateMode
                               .onUserInteraction,
@@ -141,66 +141,73 @@ class _PostScreenState extends State<PostScreen> {
                               top: 8.0, bottom: 8.0),
                           child: Row(
                             children: [
-                              const Text("Flat: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700)),
+                              const Text(
+                                "Flat: ",
+                                style: TextStyle(fontWeight: FontWeight.w700),
+                              ),
                               Padding(
-                                padding:
-                                const EdgeInsets.only(left: 85.0),
+                                padding: const EdgeInsets.only(left: 45.0),
                                 child: SizedBox(
-                                  width: 140,
-                                  child: TextFormField(
-                                      decoration: const InputDecoration(
-                                        labelText: "Enter Value",
-                                        labelStyle: TextStyle(fontSize: 10,
-                                            color: Colors.black38),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12.0)),
-                                          borderSide: BorderSide(
-                                              width: 2,
-                                              color: Color(0xff79698e)),
+                                  width: 280, // Set the width of the box here
+                                  child: Stack(
+                                    children: [
+                                      TextFormField(
+                                        decoration: const InputDecoration(
+                                          labelText: "Enter Value",
+                                          labelStyle: TextStyle(
+                                              fontSize: 10, color: Colors.black38),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                            BorderRadius.all(Radius.circular(12.0)),
+                                            borderSide:
+                                            BorderSide(width: 2, color: Color(0xff79698e)),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                            BorderRadius.all(Radius.circular(12.0)),
+                                            borderSide:
+                                            BorderSide(width: 3, color: Color(0xff79698e)),
+                                          ),
+                                          focusColor: Color(0xff79698e),
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12.0)),
-                                          borderSide: BorderSide(width: 3,
-                                              color: Color(0xff79698e)),
-                                        ),
-                                        focusColor: Color(0xff79698e),
+                                        keyboardType: TextInputType.number,
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'This field is required.';
+                                          }
+                                          final RegExp regex = RegExp(r'\d+(\.\d+)?');
+                                          if (!regex.hasMatch(value)) {
+                                            return 'Please enter a valid number';
+                                          }
+                                          return null;
+                                        },
+                                        textInputAction: TextInputAction.next,
+                                        focusNode: _flatFocuse,
+                                        onFieldSubmitted: (String value) {
+                                          FocusScope.of(context)
+                                              .requestFocus(_numberOfRoomFocuse);
+                                          _numberOfRoomFocuse.requestFocus();
+                                        },
                                       ),
-                                      keyboardType: TextInputType.number,
-                                      validator: (value) {
-                                        if (value == null ||
-                                            value.isEmpty) {
-                                          return 'This field is required.';
-                                        }
-                                        final RegExp regex =
-                                        RegExp(r'\d+(\.\d+)?');
-                                        if (!regex.hasMatch(value)) {
-                                          return 'Please enter a valid number';
-                                        }
-                                        return null;
-                                      },
-                                      textInputAction: TextInputAction.next,
-                                      focusNode: _flatFocuse,
-                                      onFieldSubmitted:(String value){
-                                        FocusScope.of(context).requestFocus(_numberOfRoomFocuse);
-                                        _numberOfRoomFocuse.requestFocus();}
-
+                                      const Positioned(
+                                        right: 10,
+                                        top: 16,
+                                        bottom: 0,
+                                        child: Text(
+                                          'm²',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(
-                                  'm²',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black),
-                                ),
-                              )
                             ],
                           ),
+
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -209,12 +216,12 @@ class _PostScreenState extends State<PostScreen> {
                             children: [
                               const Padding(
                                 padding: EdgeInsets.only(right: 26.0),
-                                child: Text("No. of rooms: ",
+                                child: Text("Rooms: ",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w700,)),
                               ),
                               SizedBox(
-                                width: 140,
+                                width: 280,
                                 child: TextFormField(
                                     decoration: const InputDecoration(
                                       labelText: "Number of rooms",
@@ -265,46 +272,49 @@ class _PostScreenState extends State<PostScreen> {
 
                           child: Row(
                             children: [
-                              const Text("No. of Bathrooms:",
+                              const Text("Bathrooms:",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700)),
-                              SizedBox(
-                                width: 140,
-                                child: TextFormField(
-                                  decoration: const InputDecoration(
-                                    labelText: "Number of Bathrooms",
-                                    labelStyle: TextStyle(fontSize: 10,
-                                        color: Colors.black38),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0)),
-                                      borderSide: BorderSide(
-                                          width: 3.0,
-                                          color: Color(0xff79698e)),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4.0),
+                                child: SizedBox(
+                                  width: 280,
+                                  child: TextFormField(
+                                    decoration: const InputDecoration(
+                                      labelText: "Number of Bathrooms",
+                                      labelStyle: TextStyle(fontSize: 10,
+                                          color: Colors.black38),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                        borderSide: BorderSide(
+                                            width: 3.0,
+                                            color: Color(0xff79698e)),
+                                      ),
+                                      focusColor: Color(0xff79698e),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12.0)),
+                                        borderSide: BorderSide(width: 3,
+                                            color: Color(0xff79698e)),
+                                      ),
                                     ),
-                                    focusColor: Color(0xff79698e),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12.0)),
-                                      borderSide: BorderSide(width: 3,
-                                          color: Color(0xff79698e)),
-                                    ),
-                                  ),
-                                  keyboardType: TextInputType.number,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'This field is required.';
-                                    }
-                                    final RegExp regex =
-                                    RegExp(r'\d+(\.\d+)?');
-                                    if (!regex.hasMatch(value)) {
-                                      return 'Please enter a valid number';
-                                    }
-                                    return null;
-                                  },
-                                  textInputAction: TextInputAction.done,
-                                  focusNode: _numberOfBathroomFocuse,
+                                    keyboardType: TextInputType.number,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'This field is required.';
+                                      }
+                                      final RegExp regex =
+                                      RegExp(r'\d+(\.\d+)?');
+                                      if (!regex.hasMatch(value)) {
+                                        return 'Please enter a valid number';
+                                      }
+                                      return null;
+                                    },
+                                    textInputAction: TextInputAction.done,
+                                    focusNode: _numberOfBathroomFocuse,
 
+                                  ),
                                 ),
                               ),
                             ],
@@ -639,7 +649,7 @@ class _PostScreenState extends State<PostScreen> {
                                       return 'This field is required.';
                                     }
 
-                                    final RegExp regex = RegExp(r'^(?=.*\d).{80,}$');
+                                    final RegExp regex = RegExp(r'^(?=.*[\d\w]).{80,}$');
                                     if (!regex.hasMatch(value)) {
                                       return 'Please enter full Description';
                                     }
