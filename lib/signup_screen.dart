@@ -2,30 +2,29 @@
 
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
-import 'package:rent/home_screen.dart';
 import 'package:rent/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final _key = GlobalKey<FormState>();
   bool _isObscureText = false;
-  final TextEditingController _FullNameController =TextEditingController();
-  final TextEditingController _EmailController =TextEditingController();
-  final TextEditingController _UserNameController =TextEditingController();
-  final TextEditingController _PasswordController =TextEditingController();
-
-  final FocusNode _FullNameFocuse= FocusNode();
-  final FocusNode _EmailFocuse= FocusNode();
-  final FocusNode _UserNameFocuse= FocusNode();
-  final FocusNode _PasswordFocuse= FocusNode();
+  final TextEditingController _FullNameController = TextEditingController();
+  final TextEditingController _EmailController = TextEditingController();
+  final TextEditingController _UserNameController = TextEditingController();
+  final TextEditingController _PasswordController = TextEditingController();
+final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FocusNode _FullNameFocuse = FocusNode();
+  final FocusNode _EmailFocuse = FocusNode();
+  final FocusNode _UserNameFocuse = FocusNode();
+  final FocusNode _PasswordFocuse = FocusNode();
 
 
   @override
@@ -33,7 +32,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child:SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               child: Form(
@@ -69,7 +68,9 @@ class _SignInScreenState extends State<SignInScreen> {
                       ],
                     ),
 
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
 
                     //text field for full name
                     TextFormField(
@@ -113,7 +114,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       } ,
                     ),
 
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
 
 
                     //text field for email
@@ -245,7 +246,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           return("This Field is required");
                         }
                         else if(!value.isPasswordHard()){
-                          return("This is an easy password");
+                          return(
+                              "This is an easy password Must contains at least: 1 uppercase letter, 1 lowecase letter, 1 number, & 1 special character"
+                              );
                         }
                         else{
                           return null;
@@ -256,30 +259,54 @@ class _SignInScreenState extends State<SignInScreen> {
 
                     const SizedBox(height: 20,),
 
+                    ElevatedButton(
+                      onPressed: () async {
+                        // Navigator.of(context).pop(_UserNameController.text);
 
-                    ElevatedButton(onPressed: (){
-                      // Navigator.of(context).pop(_UserNameController.text);
-                         if(
-                      _key.currentState!.validate()){
-                           Navigator.pushAndRemoveUntil(
-                               context,
-                               MaterialPageRoute(
-                                   builder: (context) => const HomeScreen()),
-                      (route)=>false,);
-                         }
-                         else{}
+                        if (_key.currentState!.validate()) {
+                          {
+                            try {
+                              // UserModel userModel = await registerUser(_EmailController.text, _PasswordController.text,
+                              //     _FullNameController.text, _UserNameController.text);
+                             final userCredential = await FirebaseAuth.instance
+                                  .createUserWithEmailAndPassword(
+                                      email: _EmailController.text, password: _PasswordController.text);
+                              CollectionReference usersRef= FirebaseFirestore.instance.collection("users");
+                              String userId= userCredential.user!.uid;
+                              usersRef.add({
+                                "userid": userId,
+                                "username":_UserNameController.text.trim(),
+                                "fullname":_FullNameController.text.trim(),
+                                "email":_EmailController.text.trim(),
+                                "password":_PasswordController.text.trim()
+                              });
+                            } catch (e) {
+                              print(e);
+                            }
 
-                      //Navigator.of(context).pop(_UserNameController.text);
-                    },
-
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LogInScreen()));
+                          }
+                        }
+                        print(_FullNameController.text);
+                        print(_EmailController.text);
+                        print(_UserNameController.text);
+                        print(_PasswordController.text);
+                        //Navigator.of(context).pop(_UserNameController.text);
+                      },
                       style: ElevatedButton.styleFrom(
+                        primary: const Color(0xff79698e), // Background color
+                        onPrimary:
+                            Colors.white, // Text Color (Foreground color)
 
-                        foregroundColor: Colors.white70, 
+                        foregroundColor: Colors.white70,
                         // Text Color (Foreground color)
                         backgroundColor: Color(0xff79698e),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32.0)),
-                        minimumSize: Size(300, 40),
+                        minimumSize: const Size(300, 40),
                       ),
                       child: const Text('Sign Up',
                         style: TextStyle(fontSize: 30),),
@@ -299,14 +326,20 @@ class _SignInScreenState extends State<SignInScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("You already have an account ?"),
-                        TextButton(onPressed:(){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LogInScreen()));
-                        },
-                            child: const Text("Log In ",
-                              style: TextStyle(color: Color(0xff79698e),),)),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LogInScreen()));
+                            },
+                            child: const Text(
+                              "Log In ",
+                              style: TextStyle(
+                                color: Color(0xff79698e),
+                              ),
+                            )),
                       ],
                     )
 

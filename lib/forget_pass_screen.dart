@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rent/login_screen.dart';
 
+
+
+final _auth = FirebaseAuth.instance;
 class ForgetPassScreen extends StatefulWidget {
   const ForgetPassScreen({Key? key}) : super(key: key);
+
 
   @override
   State<ForgetPassScreen> createState() => _ForgetPassScreenState();
@@ -42,9 +48,9 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
 
 
 
-                         const Text("Enter Your Email and we will send you a password  reset link",
-                         textAlign: TextAlign.center,
-                         style: TextStyle(fontSize: 20),),
+                    const Text("Enter Your Email and we will send you a password  reset link",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20),),
 
                     const SizedBox(height: 20,),
 
@@ -87,18 +93,24 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                       },
                     ),
                     const SizedBox(height: 20,),
-                    
+
                     ElevatedButton(onPressed: (){
                       _key.currentState!.validate();
+                      _auth.sendPasswordResetEmail(email: _EmailController.text);
 
+
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const  LogInScreen()));
                     },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(32.0)),
-                          minimumSize: const Size(250, 50),
-                        ),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(32.0)),
+                        minimumSize: const Size(250, 50),
+                      ),
                       child: const Text("Reset Password",
-                      style: const TextStyle(fontSize: 20),),
+                        style: const TextStyle(fontSize: 20),),
                     )
                   ],
                 ),
@@ -110,3 +122,4 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
     );
   }
 }
+

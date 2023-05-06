@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
 import 'package:rent/forget_pass_screen.dart';
+// import 'package:rent/signin_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rent/signup_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rent/home_screen.dart';
-import 'package:rent/signin_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 
@@ -18,7 +22,10 @@ class _LogInScreenState extends State<LogInScreen> {
   bool _isObscureText = false;
   final TextEditingController _UserNameController = TextEditingController();
   final TextEditingController _PasswordController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+  late SharedPreferences sharedPreferences;
 
+  late String _errorMessage;
   final FocusNode _UserNameFocuse = FocusNode();
   final FocusNode _PasswordFocuse = FocusNode();
 
@@ -186,15 +193,46 @@ class _LogInScreenState extends State<LogInScreen> {
                       height: 10,
                     ),
                     ElevatedButton(
-                        onPressed: () {
-                           if(
-                          _key.currentState!.validate()){
-                               Navigator.pushAndRemoveUntil(
-                                 context,
-                                 MaterialPageRoute(
-                                     builder: (context) => const HomeScreen()),
-                                     (route)=>false,);
-                           }
+                        onPressed: () async {
+                          if( _key.currentState!.validate()){
+                            print(_UserNameController.text);
+                            print(_PasswordController.text);
+
+
+                            if(_UserNameController.text.isEmpty){
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:
+                              Text("user is still empty "),
+                              ));
+                            }else if (_PasswordController.text.isEmpty){
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:
+                              Text("password is still empty "),
+                              ));
+                            } else{
+                              QuerySnapshot snap =await FirebaseFirestore .instance.collection("users").
+                              where("username",isEqualTo:_UserNameController.text.trim() ).get();
+
+                              try {
+                                if(_PasswordController.text == snap.docs[0]['password']){
+                                  sharedPreferences =await SharedPreferences.getInstance();
+                                  sharedPreferences.setString('username', _UserNameController.text).
+                                  then((_) => {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => const  HomeScreen()))
+                                  });
+
+                                }
+                                else{
+                                  ScaffoldMessenger.of(context).showSnackBar( SnackBar(content:
+                                  Text("password is not correct "),
+                                  ));
+                                }
+                              }
+                              catch(e){
+
+    }
+    },
 
                            else{}
                           // print(_UserNameController.text);
@@ -231,7 +269,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             onPressed: () async {Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SignInScreen()));
+                                    builder: (context) => const SignUpScreen()));
                             setState(() {
                               _UserNameController.text = result!;
                             });
