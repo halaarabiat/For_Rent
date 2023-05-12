@@ -2,26 +2,30 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:regexpattern/regexpattern.dart';
+import 'package:rent/config/current_session.dart';
 import 'package:rent/forget_pass_screen.dart';
+import 'package:rent/models/register_model.dart';
+
 // import 'package:rent/models.dart';
 import 'package:rent/post_screen.dart';
+
 // import 'package:rent/signin_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rent/signup_screen.dart';
+import 'package:rent/utils/common_views.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rent/home_screen.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
 
-
   @override
   State<LogInScreen> createState() => _LogInScreenState();
 }
 
 class _LogInScreenState extends State<LogInScreen> {
-  String? passwordError='';
-  String? usernameErorr='';
+  String? passwordError = '';
+  String? usernameErorr = '';
   final _key = GlobalKey<FormState>();
   bool _isObscureText = false;
   final TextEditingController _UserNameController = TextEditingController();
@@ -37,7 +41,6 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -81,7 +84,6 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(
-
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: const BorderSide(
@@ -113,15 +115,13 @@ class _LogInScreenState extends State<LogInScreen> {
                       onFieldSubmitted: (String value) {
                         FocusScope.of(context).requestFocus(_PasswordFocuse);
                         _PasswordFocuse.requestFocus();
-
                       },
 
-
                       validator: (value) {
-                        if (value!.isEmpty) {
+                        if (value!.trim().isEmpty) {
                           return ("This Field is required");
-                        // } else if (value.isUsername()) {
-                        //   return ("This is not a valid username");
+                          // } else if (value.isUsername()) {
+                          //   return ("This is not a valid username");
                         }
                         // else if(value == usernameErorr) {
                         //   return usernameErorr;}
@@ -136,7 +136,6 @@ class _LogInScreenState extends State<LogInScreen> {
                     TextFormField(
                       obscureText: !_isObscureText,
                       decoration: InputDecoration(
-
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: const BorderSide(
@@ -146,7 +145,6 @@ class _LogInScreenState extends State<LogInScreen> {
                           borderRadius: BorderRadius.circular(12),
                           borderSide: const BorderSide(
                               width: 3, color: Color(0xff79698e)),
-
                         ),
                         enabled: true,
                         fillColor: Colors.black12,
@@ -162,13 +160,12 @@ class _LogInScreenState extends State<LogInScreen> {
                             }),
                         prefixIcon: const Icon(
                           Icons.lock_outline,
-                          color:Color(0xff79698e),
+                          color: Color(0xff79698e),
                         ),
                         labelText: "Password",
                         labelStyle: const TextStyle(color: Colors.black38),
                         // errorText: loginError,
                         // errorText: passwordError!.isNotEmpty ? passwordError : null,
-
                       ),
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.visiblePassword,
@@ -181,15 +178,15 @@ class _LogInScreenState extends State<LogInScreen> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return ("This Field is required");
-                        // } else if (!value.isPasswordHard()) {
-                        //   return ("This is an easy password");
+                          // } else if (!value.isPasswordHard()) {
+                          //   return ("This is an easy password");
                         }
                         // else if(value==loginError){
                         //   return loginError;
                         // }
 
                         else {
-                          return  null;
+                          return null;
                         }
                       },
                     ),
@@ -199,8 +196,8 @@ class _LogInScreenState extends State<LogInScreen> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const ForgetPassScreen()));
-
+                                    builder: (context) =>
+                                        const ForgetPassScreen()));
                           },
                           child: const Text(
                             "Forget your password ? ",
@@ -215,45 +212,54 @@ class _LogInScreenState extends State<LogInScreen> {
                     ),
                     ElevatedButton(
                         onPressed: () async {
-                          if( _key.currentState!.validate()) {
-
+                          if (_key.currentState!.validate()) {
                             try {
-                              final QuerySnapshot usernameSnapshot = await FirebaseFirestore.instance
-                                  .collection("users")
-                                  .where("username", isEqualTo: _UserNameController.text.trim())
-                                  .get();
+                              final QuerySnapshot usernameSnapshot =
+                                  await FirebaseFirestore.instance
+                                      .collection("users")
+                                      .where("username",
+                                          isEqualTo:
+                                              _UserNameController.text.trim())
+                                      .get();
 
                               if (usernameSnapshot.docs.isNotEmpty) {
                                 final userDoc = usernameSnapshot.docs.first;
                                 final userData = userDoc.data();
-
-                                if ((userData as Map<String, dynamic>)['password'] == _PasswordController.text.trim()) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                                  );
-                                } else {
-                                  print('Incorrect password');
-                                  // setState(() {
-                                  //   passwordError = 'Incorrect password';
-                                  // });
+                                if (userData != null) {
+                                  UserModel model = UserModel.fromMap(
+                                      userData as Map<String, dynamic>);
+                                  if (model != null && model.email != null) {
+                                    final response = await FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                            email: model.email!,
+                                            password: _PasswordController.text);
+                                    if (response != null &&
+                                        response.user != null) {
+                                      CurrentSession().user=model;
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomeScreen()),
+                                        (route) => false,
+                                      );
+                                    }
                                   }
-                              }
-                              else {
-                                print('Username not found');
-                                // setState(() {
-                                //   usernameErorr = 'Username not found';
-                                // });
+                                }
+                              } else {
+                                CommonViews().showToast(
+                                    context, "User Not Registered",
+                                    type: TBAlertType.error);
                               }
                             } catch (e) {
                               print(e);
+                              //todo handle sign in errors  https://stackoverflow.com/questions/67617502/what-are-the-error-codes-for-flutter-firebase-auth-exception
                             }
-
                           }
-
                         },
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white, backgroundColor: const Color(0xff79698e),
+                          foregroundColor: Colors.white,
+                          backgroundColor: const Color(0xff79698e),
                           // Text Color (Foreground color)
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32.0)),
@@ -280,13 +286,15 @@ class _LogInScreenState extends State<LogInScreen> {
                       children: [
                         const Text("You don't have account ?"),
                         TextButton(
-                            onPressed: () async {Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SignUpScreen()));
-                            setState(() {
-                              _UserNameController.text = result!;
-                            });
+                            onPressed: () async {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SignUpScreen()));
+                              setState(() {
+                                _UserNameController.text = result!;
+                              });
                             },
                             child: const Text(
                               "Sign Up ",
@@ -304,7 +312,8 @@ class _LogInScreenState extends State<LogInScreen> {
         ),
       ),
     );
-  }}
+  }
+}
 // if(_UserNameController.text.isEmpty){
 //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:
 //     Text("user is still empty "),

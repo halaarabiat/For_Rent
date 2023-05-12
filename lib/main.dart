@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:rent/post_details_screen.dart';
 // import 'package:rent/signin_screen.dart';
 import 'package:rent/welcome_screen.dart';
@@ -23,10 +24,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return OKToast(
+      child: const MaterialApp(
 
-      home:MyHomePage(),
-      debugShowCheckedModeBanner: false,
+        home:MyHomePage(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
