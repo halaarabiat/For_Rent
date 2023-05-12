@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'NavBar.dart';
-import 'post_screen.dart';
+import 'form_post_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  Navigator.push(
                      context,
                      MaterialPageRoute(
-                         builder: (context) => const PostScreen()));
+                         builder: (context) => const FormPostScreen()));
                }, icon: const Icon(Icons.add,
                color: Colors.black,),
                tooltip: 'Add New Post',)
@@ -54,82 +54,83 @@ class _HomeScreenState extends State<HomeScreen> {
 
       body: Form(
         key: _key,
-        child: Stack(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height,
-               width: MediaQuery.of(context).size.width,
-               child: Image.asset("assets/home_screen_image.png",
-               fit: BoxFit.cover,),
+        child: Center(
+          child: Stack(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset(
+                  "assets/home_screen_image.png",
+                  fit: BoxFit.cover,
                 ),
-
-            Positioned(
-              top:100,
-              right:80 ,
-                  child: Container(
+              ),
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.3,
+                left: MediaQuery.of(context).size.width * 0.10,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.11,
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  color: Colors.grey.withOpacity(0.7),
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xff79698e),
+                          width: 3,
+                        ),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0xff79698e),
+                          width: 3,
+                        ),
+                      ),
+                      enabled: true,
+                      fillColor: Colors.white70,
+                      filled: true,
+                      hintText: "search by city or neighborhood",
+                      contentPadding: const EdgeInsets.all(5.0),
+                      hintStyle: const TextStyle(fontSize: 15),
+                      suffixIcon: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.search,
+                          color: Color(0xff79698e),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.15,
+                right: MediaQuery.of(context).size.width * 0.17,
+                child: Container(
                   height: 98,
                   width: 250,
-                  color  : Colors.grey.withOpacity(0.7),
+                  color: Colors.grey.withOpacity(0.7),
                   child: Column(
                     children: const [
-                      SizedBox(height: 10,),
-                      Text("Find your perfect home !",
-                      style: TextStyle(fontSize:18,
-                      fontWeight: FontWeight.bold),),
-
-                      SizedBox(height: 10,),
-
-                      Text("Houses , Apartment and Student Studio that fit your life style.",
-                      style: TextStyle(fontSize: 15),
-                      textAlign: TextAlign.center,),
+                      SizedBox(height: 10),
+                      Text(
+                        "Find your perfect home!",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        "Houses, Apartments, and Student Studios that fit your lifestyle.",
+                        style: TextStyle(fontSize: 15),
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                   ),
                 ),
-                ),
-
-
-            Positioned(
-              top: MediaQuery.of(context).size.height*0.3,
-              left: MediaQuery.of(context).size.width*0.10,
-            child: Container(
-              height: MediaQuery.of(context).size.height*0.11,
-              width: MediaQuery.of(context).size.width*0.8,
-              color: Colors.grey.withOpacity(0.7),
-
-              padding: const EdgeInsets.all(16.0),
-              child: TextFormField(
-                decoration: InputDecoration(
-                 border: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color(0xff79698e),width: 3,
-                  ),),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0xff79698e),width: 3,
-                    )
-                  ),
-                  enabled: true,
-                  fillColor: Colors.white70,
-                  filled: true,
-                  hintText: "search by city or neighborhood",
-                  contentPadding: const EdgeInsets.all(5.0),
-                  hintStyle: const TextStyle(fontSize: 15,),
-
-                  suffixIcon: IconButton(
-                    onPressed: (){},
-                    icon: const Icon(Icons.search,
-                    color: Color(0xff79698e),),
-                  )
-                ),
               ),
-            ),
-            ),
-
-
-
-
-               ],
-             ),
+            ],
+          ),
+        ),
       ),
       ),
         );

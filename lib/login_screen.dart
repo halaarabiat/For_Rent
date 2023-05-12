@@ -200,17 +200,17 @@ class _LogInScreenState extends State<LogInScreen> {
                           // print(_UserNameController.text);
                           // print(_PasswordController.text);
                         },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Color(0xff79698e), //primary: Color(0xff79698e),
-                          // Text Color (Foreground color)
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(32.0)),
-                          minimumSize: Size(300, 40),
-                        ),
-                        child: const Text(
-                          'Log In ',
-                          style: TextStyle(fontSize: 30),
-                        )),
+                      style: ElevatedButton.styleFrom(
+
+                        foregroundColor: Colors.white,
+                        // Text Color (Foreground color)
+                        backgroundColor: Color(0xff79698e),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(32.0)),
+                        minimumSize: Size(300, 40),
+                      ),
+                      child: const Text('Log in',
+                        style: TextStyle(fontSize: 30),),),
                     const SizedBox(
                       height: 10,
                     ),
@@ -231,7 +231,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             onPressed: () async {Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SignInScreen()));
+                                    builder: (context) => const SignUpScreen()));
                             setState(() {
                               _UserNameController.text = result!;
                             });

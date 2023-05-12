@@ -7,14 +7,14 @@ import 'package:rent/login_screen.dart';
 
 
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final _key = GlobalKey<FormState>();
   bool _isObscureText = false;
   final TextEditingController _FullNameController =TextEditingController();
@@ -274,7 +274,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                       style: ElevatedButton.styleFrom(
 
-                        foregroundColor: Colors.white70, 
+                        foregroundColor: Colors.white,
                         // Text Color (Foreground color)
                         backgroundColor: Color(0xff79698e),
                         shape: RoundedRectangleBorder(
