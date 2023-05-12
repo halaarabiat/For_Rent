@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:regexpattern/regexpattern.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rent/login_screen.dart';
@@ -17,7 +18,36 @@ class ForgetPassScreen extends StatefulWidget {
 class _ForgetPassScreenState extends State<ForgetPassScreen> {
   final _key = GlobalKey<FormState>();
   final TextEditingController _EmailController =TextEditingController();
+@override
+  void dispose() {
+  _EmailController.dispose();
+    super.dispose();
+  }
+  Future<void> PasswordReset(BuildContext context) async{
+    try{
+      await FirebaseAuth.instance.
+      sendPasswordResetEmail(email: _EmailController.text.trim());
+      showDialog(context: context,
+          builder:(context){
+            return AlertDialog(
+              content: Text('Password reset link sent ! \n CHECK YPUR EMAIL'),
+            );
+          }
+      );
 
+    }
+    on FirebaseAuthException catch(e){
+      print(e);
+      showDialog(context: context,
+          builder:(context)
+          {
+            return AlertDialog(
+              content: Text(e.message.toString()),
+            );
+          }
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -79,7 +109,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                       controller: _EmailController,
 
 
-                      //validate input
+                      // validate input
                       validator: (value){
                         if(value!.isEmpty){
                           return("This field is required");
@@ -89,29 +119,23 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                         }
                         else{
                           return null;
-                        }
+                         }
                       },
                     ),
                     const SizedBox(height: 20,),
 
-                    ElevatedButton(onPressed: (){
-                      _key.currentState!.validate();
-                      _auth.sendPasswordResetEmail(email: _EmailController.text);
-
-
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const  LogInScreen()));
-                    },
-                      style: ElevatedButton.styleFrom(
+                    ElevatedButton(onPressed: () {
+                      PasswordReset(context);
+                      },
+                      style:
+                      ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32.0)),
                         minimumSize: const Size(250, 50),
                       ),
-                      child: const Text("Reset Password",
-                        style: const TextStyle(fontSize: 20),),
-                    )
+                      child:Text("Reset Password",
+                        style: const TextStyle(fontSize: 20),)),
+
                   ],
                 ),
               ),
@@ -120,6 +144,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
         ),
       ),
     );
+
   }
 }
 

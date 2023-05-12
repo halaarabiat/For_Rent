@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:rent/post_details_screen.dart';
 // import 'package:rent/signin_screen.dart';
 import 'package:rent/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';

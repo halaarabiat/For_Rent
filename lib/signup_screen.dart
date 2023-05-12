@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
+import 'package:rent/home_screen.dart';
 import 'package:rent/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -246,9 +247,11 @@ final FirebaseFirestore _db = FirebaseFirestore.instance;
                           return("This Field is required");
                         }
                         else if(!value.isPasswordHard()){
-                          return(
-                              "This is an easy password Must contains at least: 1 uppercase letter, 1 lowecase letter, 1 number, & 1 special character"
-                              );
+                        return "This is an easy password Must contains at least:  "
+                            "\n 1 uppercase letter, 1 lowecase letter, 1 number, "
+                            "\n & 1 special character";
+                       //        textAlign: TextAlign.center,
+                       //    ),);
                         }
                         else{
                           return null;
@@ -261,40 +264,35 @@ final FirebaseFirestore _db = FirebaseFirestore.instance;
 
                     ElevatedButton(
                       onPressed: () async {
-                        // Navigator.of(context).pop(_UserNameController.text);
 
                         if (_key.currentState!.validate()) {
-                          {
-                            try {
-                              // UserModel userModel = await registerUser(_EmailController.text, _PasswordController.text,
-                              //     _FullNameController.text, _UserNameController.text);
-                             final userCredential = await FirebaseAuth.instance
-                                  .createUserWithEmailAndPassword(
-                                      email: _EmailController.text, password: _PasswordController.text);
-                              CollectionReference usersRef= FirebaseFirestore.instance.collection("users");
-                              String userId= userCredential.user!.uid;
-                              usersRef.add({
-                                "userid": userId,
-                                "username":_UserNameController.text.trim(),
-                                "fullname":_FullNameController.text.trim(),
-                                "email":_EmailController.text.trim(),
-                                "password":_PasswordController.text.trim()
-                              });
-                            } catch (e) {
-                              print(e);
-                            }
+                          try {
+                            final userCredential = await FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                                    email: _EmailController.text,
+                                    password: _PasswordController.text);
+                            CollectionReference usersRef =
+                                FirebaseFirestore.instance.collection("users");
+                            String userId = userCredential.user!.uid;
+                            usersRef.add({
+                              "userid": userId,
+                              "username": _UserNameController.text.trim(),
+                              "fullname": _FullNameController.text.trim(),
+                              "email": _EmailController.text.trim(),
+                              "password": _PasswordController.text.trim(),
 
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LogInScreen()));
+                            });
+                          } catch (e) {
+                            print(e);
                           }
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const LogInScreen()));
                         }
-                        print(_FullNameController.text);
-                        print(_EmailController.text);
-                        print(_UserNameController.text);
-                        print(_PasswordController.text);
-                        //Navigator.of(context).pop(_UserNameController.text);
+
+
                       },
                       style: ElevatedButton.styleFrom(
                         primary: const Color(0xff79698e), // Background color

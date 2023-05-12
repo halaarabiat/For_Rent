@@ -4,6 +4,9 @@ import 'package:flutter/services.dart';
  import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rent/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -13,7 +16,10 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-   XFile? image;
+
+
+
+  XFile? image;
 
    final ImagePicker imagePicker =ImagePicker();
 
@@ -24,6 +30,7 @@ class _NavBarState extends State<NavBar> {
        image;
      });
    }
+
 
 
 
@@ -71,7 +78,7 @@ class _NavBarState extends State<NavBar> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    'Tala Arabiat',
+                      'Full Name ',
                     style: TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
                 ),
@@ -79,29 +86,13 @@ class _NavBarState extends State<NavBar> {
                 Align(
                   alignment: Alignment.centerRight + Alignment(0, .3),
                   child: Text(
-                    '@tala_arabiat',
+                    'User Name',
                     style: TextStyle(
                       color: Colors.white70,
                     ),
                   ),
                 ),
-                     // Align(
-                     // alignment: Alignment.centerRight + Alignment(0, .9),
-                     //   child: Container(
-                     //    decoration: BoxDecoration(
-                     //    border: Border.all(color: Colors.white),
-                     //     borderRadius: BorderRadius.circular(15.0),
-                     //
-                     //      ),
-                     //     child: Padding(
-                     //       padding: const EdgeInsets.all(5.0),
-                     //       child: Text('Edit'),),
-                     //     ),
-                     //
-                     //
-                     //
-                     //
-                     //   ),
+                    
 
               ],
             ),
