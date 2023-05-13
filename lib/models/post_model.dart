@@ -1,9 +1,9 @@
 
 import 'dart:convert';
 
-PostFormModel postFormModelFromJson(String str) => PostFormModel.fromJson(json.decode(str));
+PostFormModel postFormModelFromJson(String str) => PostFormModel.fromMap(json.decode(str));
 
-String postFormModelToJson(PostFormModel data) => json.encode(data.toJson());
+String postFormModelToJson(PostFormModel data) => json.encode(data.toMap());
 
 class PostFormModel {
   String? propertyType;
@@ -42,7 +42,7 @@ class PostFormModel {
     this.price,
   });
 
-  factory PostFormModel.fromJson(Map<String, dynamic> json) => PostFormModel(
+  factory PostFormModel.fromMap(Map<String, dynamic> json) => PostFormModel(
     propertyType: json["propertyType"],
     flat: json["flat"],
     rooms: json["rooms"],
@@ -61,7 +61,7 @@ class PostFormModel {
     price: json["price"],
   );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
     "propertyType": propertyType,
     "flat": flat,
     "rooms": rooms,

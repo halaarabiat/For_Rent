@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:rent/models/post_model.dart';
 import 'package:rent/post/photos_upload.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -802,78 +804,73 @@ class _FormPostScreenState extends State<FormPostScreen> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
+                            onPressed: () async {
 
-                                DatabaseReference databaseReference =
-                                    FirebaseDatabase.instance
-                                        .ref()
-                                        .child('post');
+                                if (_formKey.currentState!.validate()) {
+                                  try{
+                                    CollectionReference postRef =
+                                    FirebaseFirestore.instance.collection("post");
 
-                                Map<String, dynamic> formData = {
-                                  'propertyType': _radioController1.text,
-                                  'flat': _flatController.text,
-                                  'rooms': _roomsController.text,
-                                  'bathrooms': _bathroomsController.text,
-                                  'furnishingStatus': _radioController2.text,
-                                  "Garden": _checkbox1Controller.text,
-                                 "Parking": _checkbox2Controller.text,
-                                 "Balcony": _checkbox3Controller.text,
-                                 "Elevator": _checkbox4Controller.text,
-                                  "Facilities": _checkbox5Controller.text,
-                                   'country':_countryController.text,
-                                   'governorate':_governorateController.text,
-                                  'neighborhood': _neighborhoodController.text,
-                                  'description': _descriptionController.text,
-                                  'phoneNumber': _phoneNumberController.text,
-                                  'price': _priceController.text
-                                };
+                                    PostFormModel   post=PostFormModel(
+                                        propertyType: _radioController1.text,
+                                        flat: _flatController.text,
+                                        rooms: _roomsController.text,
+                                        bathrooms: _bathroomsController.text,
+                                        furnishingStatus: _radioController2.text,
+                                        garden: _checkbox1Controller.text,
+                                        parking: _checkbox2Controller.text,
+                                        balcony: _checkbox3Controller.text,
+                                        elevator: _checkbox4Controller.text,
+                                        facilities: _checkbox5Controller.text,
+                                        country:_countryController.text,
+                                        governorate:_governorateController.text,
+                                        neighborhood: _neighborhoodController.text,
+                                        description: _descriptionController.text,
+                                        phoneNumber: _phoneNumberController.text,
+                                        price: _priceController.text
 
-                                databaseReference
-                                    .push()
-                                    .set(formData)
-                                    .then((_) {
-                                  print('Data sent successfully!');
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ImageUploadForm()),
-                                  );
-                                }).catchError((error) {
-                                  print('Error: $error');
-                                });
-                              } else {}
-                            },
-                            //
-                            //   if (_formKey.currentState!.validate()) {
-                            //     Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) =>
-                            //             const ImageUploadForm()));
-                            //   }
-                            //
-                            //   else {}
-                            //
-                            //
-                            // },
+                                    );
+                                    await postRef.add(post.toMap());
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          const ImageUploadForm()),
+                                    );
+
+
+                                  }
+
+
+
+
+                                  catch(e){
+                                    print(e);
+                                  }
+                                }
+                                },
+
+
+
+
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
                               backgroundColor: const Color(0xff79698e),
                               // Text Color (Foreground color)
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(32.0)),
-                              minimumSize: const Size(150, 40),
-                            ),
-                            child: const Text('Next'),
-                          ),
-                        )
+                              minimumSize: const Size(150, 40),),
+
+                            child: const Text('Next')))
+
+
                       ],
                     ),
                   ),
+                )
+                  ),
                 ),
               ),
-            )));
+            );
   }
 }
