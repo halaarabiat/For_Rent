@@ -1,28 +1,35 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:rent/form_post_screen.dart';
-import 'package:rent/photos_upload.dart';
-import 'package:rent/post_screen.dart';
-import 'package:rent/signup_screen.dart';
-import 'package:rent/tast.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:rent/post_details_screen.dart';
+// import 'package:rent/signin_screen.dart';
 import 'package:rent/welcome_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp( options: DefaultFirebaseOptions.currentPlatform,);
 
-import 'forget_pass_screen.dart';
-import 'home_screen.dart';
-import 'login_screen.dart';
+  runApp(const MyApp());}
 
-void main() { runApp(const MyApp());}
+// import 'forget_pass_screen.dart';
+// import 'home_screen.dart';
+// import 'login_screen.dart';
+
+// void main() { runApp(const MyApp());}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return OKToast(
+      child: const MaterialApp(
 
-      home:MyHomePage(),
-      debugShowCheckedModeBanner: false,
+        home:MyHomePage(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }
