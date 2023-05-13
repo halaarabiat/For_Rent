@@ -17,6 +17,7 @@ class _PostScreenState extends State<PostScreen> {
   String? _radioValue2;
   final _formKey = GlobalKey<FormState>();
 
+
   bool _checkboxValue1 = false;
   bool _checkboxValue2 = false;
   bool _checkboxValue3 = false;
@@ -31,6 +32,12 @@ class _PostScreenState extends State<PostScreen> {
   FocusNode _descriptionFocuse = FocusNode();
   FocusNode _phoneNumberFocuse = FocusNode();
   FocusNode _priceFocuse = FocusNode();
+
+  // final TextEditingController _radioButton1Controller = TextEditingController();
+  final TextEditingController _flatController = TextEditingController();
+  final TextEditingController _numberOfRoomController = TextEditingController();
+  final TextEditingController _numberOfBathRoomController = TextEditingController();
+  // final TextEditingController _radioButton2Controller = TextEditingController();
 
   @override
   void initState() {
@@ -91,7 +98,7 @@ class _PostScreenState extends State<PostScreen> {
                             ),
                           ),
                         ),
-                    //Radio buttons for property type:
+                        //Radio buttons for property type:
                         FormBuilderRadioGroup(
                           autovalidateMode: AutovalidateMode
                               .onUserInteraction,
@@ -108,6 +115,7 @@ class _PostScreenState extends State<PostScreen> {
                               return null;
                             }
                           },
+
                           orientation: OptionsOrientation.vertical,
                           activeColor: const Color(0xff79698e),
                           name: "Radio Button ",
@@ -188,6 +196,7 @@ class _PostScreenState extends State<PostScreen> {
                                               .requestFocus(_numberOfRoomFocuse);
                                           _numberOfRoomFocuse.requestFocus();
                                         },
+                                        controller: _flatController,
                                       ),
                                       const Positioned(
                                         right: 10,
@@ -255,6 +264,7 @@ class _PostScreenState extends State<PostScreen> {
                                       }
                                       return null;
                                     },
+                                    controller: _numberOfRoomController,
                                     textInputAction: TextInputAction.next,
                                     focusNode: _numberOfRoomFocuse,
                                     onFieldSubmitted:(String value){
@@ -311,6 +321,7 @@ class _PostScreenState extends State<PostScreen> {
                                       }
                                       return null;
                                     },
+                                    controller: _numberOfBathRoomController,
                                     textInputAction: TextInputAction.done,
                                     focusNode: _numberOfBathroomFocuse,
 

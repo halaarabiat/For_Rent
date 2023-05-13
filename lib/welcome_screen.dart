@@ -133,9 +133,7 @@ class _BottomSheetExampleState extends State<BottomSheetExample> {
                       )
                     ],
                   ),
-                  // const SizedBox(
-                  //   height: 10,
-                  // ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
