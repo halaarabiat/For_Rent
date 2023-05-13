@@ -83,7 +83,7 @@ class _PostItemState extends State<PostItem> {
                                   ? Icons.favorite
                                   : Icons.favorite_border,
                               color:
-                                  _isFavorite ? const Color(0xff79698e) : null,
+                              _isFavorite ? const Color(0xff79698e) : null,
                             ),
                           ),
                         ),
@@ -118,7 +118,7 @@ class _PostItemState extends State<PostItem> {
                                 ),
                               ]),
                               Row(
-                                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: const [
                                     Icon(
                                       Icons.event_seat_outlined,

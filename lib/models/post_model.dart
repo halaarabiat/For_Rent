@@ -7,21 +7,21 @@ String postFormModelToJson(PostFormModel data) => json.encode(data.toMap());
 
 class PostFormModel {
   String? propertyType;
-  String? flat;
-  String? rooms;
-  String? bathrooms;
+  int? flat;
+  int? rooms;
+  int? bathrooms;
   String? furnishingStatus;
-  String? garden;
-  String? parking;
-  String? balcony;
-  String? elevator;
-  String? facilities;
+  bool? garden;
+  bool? parking;
+  bool? balcony;
+  bool? elevator;
+  bool? facilities;
   String? country;
   String? governorate;
   String? neighborhood;
   String? description;
   String? phoneNumber;
-  String? price;
+  int? price;
 
   PostFormModel({
     this.propertyType,

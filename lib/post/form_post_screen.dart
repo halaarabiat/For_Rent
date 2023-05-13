@@ -59,6 +59,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
 
   @override
   void initState() {
+    _governorateController.text=dropdownValue1;
+    _countryController.text=dropdownValue;
     super.initState();
     _radiovalue = null;
     _radioValue2 = null;
@@ -402,7 +404,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             onChanged: (bool? value) {
                               setState(() {
                                 _checkboxValue1 = value!;
-                                 _checkbox1Controller.text=value.toString();
+                                // _checkbox1Controller.text=value.toString();
                               });
                             }),
                         CheckboxListTile(
@@ -813,21 +815,21 @@ class _FormPostScreenState extends State<FormPostScreen> {
 
                                     PostFormModel   post=PostFormModel(
                                         propertyType: _radioController1.text,
-                                        flat: _flatController.text,
-                                        rooms: _roomsController.text,
-                                        bathrooms: _bathroomsController.text,
+                                        flat: int.tryParse(_flatController.text),
+                                        rooms: int.tryParse(_roomsController.text),
+                                        bathrooms: int.tryParse(_bathroomsController.text),
                                         furnishingStatus: _radioController2.text,
-                                        garden: _checkbox1Controller.text,
-                                        parking: _checkbox2Controller.text,
-                                        balcony: _checkbox3Controller.text,
-                                        elevator: _checkbox4Controller.text,
-                                        facilities: _checkbox5Controller.text,
-                                        country:_countryController.text,
-                                        governorate:_governorateController.text,
+                                        garden: _checkboxValue1,
+                                        parking: _checkboxValue2,
+                                        balcony: _checkboxValue3,
+                                        elevator: _checkboxValue4,
+                                        facilities: _checkboxValue5,
+                                        country:dropdownValue,
+                                        governorate:dropdownValue1,
                                         neighborhood: _neighborhoodController.text,
                                         description: _descriptionController.text,
                                         phoneNumber: _phoneNumberController.text,
-                                        price: _priceController.text
+                                        price: int.tryParse(_priceController.text)
 
                                     );
                                     await postRef.add(post.toMap());
