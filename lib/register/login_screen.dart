@@ -1,16 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:regexpattern/regexpattern.dart';
 import 'package:rent/config/current_session.dart';
-import 'package:rent/register/forget_pass_screen.dart';
 import 'package:rent/models/register_model.dart';
 
-// import 'package:rent/models.dart';
-import 'package:rent/post/form_post_screen.dart';
 
-// import 'package:rent/signin_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rent/register/forget_pass_screen.dart';
 import 'package:rent/register/signup_screen.dart';
 import 'package:rent/utils/common_views.dart';
 import 'package:shared_preferences/shared_preferences.dart';

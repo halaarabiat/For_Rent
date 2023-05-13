@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rent/post/photos_upload.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-
+import 'package:firebase_database/firebase_database.dart';
 
 //void main() => runApp(const PostScreen());
 
@@ -25,9 +25,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
   String dropdownValue = 'Jordan';
   String dropdownValue1 = 'Amman';
 
-
   //focus node
-  final FocusNode _flatFocuse =FocusNode();
+  final FocusNode _flatFocuse = FocusNode();
   final FocusNode _numberOfRoomFocuse = FocusNode();
   final FocusNode _numberOfBathroomFocuse = FocusNode();
   final FocusNode _descriptionFocuse = FocusNode();
@@ -41,16 +40,20 @@ class _FormPostScreenState extends State<FormPostScreen> {
   final TextEditingController _roomsController = TextEditingController();
   final TextEditingController _bathroomsController = TextEditingController();
   final TextEditingController _radioController2 = TextEditingController();
+
+   final TextEditingController _countryController = TextEditingController();
+   final TextEditingController _governorateController = TextEditingController();
   final TextEditingController _neighborhoodController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
 
-
-
-
-
-
+  //checkbox controller
+   final _checkbox1Controller = TextEditingController();
+   final _checkbox2Controller = TextEditingController();
+  final _checkbox3Controller = TextEditingController();
+ final _checkbox4Controller = TextEditingController();
+   final _checkbox5Controller = TextEditingController();
 
   @override
   void initState() {
@@ -69,16 +72,12 @@ class _FormPostScreenState extends State<FormPostScreen> {
               title: Center(
                 child: Image.asset(
                   'assets/logo.png',
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.07,
+                  height: MediaQuery.of(context).size.height * 0.07,
                   // width: 30,
                 ),
               ),
             ),
-            body:
-            SafeArea(
+            body: SafeArea(
               child: SingleChildScrollView(
                 child: Container(
                   padding: const EdgeInsets.all(16.0),
@@ -86,7 +85,6 @@ class _FormPostScreenState extends State<FormPostScreen> {
                     key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-
                       children: <Widget>[
                         const SizedBox(
                           child: Text(
@@ -97,8 +95,6 @@ class _FormPostScreenState extends State<FormPostScreen> {
                         ),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
-
-
                         ),
 
                         const Align(
@@ -113,8 +109,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                         ),
                         //Radio buttons for property type:
                         FormBuilderRadioGroup(
-                          autovalidateMode: AutovalidateMode
-                              .onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onChanged: (value) {
                             setState(() {
                               _radiovalue = value; // تحديث القيمة المحددة
@@ -124,28 +119,21 @@ class _FormPostScreenState extends State<FormPostScreen> {
                           validator: (value) {
                             if (value == null) {
                               return 'pleas fill the required value';
-                            }
-                            else {
+                            } else {
                               return null;
                             }
                           },
                           orientation: OptionsOrientation.vertical,
                           activeColor: const Color(0xff79698e),
                           name: "Radio Button ",
-                          options: [
-                            'Home',
-                            'Apartment',
-                            'student Studio'
-                          ].map((lang) =>
-                              FormBuilderFieldOption(value: lang))
+                          options: ['Home', 'Apartment', 'student Studio']
+                              .map(
+                                  (lang) => FormBuilderFieldOption(value: lang))
                               .toList(),
-
-
                         ),
 
                         const Padding(
                           padding: EdgeInsets.all(8.0),
-
                         ),
 
                         const Align(
@@ -159,8 +147,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              top: 8.0, bottom: 8.0),
+                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                           child: Row(
                             children: [
                               const Text(
@@ -178,18 +165,21 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                         decoration: const InputDecoration(
                                           labelText: "Enter Value",
                                           labelStyle: TextStyle(
-                                              fontSize: 10, color: Colors.black38),
+                                              fontSize: 10,
+                                              color: Colors.black38),
                                           border: OutlineInputBorder(
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(12.0)),
-                                            borderSide:
-                                            BorderSide(width: 2, color: Color(0xff79698e)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0)),
+                                            borderSide: BorderSide(
+                                                width: 2,
+                                                color: Color(0xff79698e)),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(12.0)),
-                                            borderSide:
-                                            BorderSide(width: 3, color: Color(0xff79698e)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(12.0)),
+                                            borderSide: BorderSide(
+                                                width: 3,
+                                                color: Color(0xff79698e)),
                                           ),
                                           focusColor: Color(0xff79698e),
                                         ),
@@ -198,7 +188,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                           if (value == null || value.isEmpty) {
                                             return 'This field is required.';
                                           }
-                                          final RegExp regex = RegExp(r'\d+(\.\d+)?');
+                                          final RegExp regex =
+                                              RegExp(r'\d+(\.\d+)?');
                                           if (!regex.hasMatch(value)) {
                                             return 'Please enter a valid number';
                                           }
@@ -207,8 +198,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                         textInputAction: TextInputAction.next,
                                         focusNode: _flatFocuse,
                                         onFieldSubmitted: (String value) {
-                                          FocusScope.of(context)
-                                              .requestFocus(_numberOfRoomFocuse);
+                                          FocusScope.of(context).requestFocus(
+                                              _numberOfRoomFocuse);
                                           _numberOfRoomFocuse.requestFocus();
                                         },
                                       ),
@@ -230,18 +221,17 @@ class _FormPostScreenState extends State<FormPostScreen> {
                               ),
                             ],
                           ),
-
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              top: 8.0, bottom: 8.0),
+                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                           child: Row(
                             children: [
                               const Padding(
                                 padding: EdgeInsets.only(right: 26.0),
                                 child: Text("Rooms: ",
                                     style: TextStyle(
-                                      fontWeight: FontWeight.w700,)),
+                                      fontWeight: FontWeight.w700,
+                                    )),
                               ),
                               SizedBox(
                                 width: 280,
@@ -249,8 +239,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                     controller: _roomsController,
                                     decoration: const InputDecoration(
                                       labelText: "Number of rooms",
-                                      labelStyle: TextStyle(fontSize: 10,
-                                          color: Colors.black38),
+                                      labelStyle: TextStyle(
+                                          fontSize: 10, color: Colors.black38),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(12.0)),
@@ -261,8 +251,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(12.0)),
-                                        borderSide: BorderSide(width: 3,
-                                            color: Color(0xff79698e)),
+                                        borderSide: BorderSide(
+                                            width: 3, color: Color(0xff79698e)),
                                       ),
                                       enabled: true,
                                       //focusColor: Color(0xff79698e),
@@ -273,7 +263,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                         return 'This field is required.';
                                       }
                                       final RegExp regex =
-                                      RegExp(r'\d+(\.\d+)?');
+                                          RegExp(r'\d+(\.\d+)?');
                                       if (!regex.hasMatch(value)) {
                                         return 'Please enter a valid number';
                                       }
@@ -281,24 +271,22 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                     },
                                     textInputAction: TextInputAction.next,
                                     focusNode: _numberOfRoomFocuse,
-                                    onFieldSubmitted:(String value){
-                                      FocusScope.of(context).requestFocus(_numberOfBathroomFocuse);
-                                      _numberOfBathroomFocuse.requestFocus();}
-
-                                ),
+                                    onFieldSubmitted: (String value) {
+                                      FocusScope.of(context).requestFocus(
+                                          _numberOfBathroomFocuse);
+                                      _numberOfBathroomFocuse.requestFocus();
+                                    }),
                               ),
                             ],
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              top: 8.0, bottom: 8.0),
-
+                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                           child: Row(
                             children: [
                               const Text("Bathrooms:",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700)),
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.w700)),
                               Padding(
                                 padding: const EdgeInsets.only(left: 4.0),
                                 child: SizedBox(
@@ -307,8 +295,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                     controller: _bathroomsController,
                                     decoration: const InputDecoration(
                                       labelText: "Number of Bathrooms",
-                                      labelStyle: TextStyle(fontSize: 10,
-                                          color: Colors.black38),
+                                      labelStyle: TextStyle(
+                                          fontSize: 10, color: Colors.black38),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(12.0)),
@@ -320,8 +308,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                       focusedBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(12.0)),
-                                        borderSide: BorderSide(width: 3,
-                                            color: Color(0xff79698e)),
+                                        borderSide: BorderSide(
+                                            width: 3, color: Color(0xff79698e)),
                                       ),
                                     ),
                                     keyboardType: TextInputType.number,
@@ -330,7 +318,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                         return 'This field is required.';
                                       }
                                       final RegExp regex =
-                                      RegExp(r'\d+(\.\d+)?');
+                                          RegExp(r'\d+(\.\d+)?');
                                       if (!regex.hasMatch(value)) {
                                         return 'Please enter a valid number';
                                       }
@@ -338,7 +326,6 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                     },
                                     textInputAction: TextInputAction.done,
                                     focusNode: _numberOfBathroomFocuse,
-
                                   ),
                                 ),
                               ),
@@ -347,13 +334,13 @@ class _FormPostScreenState extends State<FormPostScreen> {
                         ),
 
                         const Padding(
-                          padding: EdgeInsets.only(top:8.0,bottom: 8.0,left: 2.0,right: 2.0),
+                          padding: EdgeInsets.only(
+                              top: 8.0, bottom: 8.0, left: 2.0, right: 2.0),
                           child: Divider(
                             color: Colors.grey,
                             thickness: 1,
                           ),
                         ),
-
 
                         const Align(
                           alignment: Alignment.centerLeft,
@@ -366,21 +353,17 @@ class _FormPostScreenState extends State<FormPostScreen> {
                           ),
                         ),
                         FormBuilderRadioGroup(
-                          autovalidateMode: AutovalidateMode
-                              .onUserInteraction,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onChanged: (value) {
                             setState(() {
-                              _radioValue2 =
-                                  value; // تحديث القيمة المحددة
+                              _radioValue2 = value; // تحديث القيمة المحددة
                             });
                             _radioController2.text = value!;
-
                           },
                           validator: (value) {
                             if (value == null) {
                               return 'pleas fill the required value';
-                            }
-                            else {
+                            } else {
                               return null;
                             }
                           },
@@ -391,15 +374,14 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             'Fully Furnished',
                             'Unfurnished',
                             'Partially Furnished',
-                          ].map((lang) =>
-                              FormBuilderFieldOption(value: lang))
+                          ]
+                              .map(
+                                  (lang) => FormBuilderFieldOption(value: lang))
                               .toList(growable: false),
-
                         ),
 
                         const Padding(
                           padding: EdgeInsets.all(8.0),
-
                         ),
                         const Align(
                           alignment: Alignment.centerLeft,
@@ -418,6 +400,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             onChanged: (bool? value) {
                               setState(() {
                                 _checkboxValue1 = value!;
+                                 _checkbox1Controller.text=value.toString();
                               });
                             }),
                         CheckboxListTile(
@@ -427,6 +410,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             onChanged: (bool? value) {
                               setState(() {
                                 _checkboxValue2 = value!;
+                                _checkbox2Controller.text=value.toString();
                               });
                             }),
                         CheckboxListTile(
@@ -436,6 +420,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             onChanged: (bool? value) {
                               setState(() {
                                 _checkboxValue3 = value!;
+                                 _checkbox3Controller.text=value.toString();
                               });
                             }),
                         CheckboxListTile(
@@ -445,6 +430,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             onChanged: (bool? value) {
                               setState(() {
                                 _checkboxValue4 = value!;
+                                _checkbox4Controller.text=value.toString();
                               });
                             }),
                         CheckboxListTile(
@@ -455,10 +441,12 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             onChanged: (bool? value) {
                               setState(() {
                                 _checkboxValue5 = value!;
+                                _checkbox5Controller.text=value.toString();
                               });
                             }),
                         const Padding(
-                          padding: EdgeInsets.only(top:8.0,bottom: 8.0,left: 2.0,right: 2.0),
+                          padding: EdgeInsets.only(
+                              top: 8.0, bottom: 8.0, left: 2.0, right: 2.0),
                           child: Divider(
                             color: Colors.grey,
                             thickness: 1,
@@ -474,15 +462,15 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             ),
                           ),
                         ),
-                        const Padding(padding: EdgeInsets.all(8.0) ),
+                        const Padding(padding: EdgeInsets.all(8.0)),
                         const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'Country',
                             style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500),
-                          ),),
+                                fontSize: 20, fontWeight: FontWeight.w500),
+                          ),
+                        ),
                         SizedBox(
                           width: 500,
                           height: 50,
@@ -496,19 +484,23 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0,top: 8.0,left: 6.0,right: 6.0),
+                                padding: const EdgeInsets.only(
+                                    bottom: 8.0,
+                                    top: 8.0,
+                                    left: 6.0,
+                                    right: 6.0),
                                 child: DropdownButton<String>(
                                   value: dropdownValue,
                                   onChanged: (String? newValue) {
                                     setState(() {
                                       dropdownValue = newValue!;
+                                      _countryController.text=newValue;
                                     });
                                   },
                                   items: <String>[
                                     'Jordan',
-
                                   ].map<DropdownMenuItem<String>>(
-                                        (String value) {
+                                    (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
                                         child: Text(value),
@@ -520,15 +512,15 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             ),
                           ),
                         ),
-                        const Padding(padding: EdgeInsets.all(8.0) ),
+                        const Padding(padding: EdgeInsets.all(8.0)),
                         const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'Governorate',
                             style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500),
-                          ),),
+                                fontSize: 20, fontWeight: FontWeight.w500),
+                          ),
+                        ),
 
                         SizedBox(
                           width: 500,
@@ -549,6 +541,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                   onChanged: (String? newValue) {
                                     setState(() {
                                       dropdownValue1 = newValue!;
+                                      _governorateController.text=newValue;
                                     });
                                   },
                                   items: <String>[
@@ -565,7 +558,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                     'Ajloun',
                                     'al-mafraq'
                                   ].map<DropdownMenuItem<String>>(
-                                        (String value) {
+                                    (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
                                         child: Text(value),
@@ -577,40 +570,36 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             ),
                           ),
                         ),
-                        const Padding(padding: EdgeInsets.all(8.0) ),
+                        const Padding(padding: EdgeInsets.all(8.0)),
                         const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'Neighborhood',
                             style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500),
-                          ),),
+                                fontSize: 20, fontWeight: FontWeight.w500),
+                          ),
+                        ),
 
                         TextFormField(
                           controller: _neighborhoodController,
                           decoration: const InputDecoration(
                             hintText: "Neighborhood",
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(12.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
                               borderSide: BorderSide(
-                                  width: 2,
-                                  color: Color(0xff79698e)),
+                                  width: 2, color: Color(0xff79698e)),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(12.0)),
-                              borderSide: BorderSide(width: 3,
-                                  color: Color(0xff79698e)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                              borderSide: BorderSide(
+                                  width: 3, color: Color(0xff79698e)),
                             ),
                             focusColor: Color(0xff79698e),
                           ),
-
                           validator: (value) {
-                            if (value == null || value
-                                .trim()
-                                .isEmpty) {
+                            if (value == null || value.trim().isEmpty) {
                               return 'Please enter a neighborhood';
                             }
                             return null;
@@ -618,7 +607,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
                         ),
 
                         const Padding(
-                          padding:  EdgeInsets.only(top:8.0,bottom: 8.0,left: 2.0,right: 2.0),
+                          padding: EdgeInsets.only(
+                              top: 8.0, bottom: 8.0, left: 2.0, right: 2.0),
                           child: Divider(
                             color: Colors.grey,
                             thickness: 1,
@@ -627,8 +617,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment
-                                .start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Align(
                                 alignment: Alignment.centerLeft,
@@ -640,7 +629,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                   ),
                                 ),
                               ),
-                              const Padding(padding: EdgeInsets.only(bottom: 8.0)),
+                              const Padding(
+                                  padding: EdgeInsets.only(bottom: 8.0)),
                               const Text(
                                 'Description',
                                 style: TextStyle(
@@ -656,30 +646,29 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                   controller: _descriptionController,
                                   decoration: const InputDecoration(
                                     hintText:
-                                    "EX:3 bedroom, 1 master, 3 bathroom, with parking for two cars, 2 balcony or garden, first floor, with view...",
+                                        "EX:3 bedroom, 1 master, 3 bathroom, with parking for two cars, 2 balcony or garden, first floor, with view...",
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(12.0)),
                                       borderSide: BorderSide(
-                                          width: 2,
-                                          color: Color(0xff79698e)),
+                                          width: 2, color: Color(0xff79698e)),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(12.0)),
-                                      borderSide: BorderSide(width: 3,
-                                          color: Color(0xff79698e)),
+                                      borderSide: BorderSide(
+                                          width: 3, color: Color(0xff79698e)),
                                     ),
                                     focusColor: Color(0xff79698e),
                                   ),
-
                                   maxLines: null,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'This field is required.';
                                     }
 
-                                    final RegExp regex = RegExp(r'^(?=.*[\d\w]).{80,}$');
+                                    final RegExp regex =
+                                        RegExp(r'^(?=.*[\d\w]).{80,}$');
                                     if (!regex.hasMatch(value)) {
                                       return 'Please enter full Description';
                                     }
@@ -688,15 +677,13 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                   },
                                 ),
                               ),
-
                             ],
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment
-                                .start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
                                 'Phone Number',
@@ -708,90 +695,85 @@ class _FormPostScreenState extends State<FormPostScreen> {
                               TextFormField(
                                   controller: _phoneNumberController,
                                   decoration: const InputDecoration(
-                                    hintText: "please enter your valid phone number",
+                                    hintText:
+                                        "please enter your valid phone number",
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius
-                                          .all(
-                                          Radius.circular(
-                                              12.0)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0)),
                                       borderSide: BorderSide(
-                                          width: 2,
-                                          color: Color(
-                                              0xff79698e)),
+                                          width: 2, color: Color(0xff79698e)),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius
-                                          .all(
-                                          Radius.circular(
-                                              12.0)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.0)),
                                       borderSide: BorderSide(
-                                          width: 3,
-                                          color: Color(
-                                              0xff79698e)),
+                                          width: 3, color: Color(0xff79698e)),
                                     ),
-                                    focusColor: Color(
-                                        0xff79698e),
-
+                                    focusColor: Color(0xff79698e),
                                   ),
-                                  keyboardType: TextInputType
-                                      .phone,
+                                  keyboardType: TextInputType.phone,
                                   validator: (value) {
-                                    if (value == null ||
-                                        value.isEmpty) {
+                                    if (value == null || value.isEmpty) {
                                       return 'This field is required.';
                                     }
-                                    final RegExp regex = RegExp(
-                                        r'^07\d{8}$');
-                                    if (!regex.hasMatch(
-                                        value)) {
+                                    final RegExp regex = RegExp(r'^07\d{8}$');
+                                    if (!regex.hasMatch(value)) {
                                       return 'Please enter a valid phone number';
                                     }
                                     return null;
                                   },
                                   textInputAction: TextInputAction.next,
                                   focusNode: _phoneNumberFocuse,
-                                  onFieldSubmitted:(String value){
-                                    FocusScope.of(context).requestFocus(_priceFocuse);
-                                    _priceFocuse.requestFocus();}
-
-                              ),
+                                  onFieldSubmitted: (String value) {
+                                    FocusScope.of(context)
+                                        .requestFocus(_priceFocuse);
+                                    _priceFocuse.requestFocus();
+                                  }),
                             ],
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text('Price',
                                     style: TextStyle(
                                         fontSize: 20,
-                                        fontWeight:
-                                        FontWeight.w500)),
+                                        fontWeight: FontWeight.w500)),
                                 Stack(
                                   children: [
                                     TextFormField(
                                       decoration: const InputDecoration(
                                         hintText: "Monthly rental price",
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                                          borderSide: BorderSide(width: 2, color: Color(0xff79698e)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0)),
+                                          borderSide: BorderSide(
+                                              width: 2,
+                                              color: Color(0xff79698e)),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                                          borderSide: BorderSide(width: 3, color: Color(0xff79698e)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12.0)),
+                                          borderSide: BorderSide(
+                                              width: 3,
+                                              color: Color(0xff79698e)),
                                         ),
                                         focusColor: Color(0xff79698e),
-                                        contentPadding: EdgeInsets.symmetric(horizontal: 12,vertical: 16), // Optional: Adjust the horizontal padding
-                                        isDense: true, // Optional: Reduce the vertical height of the input field
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 16),
+                                        // Optional: Adjust the horizontal padding
+                                        isDense:
+                                            true, // Optional: Reduce the vertical height of the input field
                                       ),
                                       keyboardType: TextInputType.number,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'This field is required.';
                                         }
-                                        final RegExp regex = RegExp(r'\d+(\.\d+)?');
+                                        final RegExp regex =
+                                            RegExp(r'\d+(\.\d+)?');
                                         if (!regex.hasMatch(value)) {
                                           return 'Please enter a valid price';
                                         }
@@ -815,27 +797,67 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                     ),
                                   ],
                                 )
-
                               ]),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ElevatedButton(
                             onPressed: () {
-
-
                               if (_formKey.currentState!.validate()) {
-                                Navigator.push(
+
+                                DatabaseReference databaseReference =
+                                    FirebaseDatabase.instance
+                                        .ref()
+                                        .child('post');
+
+                                Map<String, dynamic> formData = {
+                                  'propertyType': _radioController1.text,
+                                  'flat': _flatController.text,
+                                  'rooms': _roomsController.text,
+                                  'bathrooms': _bathroomsController.text,
+                                  'furnishingStatus': _radioController2.text,
+                                  "Garden": _checkbox1Controller.text,
+                                 "Parking": _checkbox2Controller.text,
+                                 "Balcony": _checkbox3Controller.text,
+                                 "Elevator": _checkbox4Controller.text,
+                                  "Facilities": _checkbox5Controller.text,
+                                   'country':_countryController.text,
+                                   'governorate':_governorateController.text,
+                                  'neighborhood': _neighborhoodController.text,
+                                  'description': _descriptionController.text,
+                                  'phoneNumber': _phoneNumberController.text,
+                                  'price': _priceController.text
+                                };
+
+                                databaseReference
+                                    .push()
+                                    .set(formData)
+                                    .then((_) {
+                                  print('Data sent successfully!');
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                        const ImageUploadForm()));
-                              }
-
-                              else {}
-
-
+                                            const ImageUploadForm()),
+                                  );
+                                }).catchError((error) {
+                                  print('Error: $error');
+                                });
+                              } else {}
                             },
+                            //
+                            //   if (_formKey.currentState!.validate()) {
+                            //     Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) =>
+                            //             const ImageUploadForm()));
+                            //   }
+                            //
+                            //   else {}
+                            //
+                            //
+                            // },
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
                               backgroundColor: const Color(0xff79698e),

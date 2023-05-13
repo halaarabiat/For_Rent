@@ -101,6 +101,7 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
                         borderRadius: BorderRadius.circular(32.0),
                       ),
                       minimumSize: const Size(100, 40),
+                      foregroundColor: Colors.white, // Set the font color to white
                     ),
                     icon: const Icon(Icons.photo_library_outlined),
                     label: const Text('Select Images'),
@@ -116,11 +117,13 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
                         borderRadius: BorderRadius.circular(32.0),
                       ),
                       minimumSize: const Size(100, 40),
+                      foregroundColor: Colors.white, // Set the font color to white
                     ),
                     icon: const Icon(Icons.camera_alt_outlined),
                     label: const Text('Take Photo'),
                   ),
                 ),
+
               ],
             ),
 

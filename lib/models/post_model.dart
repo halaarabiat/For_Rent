@@ -1,6 +1,3 @@
-// To parse this JSON data, do
-//
-//     final postFormModel = postFormModelFromJson(jsonString);
 
 import 'dart:convert';
 
@@ -14,6 +11,11 @@ class PostFormModel {
   String? rooms;
   String? bathrooms;
   String? furnishingStatus;
+  String? garden;
+  String? parking;
+  String? balcony;
+  String? elevator;
+  String? facilities;
   String? country;
   String? governorate;
   String? neighborhood;
@@ -27,6 +29,11 @@ class PostFormModel {
     this.rooms,
     this.bathrooms,
     this.furnishingStatus,
+    this.garden,
+    this.parking,
+    this.balcony,
+    this.elevator,
+    this.facilities,
     this.country,
     this.governorate,
     this.neighborhood,
@@ -41,6 +48,11 @@ class PostFormModel {
     rooms: json["rooms"],
     bathrooms: json["bathrooms"],
     furnishingStatus: json["furnishingStatus"],
+    garden: json["Garden"],
+    parking: json["Parking"],
+    balcony: json["Balcony"],
+    elevator: json["Elevator"],
+    facilities: json["Facilities"],
     country: json["country"],
     governorate: json["governorate"],
     neighborhood: json["neighborhood"],
@@ -55,6 +67,11 @@ class PostFormModel {
     "rooms": rooms,
     "bathrooms": bathrooms,
     "furnishingStatus": furnishingStatus,
+    "Garden": garden,
+    "Parking": parking,
+    "Balcony": balcony,
+    "Elevator": elevator,
+    "Facilities": facilities,
     "country": country,
     "governorate": governorate,
     "neighborhood": neighborhood,
