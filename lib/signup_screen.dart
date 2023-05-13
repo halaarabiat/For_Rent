@@ -390,8 +390,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return "This Email is Already exist";
       case "invalid-email":
         return "Invalid Email";
-      case "weak-password":
-        return "Your Password is Weak";
       case "operation-not-allowed":
         return "Please call us on 079511111";
       default:

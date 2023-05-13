@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:rent/home_screen.dart';
 import 'package:ionicons/ionicons.dart';
 
+import 'config/current_session.dart';
+
 
 class PostDetails extends StatefulWidget {
   const PostDetails({Key? key}) : super(key: key);
@@ -11,7 +13,7 @@ class PostDetails extends StatefulWidget {
 }
 
 class _PostDetailsState extends State<PostDetails> {
-  List<String> itemList = ['Parking',''];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +53,7 @@ class _PostDetailsState extends State<PostDetails> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Text("Name",
+                    child: Text(CurrentSession().user?.fullname ?? 'User',
                     style: TextStyle(fontWeight: FontWeight.bold),),
                   ),
                   

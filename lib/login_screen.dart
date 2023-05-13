@@ -7,7 +7,7 @@ import 'package:rent/forget_pass_screen.dart';
 import 'package:rent/models/register_model.dart';
 
 // import 'package:rent/models.dart';
-import 'package:rent/post_screen.dart';
+import 'package:rent/form_post_screen.dart';
 
 // import 'package:rent/signin_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -197,7 +197,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const ForgetPassScreen()));
+                                    const ForgetPassScreen()));
                           },
                           child: const Text(
                             "Forget your password ? ",
@@ -215,12 +215,12 @@ class _LogInScreenState extends State<LogInScreen> {
                           if (_key.currentState!.validate()) {
                             try {
                               final QuerySnapshot usernameSnapshot =
-                                  await FirebaseFirestore.instance
-                                      .collection("users")
-                                      .where("username",
-                                          isEqualTo:
-                                              _UserNameController.text.trim())
-                                      .get();
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .where("username",
+                                  isEqualTo:
+                                  _UserNameController.text.trim())
+                                  .get();
 
                               if (usernameSnapshot.docs.isNotEmpty) {
                                 final userDoc = usernameSnapshot.docs.first;
@@ -231,17 +231,17 @@ class _LogInScreenState extends State<LogInScreen> {
                                   if (model != null && model.email != null) {
                                     final response = await FirebaseAuth.instance
                                         .signInWithEmailAndPassword(
-                                            email: model.email!,
-                                            password: _PasswordController.text);
+                                        email: model.email!,
+                                        password: _PasswordController.text);
                                     if (response != null &&
                                         response.user != null) {
-                                      CurrentSession().user=model;
+                                      CurrentSession().user = model;
                                       Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const HomeScreen()),
-                                        (route) => false,
+                                            const HomeScreen()),
+                                            (route) => false,
                                       );
                                     }
                                   }
@@ -252,7 +252,20 @@ class _LogInScreenState extends State<LogInScreen> {
                                     type: TBAlertType.error);
                               }
                             } catch (e) {
-                              print(e);
+                              if (e is FirebaseAuthException) {
+                                String msg = _getAuthMessage(e.code);
+                                CommonViews().showToast(
+                                    context, msg, type: TBAlertType.error);
+                              }
+                              else if(e is FirebaseException){
+                                CommonViews().showToast(context, e.message ?? '',
+                                    type: TBAlertType.error);
+                              }
+                              else {
+                                CommonViews().showToast(context,
+                                    "Something went wrong please try again later",
+                                    type: TBAlertType.error);
+                              }
                               //todo handle sign in errors  https://stackoverflow.com/questions/67617502/what-are-the-error-codes-for-flutter-firebase-auth-exception
                             }
                           }
@@ -291,7 +304,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const SignUpScreen()));
+                                      const SignUpScreen()));
                               setState(() {
                                 _UserNameController.text = result!;
                               });
@@ -312,6 +325,20 @@ class _LogInScreenState extends State<LogInScreen> {
         ),
       ),
     );
+  }
+
+
+  String _getAuthMessage(String code) {
+    switch (code) {
+      case"user-not-found":
+        return "User not found ";
+      case"user-disabled":
+        return "u";
+      case "wrong-password":
+        return "The password is wrong ";
+      default:
+        return "Something Went Wrong, please try again later";
+    }
   }
 }
 // if(_UserNameController.text.isEmpty){
