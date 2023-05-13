@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rent/photos_upload.dart';
+import 'package:rent/post/photos_upload.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 
@@ -25,12 +25,32 @@ class _FormPostScreenState extends State<FormPostScreen> {
   String dropdownValue = 'Jordan';
   String dropdownValue1 = 'Amman';
 
+
+  //focus node
   final FocusNode _flatFocuse =FocusNode();
   final FocusNode _numberOfRoomFocuse = FocusNode();
   final FocusNode _numberOfBathroomFocuse = FocusNode();
   final FocusNode _descriptionFocuse = FocusNode();
   final FocusNode _phoneNumberFocuse = FocusNode();
   final FocusNode _priceFocuse = FocusNode();
+
+  //  final TextEditingController _FullNameController = TextEditingController();
+//Controller
+  final TextEditingController _radioController1 = TextEditingController();
+  final TextEditingController _flatController = TextEditingController();
+  final TextEditingController _roomsController = TextEditingController();
+  final TextEditingController _bathroomsController = TextEditingController();
+  final TextEditingController _radioController2 = TextEditingController();
+  final TextEditingController _neighborhoodController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+
+
+
+
+
+
 
   @override
   void initState() {
@@ -91,7 +111,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             ),
                           ),
                         ),
-                    //Radio buttons for property type:
+                        //Radio buttons for property type:
                         FormBuilderRadioGroup(
                           autovalidateMode: AutovalidateMode
                               .onUserInteraction,
@@ -99,6 +119,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             setState(() {
                               _radiovalue = value; // تحديث القيمة المحددة
                             });
+                            _radioController1.text = value!;
                           },
                           validator: (value) {
                             if (value == null) {
@@ -117,7 +138,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
                             'student Studio'
                           ].map((lang) =>
                               FormBuilderFieldOption(value: lang))
-                              .toList(growable: false),
+                              .toList(),
+
 
                         ),
 
@@ -152,6 +174,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                   child: Stack(
                                     children: [
                                       TextFormField(
+                                        controller: _flatController,
                                         decoration: const InputDecoration(
                                           labelText: "Enter Value",
                                           labelStyle: TextStyle(
@@ -223,6 +246,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                               SizedBox(
                                 width: 280,
                                 child: TextFormField(
+                                    controller: _roomsController,
                                     decoration: const InputDecoration(
                                       labelText: "Number of rooms",
                                       labelStyle: TextStyle(fontSize: 10,
@@ -280,6 +304,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                 child: SizedBox(
                                   width: 280,
                                   child: TextFormField(
+                                    controller: _bathroomsController,
                                     decoration: const InputDecoration(
                                       labelText: "Number of Bathrooms",
                                       labelStyle: TextStyle(fontSize: 10,
@@ -348,6 +373,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
                               _radioValue2 =
                                   value; // تحديث القيمة المحددة
                             });
+                            _radioController2.text = value!;
+
                           },
                           validator: (value) {
                             if (value == null) {
@@ -561,6 +588,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                           ),),
 
                         TextFormField(
+                          controller: _neighborhoodController,
                           decoration: const InputDecoration(
                             hintText: "Neighborhood",
                             border: OutlineInputBorder(
@@ -624,6 +652,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                 padding: const EdgeInsets.only(
                                     top: 8.0, bottom: 8.0),
                                 child: TextFormField(
+                                  focusNode: _descriptionFocuse,
+                                  controller: _descriptionController,
                                   decoration: const InputDecoration(
                                     hintText:
                                     "EX:3 bedroom, 1 master, 3 bathroom, with parking for two cars, 2 balcony or garden, first floor, with view...",
@@ -676,6 +706,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                 ),
                               ),
                               TextFormField(
+                                  controller: _phoneNumberController,
                                   decoration: const InputDecoration(
                                     hintText: "please enter your valid phone number",
                                     border: OutlineInputBorder(
@@ -768,6 +799,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                       },
                                       textInputAction: TextInputAction.done,
                                       focusNode: _priceFocuse,
+                                      controller: _priceController,
                                     ),
                                     const Positioned(
                                       right: 10,
@@ -790,6 +822,8 @@ class _FormPostScreenState extends State<FormPostScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: ElevatedButton(
                             onPressed: () {
+
+
                               if (_formKey.currentState!.validate()) {
                                 Navigator.push(
                                     context,
