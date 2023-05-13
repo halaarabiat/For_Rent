@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:rent/login_screen.dart';
-import 'package:rent/signup_screen.dart';
+import 'package:rent/register/login_screen.dart';
+import 'package:rent/register/signup_screen.dart';
 
 class BottomSheetApp extends StatelessWidget {
   const BottomSheetApp({Key? key}) : super(key: key);

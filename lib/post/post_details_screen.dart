@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rent/home_screen.dart';
 import 'package:ionicons/ionicons.dart';
 
-import 'config/current_session.dart';
+import '../config/current_session.dart';
 
 
 class PostDetails extends StatefulWidget {

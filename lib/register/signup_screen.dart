@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:regexpattern/regexpattern.dart';
 import 'package:rent/home_screen.dart';
-import 'package:rent/login_screen.dart';
+import 'package:rent/register/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rent/models/register_model.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:regexpattern/regexpattern.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rent/login_screen.dart';
+import 'package:rent/register/login_screen.dart';
 
 final _auth = FirebaseAuth.instance;
 
