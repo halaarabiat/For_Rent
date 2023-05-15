@@ -4,7 +4,6 @@ import 'package:ionicons/ionicons.dart';
 
 import '../config/current_session.dart';
 
-
 class PostDetails extends StatefulWidget {
   const PostDetails({Key? key}) : super(key: key);
 
@@ -13,11 +12,9 @@ class PostDetails extends StatefulWidget {
 }
 
 class _PostDetailsState extends State<PostDetails> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: const Color(0xff79698e),
 
@@ -35,14 +32,18 @@ class _PostDetailsState extends State<PostDetails> {
         //     ),
         //   ],
         // ),
-          actions: [
-            IconButton(onPressed:  (){Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const HomeScreen() ));},
-                icon: Icon(Ionicons.close_circle_outline,
-                color: Colors.black,),)
-          ],
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+            },
+            icon: Icon(
+              Ionicons.close_circle_outline,
+              color: Colors.black,
+            ),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -53,164 +54,187 @@ class _PostDetailsState extends State<PostDetails> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Text(CurrentSession().user?.fullname ?? 'User',
-                    style: TextStyle(fontWeight: FontWeight.bold),),
+                    child: Text(
+                      CurrentSession().user?.fullname ?? 'User',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  
-                  IconButton(onPressed: (){
-                    showModalBottomSheet(
-                       isScrollControlled: true,
-                        context: context,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(20))
-                        ),
-                        builder: (context) {return Wrap(children:[
-                           Column(
-                            children: [
-                              ListTile(
-                                title: Text('Delete'),
-                                leading: Icon(Icons.delete,
-                                color: Color(0xff79698e),),
-                                onTap: ()=>null,
-                              ),
-                            ],
-                          ),
-
-                            ],
-                        );
-                        } );
-                  }, icon: Icon(Ionicons.ellipsis_horizontal_outline))
+                  IconButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20))),
+                            builder: (context) {
+                              return Wrap(
+                                children: [
+                                  Column(
+                                    children: [
+                                      ListTile(
+                                        title: Text('Delete'),
+                                        leading: Icon(
+                                          Icons.delete,
+                                          color: Color(0xff79698e),
+                                        ),
+                                        onTap: () => null,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      icon: Icon(Ionicons.ellipsis_horizontal_outline))
                 ],
               ),
-
 
               Row(
-                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(onPressed:(){},
-                      icon: Icon(Icons.arrow_circle_left_outlined,
-                    size: 30,)),
-
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_circle_left_outlined,
+                        size: 30,
+                      )),
                   Container(
-                    height: MediaQuery.of(context).size.height*0.305,
-                    width:  MediaQuery.of(context).size.width*0.70,
+                    height: MediaQuery.of(context).size.height * 0.305,
+                    width: MediaQuery.of(context).size.width * 0.70,
                     color: Colors.grey,
-
                   ),
-
-                  IconButton(onPressed: (){},
-                      icon: Icon(Icons.arrow_circle_right_outlined,
-                      size: 30,))
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_circle_right_outlined,
+                        size: 30,
+                      ))
                 ],
               ),
-              SizedBox(height: 14,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width*0.5,
-                      decoration: BoxDecoration(
-                        border:Border.all(
-                          color: Colors.grey,
-                          width: 1,
-                        )
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.home_outlined,size: 40,),
-                          SizedBox(width: 10,),
-                          Text("Home"),
-                        ],
-                      ),
-                    ),
-
-                    Container(
-                      width: MediaQuery.of(context).size.width*0.5,
-                      decoration: BoxDecoration(
-                          border:Border.all(
-                            color: Colors.grey,
-                            width: 1,
-                          )
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.event_seat_outlined,size: 40,),
-                          SizedBox(width: 10 ,),
-                          Text('Furneshd'),
-                        ],
-                      ),
-                    ),
-
-
-
-                  ],
-                ),
-               // SizedBox(height:5 ,),
+              SizedBox(
+                height: 14,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width*0.3,
+                    width: MediaQuery.of(context).size.width * 0.5,
                     decoration: BoxDecoration(
-                        border:Border.all(
-                          color: Colors.grey,
-                          width: 1,
-                        )
+                        border: Border.all(
+                      color: Colors.grey,
+                      width: 1,
+                    )),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.home_outlined,
+                          size: 40,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Home"),
+                      ],
                     ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                      color: Colors.grey,
+                      width: 1,
+                    )),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.event_seat_outlined,
+                          size: 40,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text('Furneshd'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              // SizedBox(height:5 ,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                      color: Colors.grey,
+                      width: 1,
+                    )),
                     child: Column(
                       children: [
-                        Icon(Icons.space_bar_outlined,size: 40,),
-                        SizedBox(height: 5 ,),
+                        Icon(
+                          Icons.space_bar_outlined,
+                          size: 40,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Text("Flat"),
                         // SizedBox(height: 5 ,),
                         Text('160 m²'),
-
                       ],
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width*0.3,
+                    width: MediaQuery.of(context).size.width * 0.3,
                     decoration: BoxDecoration(
-                      border:Border.all(
-                        color: Colors.grey,
-                        width: 1,
-                      )
-                    ),
+                        border: Border.all(
+                      color: Colors.grey,
+                      width: 1,
+                    )),
                     child: Column(
                       children: [
-                        Icon(Ionicons.bed_outline,size: 40,),
-                        SizedBox(height: 5 ,),
+                        Icon(
+                          Ionicons.bed_outline,
+                          size: 40,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Text("Number of room"),
                         // SizedBox(height: 5 ,),
                         Text('5'),
-
                       ],
                     ),
                   ),
-
                   Container(
-                    width: MediaQuery.of(context).size.width*0.4,
+                    width: MediaQuery.of(context).size.width * 0.4,
                     decoration: BoxDecoration(
-                      border:Border.all(
-                        color: Colors.grey,
-                        width: 1,
-                      )
-                    ),
+                        border: Border.all(
+                      color: Colors.grey,
+                      width: 1,
+                    )),
                     child: Column(
                       children: [
-                        Icon(Icons.space_bar_outlined,size: 40,),
-                        SizedBox(height: 5 ,),
+                        Icon(
+                          Icons.space_bar_outlined,
+                          size: 40,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Text("Number of bathroom"),
                         // SizedBox(height: 5 ,),
                         Text('3'),
-
                       ],
                     ),
                   )
-
                 ],
               ),
-             SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               // Container(
               //   decoration: BoxDecoration(
               //     border:Border.all(color: Colors.grey)
@@ -223,64 +247,65 @@ class _PostDetailsState extends State<PostDetails> {
               //
               // ),
 
-             Container(
-               width: MediaQuery.of(context).size.width*0.8,
-               height:MediaQuery.of(context).size.height*0.1 ,
-               decoration: BoxDecoration(
-                   border:Border.all(
-                     color: Colors.grey,
-                     width: 1,
-                   )
-               ),
-               child:Row(
-                 children: [
-                   Icon(Icons.location_on_outlined,size:40,),
-
-                 ],
-               ),
-             ),
-
-              SizedBox(height: 10,),
               Container(
-                width: MediaQuery.of(context).size.width*0.8,
-                height:MediaQuery.of(context).size.height*0.1 ,
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.1,
                 decoration: BoxDecoration(
-                    border:Border.all(
-                      color: Colors.grey,
-                      width: 1,
-                    )
-                ),
-                child:Row(
+                    border: Border.all(
+                  color: Colors.grey,
+                  width: 1,
+                )),
+                child: Row(
                   children: [
-                    Icon(Icons.attach_money_outlined,size:40,),
-
+                    Icon(
+                      Icons.location_on_outlined,
+                      size: 40,
+                    ),
                   ],
                 ),
               ),
 
-
-
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Container(
-                width: MediaQuery.of(context).size.width*0.8,
-                height:MediaQuery.of(context).size.height*0.1 ,
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.1,
                 decoration: BoxDecoration(
-                    border:Border.all(
-                      color: Colors.grey,
-                      width: 1,
-                    )
-                ),
-                child:Row(
+                    border: Border.all(
+                  color: Colors.grey,
+                  width: 1,
+                )),
+                child: Row(
                   children: [
-                    Icon(Icons.phone_outlined,size:40,),
-
+                    Icon(
+                      Icons.attach_money_outlined,
+                      size: 40,
+                    ),
                   ],
                 ),
               ),
 
-
-
-
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.1,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                  color: Colors.grey,
+                  width: 1,
+                )),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.phone_outlined,
+                      size: 40,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
