@@ -6,6 +6,7 @@ PostFormModel postFormModelFromJson(String str) =>
 String postFormModelToJson(PostFormModel data) => json.encode(data.toMap());
 
 class PostFormModel {
+  String? userId;
   String? propertyType;
   int? flat;
   int? rooms;
@@ -23,7 +24,6 @@ class PostFormModel {
   String? phoneNumber;
   int? price;
   List<String>? images;
-  String? userId;
 
   PostFormModel(
       {this.propertyType,
@@ -89,7 +89,5 @@ class PostFormModel {
         "images":
             images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
       };
-
-
   // comparable
 }
