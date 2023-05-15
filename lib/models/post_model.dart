@@ -6,6 +6,7 @@ PostFormModel postFormModelFromJson(String str) => PostFormModel.fromMap(json.de
 String postFormModelToJson(PostFormModel data) => json.encode(data.toMap());
 
 class PostFormModel {
+  String? userId;
   String? propertyType;
   int? flat;
   int? rooms;
@@ -22,8 +23,10 @@ class PostFormModel {
   String? description;
   String? phoneNumber;
   int? price;
+  List<String>? images;
 
   PostFormModel({
+    this.userId,
     this.propertyType,
     this.flat,
     this.rooms,
@@ -40,9 +43,12 @@ class PostFormModel {
     this.description,
     this.phoneNumber,
     this.price,
+    this.images,
+
   });
 
   factory PostFormModel.fromMap(Map<String, dynamic> json) => PostFormModel(
+     userId: json["userId"],
     propertyType: json["propertyType"],
     flat: json["flat"],
     rooms: json["rooms"],
@@ -59,9 +65,11 @@ class PostFormModel {
     description: json["description"],
     phoneNumber: json["phoneNumber"],
     price: json["price"],
+    images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
   );
 
   Map<String, dynamic> toMap() => {
+    "userId": userId,
     "propertyType": propertyType,
     "flat": flat,
     "rooms": rooms,
@@ -78,5 +86,7 @@ class PostFormModel {
     "description": description,
     "phoneNumber": phoneNumber,
     "price": price,
+    "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
+
   };
 }

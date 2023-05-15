@@ -19,11 +19,11 @@ class _FormPostScreenState extends State<FormPostScreen> {
   String? _radioValue2;
   final _formKey = GlobalKey<FormState>();
 
-  bool _checkboxValue1 = false;
-  bool _checkboxValue2 = false;
-  bool _checkboxValue3 = false;
-  bool _checkboxValue4 = false;
-  bool _checkboxValue5 = false;
+  bool _checkboxGraden = false;
+  bool _checkboxParking = false;
+  bool _checkboxBalcony = false;
+  bool _checkboxElevator = false;
+  bool _checkboxFacilities = false;
   String dropdownValue = 'Jordan';
   String dropdownValue1 = 'Amman';
 
@@ -399,52 +399,49 @@ class _FormPostScreenState extends State<FormPostScreen> {
                         ),
                         CheckboxListTile(
                             title: const Text('Garden'),
-                            value: _checkboxValue1,
+                            value: _checkboxGraden,
                             activeColor: const Color(0xff79698e),
                             onChanged: (bool? value) {
                               setState(() {
-                                _checkboxValue1 = value!;
-                                // _checkbox1Controller.text=value.toString();
+                                _checkboxGraden = value!;
                               });
                             }),
                         CheckboxListTile(
                             title: const Text('Parking'),
-                            value: _checkboxValue2,
+                            value: _checkboxParking,
                             activeColor: const Color(0xff79698e),
                             onChanged: (bool? value) {
                               setState(() {
-                                _checkboxValue2 = value!;
-                                _checkbox2Controller.text=value.toString();
+                                _checkboxParking = value!;
                               });
                             }),
                         CheckboxListTile(
                             title: const Text('Balcony'),
-                            value: _checkboxValue3,
+                            value: _checkboxBalcony,
                             activeColor: const Color(0xff79698e),
                             onChanged: (bool? value) {
                               setState(() {
-                                _checkboxValue3 = value!;
-                                 _checkbox3Controller.text=value.toString();
+                                _checkboxBalcony = value!;
                               });
                             }),
                         CheckboxListTile(
                             title: const Text('Elevator'),
-                            value: _checkboxValue4,
+                            value: _checkboxElevator,
                             activeColor: const Color(0xff79698e),
                             onChanged: (bool? value) {
                               setState(() {
-                                _checkboxValue4 = value!;
-                                _checkbox4Controller.text=value.toString();
+                                _checkboxElevator = value!;
+
                               });
                             }),
                         CheckboxListTile(
                             title: const Text(
                                 'Facilities for people with special needed'),
-                            value: _checkboxValue5,
+                            value: _checkboxFacilities,
                             activeColor: const Color(0xff79698e),
                             onChanged: (bool? value) {
                               setState(() {
-                                _checkboxValue5 = value!;
+                                _checkboxFacilities = value!;
                                 _checkbox5Controller.text=value.toString();
                               });
                             }),
@@ -672,7 +669,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                     }
 
                                     final RegExp regex =
-                                        RegExp(r'^(?=.*[\d\w]).{80,}$');
+                                        RegExp(r'^(?=.*[\d\w]).{25,}$');
                                     if (!regex.hasMatch(value)) {
                                       return 'Please enter full Description';
                                     }
@@ -810,8 +807,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
 
                                 if (_formKey.currentState!.validate()) {
                                   try{
-                                    CollectionReference postRef =
-                                    FirebaseFirestore.instance.collection("post");
+
 
                                     PostFormModel   post=PostFormModel(
                                         propertyType: _radioController1.text,
@@ -819,11 +815,11 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                         rooms: int.tryParse(_roomsController.text),
                                         bathrooms: int.tryParse(_bathroomsController.text),
                                         furnishingStatus: _radioController2.text,
-                                        garden: _checkboxValue1,
-                                        parking: _checkboxValue2,
-                                        balcony: _checkboxValue3,
-                                        elevator: _checkboxValue4,
-                                        facilities: _checkboxValue5,
+                                        garden: _checkboxGraden,
+                                        parking: _checkboxParking,
+                                        balcony: _checkboxBalcony,
+                                        elevator: _checkboxElevator,
+                                        facilities: _checkboxFacilities,
                                         country:dropdownValue,
                                         governorate:dropdownValue1,
                                         neighborhood: _neighborhoodController.text,
@@ -832,12 +828,12 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                         price: int.tryParse(_priceController.text)
 
                                     );
-                                    await postRef.add(post.toMap());
+                                    // await postRef.add(post.toMap());
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                          const ImageUploadForm()),
+                                           ImageUploadForm(model: post,)),
                                     );
 
 

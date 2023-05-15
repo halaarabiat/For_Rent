@@ -1,9 +1,17 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as path;
+import 'package:rent/models/post_model.dart';
+import 'package:rent/utils/upload_images.dart';
+
+
 
 class ImageUploadForm extends StatefulWidget {
-  const ImageUploadForm({Key? key}) : super(key: key);
+  final PostFormModel model;
+  const ImageUploadForm({Key? key, required this.model}) : super(key: key);
 
   @override
   _ImageUploadFormState createState() => _ImageUploadFormState();
@@ -33,6 +41,16 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
       );
     }
   }
+  // upload image method
+  // Future<String> uploadImage(File file)
+  // async{
+  //   String fileName=path.basename(file.path);
+  //   Reference ref=FirebaseStorage.instance.ref().child("images/$fileName");
+  //   UploadTask task=ref.putFile(file);
+  //   TaskSnapshot snapshot = await task.whenComplete(() => null);
+  //   String url = await snapshot.ref.getDownloadURL();
+  //   return url;
+  // }
 
 
 
@@ -53,10 +71,18 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
     return null;
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       String? validationResult = _validateImages(_selectedImages);
+      List<String> imageUrl=[];
       if (validationResult == null) {
+        for(var value in _selectedImages){
+        imageUrl.add(await uploadImage(File(value.path)));}
+
+          widget.model.images=imageUrl;
+        CollectionReference postRef =
+        FirebaseFirestore.instance.collection("post");
+         await postRef.add(widget.model.toMap());
 
       } else {
         // Display validation error message

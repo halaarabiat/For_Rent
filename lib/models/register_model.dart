@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:rent/models/post_model.dart';
+
 UserModel registerModelFromMap(String str) => UserModel.fromMap(json.decode(str));
 
 String registerModelToMap(UserModel data) => json.encode(data.toMap());
@@ -10,6 +12,7 @@ class UserModel {
   String? fullname;
   String? email;
   String? password;
+  PostFormModel? postForm;
 
   UserModel({
     this.userid,
@@ -17,6 +20,7 @@ class UserModel {
     this.fullname,
     this.email,
     this.password,
+    this.postForm,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
@@ -25,6 +29,9 @@ class UserModel {
     fullname: json["fullname"],
     email: json["email"],
     password: json["password"],
+    postForm: json["postForm"] != null
+        ? PostFormModel.fromMap(json["postForm"])
+        : null,
   );
 
   Map<String, dynamic> toMap() => {
@@ -32,6 +39,6 @@ class UserModel {
     "username": username,
     "fullname": fullname,
     "email": email,
-    // "password": password,
+    "postForm": postForm != null ? postForm!.toMap() : null,
   };
 }
