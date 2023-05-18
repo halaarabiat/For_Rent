@@ -825,7 +825,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                         neighborhood: _neighborhoodController.text,
                                         description: _descriptionController.text,
                                         phoneNumber: _phoneNumberController.text,
-                                        price: int.tryParse(_priceController.text)
+                                        price: _priceController.text
 
                                     );
                                     // await postRef.add(post.toMap());

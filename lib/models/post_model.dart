@@ -1,7 +1,7 @@
+
 import 'dart:convert';
 
-PostFormModel postFormModelFromJson(String str) =>
-    PostFormModel.fromMap(json.decode(str));
+PostFormModel postFormModelFromJson(String str) => PostFormModel.fromMap(json.decode(str));
 
 String postFormModelToJson(PostFormModel data) => json.encode(data.toMap());
 
@@ -22,72 +22,71 @@ class PostFormModel {
   String? neighborhood;
   String? description;
   String? phoneNumber;
-  int? price;
+  String? price;
   List<String>? images;
 
-  PostFormModel(
-      {this.propertyType,
-      this.flat,
-      this.userId,
-      this.rooms,
-      this.bathrooms,
-      this.furnishingStatus,
-      this.garden,
-      this.parking,
-      this.balcony,
-      this.elevator,
-      this.facilities,
-      this.country,
-      this.governorate,
-      this.neighborhood,
-      this.description,
-      this.phoneNumber,
-      this.price,
-      this.images});
+  PostFormModel({
+    this.userId,
+    this.propertyType,
+    this.flat,
+    this.rooms,
+    this.bathrooms,
+    this.furnishingStatus,
+    this.garden,
+    this.parking,
+    this.balcony,
+    this.elevator,
+    this.facilities,
+    this.country,
+    this.governorate,
+    this.neighborhood,
+    this.description,
+    this.phoneNumber,
+    this.price,
+    this.images,
+
+  });
 
   factory PostFormModel.fromMap(Map<String, dynamic> json) => PostFormModel(
-        propertyType: json["propertyType"],
-        flat: json["flat"],
-        rooms: json["rooms"],
-        bathrooms: json["bathrooms"],
-        furnishingStatus: json["furnishingStatus"],
-        garden: json["Garden"],
-        parking: json["Parking"],
-        balcony: json["Balcony"],
-        elevator: json["Elevator"],
-        facilities: json["Facilities"],
-        country: json["country"],
-        governorate: json["governorate"],
-        neighborhood: json["neighborhood"],
-        description: json["description"],
-        userId: json["userId"],
-        phoneNumber: json["phoneNumber"],
-        price: json["price"],
-        images: json["images"] == null
-            ? []
-            : List<String>.from(json["images"]!.map((x) => x)),
-      );
+     userId: json["userId"],
+    propertyType: json["propertyType"],
+    flat: json["flat"],
+    rooms: json["rooms"],
+    bathrooms: json["bathrooms"],
+    furnishingStatus: json["furnishingStatus"],
+    garden: json["Garden"],
+    parking: json["Parking"],
+    balcony: json["Balcony"],
+    elevator: json["Elevator"],
+    facilities: json["Facilities"],
+    country: json["country"],
+    governorate: json["governorate"],
+    neighborhood: json["neighborhood"],
+    description: json["description"],
+    phoneNumber: json["phoneNumber"],
+    price: json["price"],
+    images: json["images"] == null ? [] : List<String>.from(json["images"]!.map((x) => x)),
+  );
 
   Map<String, dynamic> toMap() => {
-        "propertyType": propertyType,
-        "flat": flat,
-        "rooms": rooms,
-        "bathrooms": bathrooms,
-        "furnishingStatus": furnishingStatus,
-        "Garden": garden,
-        "Parking": parking,
-        "Balcony": balcony,
-        "Elevator": elevator,
-        "userId": userId,
-        "Facilities": facilities,
-        "country": country,
-        "governorate": governorate,
-        "neighborhood": neighborhood,
-        "description": description,
-        "phoneNumber": phoneNumber,
-        "price": price,
-        "images":
-            images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
-      };
-  // comparable
+    "userId": userId,
+    "propertyType": propertyType,
+    "flat": flat,
+    "rooms": rooms,
+    "bathrooms": bathrooms,
+    "furnishingStatus": furnishingStatus,
+    "Garden": garden,
+    "Parking": parking,
+    "Balcony": balcony,
+    "Elevator": elevator,
+    "Facilities": facilities,
+    "country": country,
+    "governorate": governorate,
+    "neighborhood": neighborhood,
+    "description": description,
+    "phoneNumber": phoneNumber,
+    "price": price,
+    "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
+
+  };
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:rent/home_screen.dart';
+import 'package:rent/models/post_model.dart';
 
-// enum PostType{favorite,myPosts}
 class PostItem extends StatefulWidget {
-  // final PostType postType;
-  // final PostFormModel model
-  const PostItem({super.key});
+  final PostFormModel model;
+
+  const PostItem({Key? key, required this.model}) : super(key: key);
 
   @override
   _PostItemState createState() => _PostItemState();
@@ -22,7 +22,6 @@ class _PostItemState extends State<PostItem> {
     });
   }
 
-  // where city = Amman  // filter
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +51,7 @@ class _PostItemState extends State<PostItem> {
         child: ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 6,
+            itemCount: 1,
             itemBuilder: (context, _) {
               return InkWell(
                 onTap: selectPost,
@@ -76,6 +75,7 @@ class _PostItemState extends State<PostItem> {
                                 topRight: Radius.circular(15),
                               ),
                               child: Container(
+
                                 height: 250,
                                 width: double.infinity,
                                 color: Colors.grey,
@@ -114,45 +114,45 @@ class _PostItemState extends State<PostItem> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
-                                      children: const [
-                                        Icon(
+                                      children: [
+                                        const Icon(
                                           Icons.home_outlined,
                                           size: 40,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 10,
                                         ),
                                         Text(
-                                          "Home",
-                                          style: TextStyle(
+                                          widget.model.propertyType ?? '',
+                                          style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Row(children: const [
-                                      Icon(
+                                    Row(children:  [
+                                      const Icon(
                                         Icons.event_seat_outlined,
                                         size: 40,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       Text(
-                                        'Status',
-                                        style: TextStyle(
+                                        widget.model.furnishingStatus ?? '',
+                                        style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      SizedBox(width: 10),
+                                      const SizedBox(width: 10),
                                     ]),
                                     Row(
-                                      children: const [
+                                      children:  [
                                         Text(
-                                          'Rooms',
-                                          style: TextStyle(
+                                          widget.model.rooms.toString() ?? '' ,
+                                          style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -165,38 +165,38 @@ class _PostItemState extends State<PostItem> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(children: const [
-                                      Icon(
+                                    Row(children:  [
+                                      const Icon(
                                         Icons.location_on_outlined,
                                         size: 40,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Text(
-                                        "Location",
-                                        style: TextStyle(
+                                        widget.model.neighborhood ?? '' ,
+                                        style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ]),
-                                    Row(children: const [
-                                      Icon(
+                                    Row(children:  [
+                                      const Icon(
                                         Icons.attach_money,
                                         size: 40,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Text(
-                                        'Price',
-                                        style: TextStyle(
+                                        widget.model.price ?? '',
+                                        style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      SizedBox(width: 5),
+                                      const SizedBox(width: 5),
                                     ]),
                                   ],
                                 ),

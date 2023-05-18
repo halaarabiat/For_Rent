@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
+import 'package:rent/config/current_session.dart';
 import 'package:rent/models/post_model.dart';
+import 'package:rent/post/post_details_screen.dart';
 import 'package:rent/utils/upload_images.dart';
 
 
@@ -36,8 +38,7 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
       // Display a message indicating that the maximum limit has been reached
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text(
-              'You can select up to 10 images. please delete additional images w'),
+          content: Text('You can select up to 10 images. please delete additional images w'),
         ),
       );
     }
@@ -53,6 +54,8 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
   //   return url;
   // }
 
+
+
   void _takePhoto() async {
     XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
     if (image != null) {
@@ -62,14 +65,6 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
     }
   }
 
-  Future<String> uploadImage(File file) async {
-    String fileName = path.basename(file.path);
-    Reference ref = FirebaseStorage.instance.ref().child("images/$fileName");
-    UploadTask task = ref.putFile(file);
-    TaskSnapshot snapshot = await task.whenComplete(() => null);
-    String url = await snapshot.ref.getDownloadURL();
-    return url;
-  } // utils imageHelper
 
   String? _validateImages(List<XFile> images) {
     if (images.length < 5) {
@@ -89,6 +84,13 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
           widget.model.images=imageUrl;
         CollectionReference postRef =
         FirebaseFirestore.instance.collection("post");
+        widget.model.userId =  CurrentSession().user?.userid??'';
+         await postRef.add(widget.model.toMap());
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const PostDetails()));
+
       } else {
         // Display validation error message
         ScaffoldMessenger.of(context).showSnackBar(
@@ -97,7 +99,6 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
       }
     }
   }
-
   void _deleteImage(int index) {
     setState(() {
       _selectedImages.removeAt(index);
@@ -112,7 +113,7 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
         title: Center(
           child: Image.asset(
             'assets/logo.png',
-            height: MediaQuery.of(context).size.height * 0.07,
+            height:MediaQuery.of(context).size.height*0.07,
           ),
         ),
       ),
@@ -133,8 +134,7 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
                         borderRadius: BorderRadius.circular(32.0),
                       ),
                       minimumSize: const Size(100, 40),
-                      foregroundColor:
-                          Colors.white, // Set the font color to white
+                      foregroundColor: Colors.white, // Set the font color to white
                     ),
                     icon: const Icon(Icons.photo_library_outlined),
                     label: const Text('Select Images'),
@@ -150,15 +150,16 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
                         borderRadius: BorderRadius.circular(32.0),
                       ),
                       minimumSize: const Size(100, 40),
-                      foregroundColor:
-                          Colors.white, // Set the font color to white
+                      foregroundColor: Colors.white, // Set the font color to white
                     ),
                     icon: const Icon(Icons.camera_alt_outlined),
                     label: const Text('Take Photo'),
                   ),
                 ),
+
               ],
             ),
+
             const SizedBox(height: 10),
             Text(
               _selectedImages.length.toString() + ' images selected',
@@ -203,12 +204,12 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
                 },
               ),
             ),
+
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: _submitForm,
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white70,
-                // primary: const Color(0xff79698e),
+                foregroundColor: Colors.white70,// primary: const Color(0xff79698e),
                 // Text Color (Foreground color)
                 backgroundColor: const Color(0xff79698e),
                 shape: RoundedRectangleBorder(
@@ -223,3 +224,4 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
     );
   }
 }
+

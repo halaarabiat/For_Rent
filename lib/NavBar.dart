@@ -37,7 +37,7 @@ class _NavBarState extends State<NavBar> {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color(0xff79698e),
             ),
             child: Stack(
@@ -61,7 +61,7 @@ class _NavBarState extends State<NavBar> {
                       onPressed: () {
                         getImageFromGallery();
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.add_a_photo_outlined,
                         color: Colors.white,
                       ),
@@ -70,14 +70,14 @@ class _NavBarState extends State<NavBar> {
                   alignment: Alignment.centerRight,
                   child: Text(
                     CurrentSession().user?.fullname ?? 'User',
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    style: const TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
                 ),
                 Align(
-                  alignment: Alignment.centerRight + Alignment(0, .3),
+                  alignment: Alignment.centerRight + const Alignment(0, .3),
                   child: Text(
                     CurrentSession().user?.username ?? 'Username',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white70,
                     ),
                   ),
@@ -87,27 +87,27 @@ class _NavBarState extends State<NavBar> {
           ),
 
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.favorite,
               color: Color(0xff79698e),
             ),
-            title: Text('Favorite'),
+            title: const Text('Favorite'),
             onTap: () => null,
           ),
           //Divider(),
 
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.wysiwyg,
               color: Color(0xff79698e),
             ),
-            title: Text('Post'),
+            title: const Text('Post'),
             onTap: () => {},
           ),
 
-          Divider(),
+          const Divider(),
 
-          ListTile(
+          const ListTile(
             leading: Icon(
               Icons.warning_amber,
             ),
@@ -127,7 +127,7 @@ class _NavBarState extends State<NavBar> {
                   (route) => false,
                 );
               },
-              child: Text(
+              child: const Text(
                 "Log Out",
                 style: TextStyle(color: Color(0xff79698e)),
               ),
