@@ -11,7 +11,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController _searchController = TextEditingController();
   final _key = GlobalKey<FormState>();
+  late String _selectedOption;
+
+  List <String> cities=[
+    'Amman',
+    'Al-balqa',
+    'Zarqa',
+    'Madaba',
+    'Ma\'an',
+    'Aqaba',
+    'Al-Karak',
+    'at-Tafila',
+    'Jerash',
+    'Irbid',
+    'Ajloun',
+    'al-mafraq'];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -73,35 +89,112 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: MediaQuery.of(context).size.width * 0.8,
                   color: Colors.grey.withOpacity(0.7),
                   padding: const EdgeInsets.all(16.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0xff79698e),
-                          width: 3,
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0xff79698e),
-                          width: 3,
-                        ),
-                      ),
-                      enabled: true,
-                      fillColor: Colors.white70,
-                      filled: true,
-                      hintText: "search by city or neighborhood",
-                      contentPadding: const EdgeInsets.all(5.0),
-                      hintStyle: const TextStyle(fontSize: 15),
-                      suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.search,
-                          color: Color(0xff79698e),
-                        ),
-                      ),
-                    ),
+                  child: Autocomplete(optionsBuilder: (TextEditingValue textEditingValue) {
+                    if (textEditingValue.text == '') {
+                      return const Iterable<String>.empty();
+                    }else{
+                      List<String> matches = <String>[];
+                      matches.addAll(cities);
+
+                      matches.retainWhere((s){
+                        return s.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                      });
+                      return matches;
+                    }
+                  },
+                    onSelected: (String value) {
+                      setState(() {
+                        _selectedOption = value;
+                      });
+                    },
+                    fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
+                      _searchController.value = textEditingController.value;
+                      return TextFormField(
+                        controller: textEditingController,
+                        focusNode: focusNode,
+                        onChanged: (String value) {
+                          onFieldSubmitted();
+                        },
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xff79698e),
+                                  width: 3,
+                                ),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xff79698e),
+                                  width: 3,
+                                ),
+                              ),
+                              enabled: true,
+                              fillColor: Colors.white70,
+                              filled: true,
+                              hintText: "search by city ",
+                              contentPadding: const EdgeInsets.all(5.0),
+                              hintStyle: const TextStyle(fontSize: 15),
+                              suffixIcon: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.search,
+                                  color: Color(0xff79698e),
+                                ),
+                              ),
+                            ),
+                          );
+                    },
+    optionsViewBuilder: (BuildContext context, AutocompleteOnSelected<String> onSelected, Iterable<String> options) {
+                    return Align(
+                        alignment: Alignment.topLeft,
+                        child: Material(
+                        elevation: 2.0,
+                        child: Container(
+                        width: double.infinity,
+                        color: Colors.white,
+                        child: ListView(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        children: options.map((String option) {
+                      return ListTile(
+                        title: Text(option),
+                        onTap: () {
+                          onSelected(option);
+                        },
+                      );
+                    }).toList(),
+      ))));
+    },
                   ),
+                  // child: TextFormField(
+                  //   decoration: InputDecoration(
+                  //     border: const OutlineInputBorder(
+                  //       borderSide: BorderSide(
+                  //         color: Color(0xff79698e),
+                  //         width: 3,
+                  //       ),
+                  //     ),
+                  //     focusedBorder: const OutlineInputBorder(
+                  //       borderSide: BorderSide(
+                  //         color: Color(0xff79698e),
+                  //         width: 3,
+                  //       ),
+                  //     ),
+                  //     enabled: true,
+                  //     fillColor: Colors.white70,
+                  //     filled: true,
+                  //     hintText: "search by city or neighborhood",
+                  //     contentPadding: const EdgeInsets.all(5.0),
+                  //     hintStyle: const TextStyle(fontSize: 15),
+                  //     suffixIcon: IconButton(
+                  //       onPressed: () {},
+                  //       icon: const Icon(
+                  //         Icons.search,
+                  //         color: Color(0xff79698e),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ),
               ),
               Positioned(
