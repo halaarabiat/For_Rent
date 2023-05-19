@@ -9,10 +9,9 @@ import 'package:rent/models/post_model.dart';
 import 'package:rent/post/details/post_details_screen.dart';
 import 'package:rent/utils/upload_images.dart';
 
-
-
 class ImageUploadForm extends StatefulWidget {
   final PostFormModel model;
+
   const ImageUploadForm({Key? key, required this.model}) : super(key: key);
 
   @override
@@ -37,13 +36,12 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('You can select up to 10 images. please delete additional images w'),
+          content: Text(
+              'You can select up to 10 images. please delete additional images w'),
         ),
       );
     }
   }
-
-
 
   void _takePhoto() async {
     XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -54,7 +52,6 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
     }
   }
 
-
   String? _validateImages(List<XFile> images) {
     if (images.length < 5) {
       return 'Please select at least 5 images.';
@@ -63,31 +60,38 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
   }
 
   void _submitForm() async {
-    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-      String? validationResult = _validateImages(_selectedImages);
-      List<String> imageUrl=[];
-      if (validationResult == null) {
-        for(var value in _selectedImages){
-        imageUrl.add(await uploadImage(File(value.path)));}
+    try {
+      if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+        String? validationResult = _validateImages(_selectedImages);
+        List<String> imageUrl = [];
+        if (validationResult == null) {
+          for (var value in _selectedImages) {
+            imageUrl.add(await uploadImage(File(value.path)));
+          }
 
-          widget.model.images=imageUrl;
-        CollectionReference postRef =
-        FirebaseFirestore.instance.collection("post");
-        widget.model.userId =  CurrentSession().user?.userid??'';
-         await postRef.add(widget.model.toMap());
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const PostDetails()));
-
-      } else {
-        // Display validation error message
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(validationResult)),
-        );
+          widget.model.images = imageUrl;
+          CollectionReference postRef =
+              FirebaseFirestore.instance.collection("post");
+          widget.model.userId = CurrentSession().user?.userid ?? '';
+          await postRef.add(widget.model.toMap());
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PostDetails(
+                        model: widget.model,
+                      )));
+        } else {
+          // Display validation error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(validationResult)),
+          );
+        }
       }
+    } catch (e) {
+      print(e);
     }
   }
+
   void _deleteImage(int index) {
     setState(() {
       _selectedImages.removeAt(index);
@@ -102,7 +106,7 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
         title: Center(
           child: Image.asset(
             'assets/logo.png',
-            height:MediaQuery.of(context).size.height*0.07,
+            height: MediaQuery.of(context).size.height * 0.07,
           ),
         ),
       ),
@@ -123,7 +127,8 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
                         borderRadius: BorderRadius.circular(32.0),
                       ),
                       minimumSize: const Size(100, 40),
-                      foregroundColor: Colors.white, // Set the font color to white
+                      foregroundColor:
+                          Colors.white, // Set the font color to white
                     ),
                     icon: const Icon(Icons.photo_library_outlined),
                     label: const Text('Select Images'),
@@ -139,16 +144,15 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
                         borderRadius: BorderRadius.circular(32.0),
                       ),
                       minimumSize: const Size(100, 40),
-                      foregroundColor: Colors.white, // Set the font color to white
+                      foregroundColor:
+                          Colors.white, // Set the font color to white
                     ),
                     icon: const Icon(Icons.camera_alt_outlined),
                     label: const Text('Take Photo'),
                   ),
                 ),
-
               ],
             ),
-
             const SizedBox(height: 10),
             Text(
               _selectedImages.length.toString() + ' images selected',
@@ -193,12 +197,12 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
                 },
               ),
             ),
-
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: _submitForm,
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white70,// primary: const Color(0xff79698e),
+                foregroundColor: Colors.white70,
+                // primary: const Color(0xff79698e),
                 // Text Color (Foreground color)
                 backgroundColor: const Color(0xff79698e),
                 shape: RoundedRectangleBorder(
@@ -213,4 +217,3 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
     );
   }
 }
-

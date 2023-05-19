@@ -12,11 +12,11 @@ class PostFormModel {
   int? rooms;
   int? bathrooms;
   String? furnishingStatus;
-  bool? garden;
-  bool? parking;
-  bool? balcony;
-  bool? elevator;
-  bool? facilities;
+  bool garden;
+  bool parking;
+  bool balcony;
+  bool elevator;
+  bool facilities;
   String? country;
   String? governorate;
   String? neighborhood;
@@ -32,11 +32,11 @@ class PostFormModel {
     this.rooms,
     this.bathrooms,
     this.furnishingStatus,
-    this.garden,
-    this.parking,
-    this.balcony,
-    this.elevator,
-    this.facilities,
+    this.garden=false,
+    this.parking=false,
+    this.balcony=false,
+    this.elevator=false,
+    this.facilities=false,
     this.country,
     this.governorate,
     this.neighborhood,

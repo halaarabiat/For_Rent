@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:rent/home_screen.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:rent/models/post_model.dart';
+
 // import 'package:rent/models/post_model.dart';
 import '../../config/current_session.dart';
 
 class PostDetails extends StatefulWidget {
-  // final PostFormModel model;
-  const PostDetails({Key? key}) : super(key: key);
-  // const PostDetails({Key? key, required this.model}) : super(key: key);
+  final PostFormModel model;
+
+  const PostDetails({Key? key, required this.model}) : super(key: key);
 
   @override
   State<PostDetails> createState() => _PostDetailsState();
@@ -117,19 +119,21 @@ class _PostDetailsState extends State<PostDetails> {
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Row(
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Icons.home_outlined,
                               size: 40,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            // Text(  widget.model.propertyType ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            Text(
+                              widget.model.propertyType ?? '',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -147,7 +151,7 @@ class _PostDetailsState extends State<PostDetails> {
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Row(
-                          children: const [
+                          children: [
                             Icon(
                               Icons.event_seat_outlined,
                               size: 40,
@@ -155,11 +159,13 @@ class _PostDetailsState extends State<PostDetails> {
                             SizedBox(
                               width: 10,
                             ),
-                            // Text( widget.model.furnishingStatus ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            Text(
+                              widget.model.furnishingStatus ?? '',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -184,7 +190,7 @@ class _PostDetailsState extends State<PostDetails> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Icon(
                               Icons.space_bar_outlined,
                               size: 40,
@@ -192,12 +198,16 @@ class _PostDetailsState extends State<PostDetails> {
                             SizedBox(
                               height: 5,
                             ),
-                            // SizedBox(height: 5 ,),
-                            // Text( widget.model.flat.toString() ?? 'm²',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              widget.model.flat.toString() ?? 'm²',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -216,7 +226,7 @@ class _PostDetailsState extends State<PostDetails> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Icon(
                               Ionicons.bed_outline,
                               size: 40,
@@ -224,11 +234,13 @@ class _PostDetailsState extends State<PostDetails> {
                             SizedBox(
                               height: 5,
                             ),
-                            // Text(  widget.model.rooms.toString() ??'',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            Text(
+                              widget.model.rooms.toString() ?? '',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             // SizedBox(height: 5 ,),
                             Text("Room"),
                           ],
@@ -247,17 +259,21 @@ class _PostDetailsState extends State<PostDetails> {
                       width: 100,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(
                             Icons.bathtub,
                             size: 40,
                           ),
-                          // SizedBox(height: 5 ,),
-                          //  Text(  widget.model.bathrooms.toString() ?? '',
-                          //    style: const TextStyle(
-                          //      fontSize: 20,
-                          //      fontWeight: FontWeight.bold,
-                          //    ),),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            widget.model.bathrooms.toString() ?? '',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           Text("bathroom"),
                         ],
                       ),
@@ -284,7 +300,7 @@ class _PostDetailsState extends State<PostDetails> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Icon(
                               Icons.local_parking_outlined,
                               size: 30,
@@ -295,11 +311,13 @@ class _PostDetailsState extends State<PostDetails> {
                             SizedBox(
                               height: 5,
                             ),
-                            // Text( widget.model.parking.toString() ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            Text(
+                              widget.model.parking.toString() ?? '',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -318,7 +336,7 @@ class _PostDetailsState extends State<PostDetails> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children:  const [
+                          children: [
                             Icon(
                               Icons.park_outlined,
                               size: 30,
@@ -329,11 +347,15 @@ class _PostDetailsState extends State<PostDetails> {
                             SizedBox(
                               height: 5,
                             ),
-                            // Text( widget.model.garden.toString() ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            widget.model.garden
+                                ? Icon(
+                                    Icons.check,
+                                    color: Colors.green,
+                                  )
+                                : Icon(
+                                    Icons.close,
+                                    color: Colors.red,
+                                  ),
                           ],
                         ),
                       ),
@@ -352,7 +374,7 @@ class _PostDetailsState extends State<PostDetails> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children:  const [
+                          children: [
                             Icon(
                               Icons.balcony_outlined,
                               size: 30,
@@ -363,11 +385,13 @@ class _PostDetailsState extends State<PostDetails> {
                             SizedBox(
                               height: 5,
                             ),
-                            // Text( widget.model.balcony.toString() ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            Text(
+                              widget.model.balcony.toString() ?? '',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -386,7 +410,7 @@ class _PostDetailsState extends State<PostDetails> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children:  const [
+                          children: [
                             Icon(
                               Icons.elevator_outlined,
                               size: 30,
@@ -397,11 +421,13 @@ class _PostDetailsState extends State<PostDetails> {
                             SizedBox(
                               height: 5,
                             ),
-                            // Text( widget.model.elevator.toString() ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            Text(
+                              widget.model.elevator.toString() ?? '',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -420,7 +446,7 @@ class _PostDetailsState extends State<PostDetails> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children:  const [
+                          children: [
                             Icon(
                               Icons.wheelchair_pickup_outlined,
                               size: 30,
@@ -431,11 +457,13 @@ class _PostDetailsState extends State<PostDetails> {
                             SizedBox(
                               height: 5,
                             ),
-                            // Text( widget.model.facilities.toString() ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            Text(
+                              widget.model.facilities.toString() ?? '',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -454,32 +482,32 @@ class _PostDetailsState extends State<PostDetails> {
                   height: 70,
                   width: double.infinity,
                   child: Row(
-                    children: const [
+                    children: [
                       Icon(
                         Icons.location_on_outlined,
                         size: 40,
                       ),
-                      // Text(
-                      //   widget.model.neighborhood ?? '',
-                      //   style: const TextStyle(
-                      //     fontSize: 20,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      // Text(
-                      //   widget.model.governorate ?? '',
-                      //   style: const TextStyle(
-                      //     fontSize: 20,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      // Text(
-                      //   widget.model.country ?? '',
-                      //   style: const TextStyle(
-                      //     fontSize: 20,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
+                      Text(
+                        widget.model.neighborhood ?? '',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        widget.model.governorate ?? '',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        widget.model.country ?? '',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -498,15 +526,16 @@ class _PostDetailsState extends State<PostDetails> {
                   height: 70,
                   width: double.infinity,
                   child: Row(
-                    children: const [
+                    children: [
                       Icon(
                         Icons.attach_money_outlined,
                         size: 40,
                       ),
-                      // Text(widget.model.price ?? '',
-                      //   style: const TextStyle(
-                      //     fontSize: 20,
-                      //     fontWeight: FontWeight.bold,))
+                      Text(widget.model.price ?? '',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ))
                     ],
                   ),
                 ),
@@ -525,15 +554,16 @@ class _PostDetailsState extends State<PostDetails> {
                   height: 70,
                   width: double.infinity,
                   child: Row(
-                    children: const [
+                    children: [
                       Icon(
                         Icons.phone_outlined,
                         size: 40,
                       ),
-                      // Text(widget.model.phoneNumber ?? '',
-                      //     style: const TextStyle(
-                      //       fontSize: 20,
-                      //       fontWeight: FontWeight.bold,))
+                      Text(widget.model.phoneNumber ?? '',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ))
                     ],
                   ),
                 ),
@@ -560,14 +590,13 @@ class _PostDetailsState extends State<PostDetails> {
                 child: SizedBox(
                   height: 200,
                   width: double.infinity,
-                  child: Row(
-                    children: const [
-                      // Text(widget.model.description ?? '',
-                      //     style: const TextStyle(
-                      //       fontSize: 20,
-                      //       fontWeight: FontWeight.bold,))
-                    ],
-                  ),
+                  child: Text(widget.model.description ?? '',
+                      maxLines: 6,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeight.bold,
+                      )),
                 ),
               ),
             ],

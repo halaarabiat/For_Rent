@@ -1,9 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:rent/post/details/fav_post_details.dart';
-import 'package:rent/post/details/post_details_screen.dart';
-import 'package:rent/post/list/post_screen.dart';
 import 'package:rent/register/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';

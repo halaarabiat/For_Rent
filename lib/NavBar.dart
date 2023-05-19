@@ -18,10 +18,12 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   XFile? image;
   final ImagePicker imagePicker = ImagePicker();
-
+  String imgUrl = '';
+  User? user = FirebaseAuth.instance.currentUser;
 
   Future<void> getImageFromGallery() async {
-    final pickedImage = await imagePicker.pickImage(source: ImageSource.gallery);
+    final pickedImage =
+        await imagePicker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
       setState(() {
@@ -32,17 +34,18 @@ class _NavBarState extends State<NavBar> {
       final fileName = path.basename(file.path);
 
       try {
-        final user = FirebaseAuth.instance.currentUser;
-
         if (user != null) {
-          final storageRef = FirebaseStorage.instance.ref().child('profile_images/$fileName');
+          final storageRef =
+              FirebaseStorage.instance.ref().child('profile_images/$fileName');
           final uploadTask = storageRef.putFile(file);
 
           await uploadTask;
 
           final imageUrl = await storageRef.getDownloadURL();
 
-          await user.updatePhotoURL(imageUrl);
+          await user!.updatePhotoURL(imageUrl);
+          imgUrl = imageUrl;
+          setState(() {});
         }
       } catch (e) {
         print('Error uploading image to Firebase: $e');
@@ -50,7 +53,13 @@ class _NavBarState extends State<NavBar> {
     }
   }
 
-
+  @override
+  void initState() {
+    if (user != null) {
+      imgUrl = user?.photoURL ?? '';
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,13 +74,14 @@ class _NavBarState extends State<NavBar> {
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: CircleAvatar(
-                    backgroundImage:
-                        image == null ? null : FileImage(File(image!.path)),
-
+                  child: imgUrl.isNotEmpty? CircleAvatar(
+                    backgroundImage: NetworkImage(imgUrl),
                     backgroundColor: Colors.white70,
                     radius: 50.0,
-                  ),
+                  ): CircleAvatar(
+                    backgroundColor: Colors.white70,
+                    radius: 50.0,
+                  ),//todo
                 ),
                 Positioned(
                     bottom: 5,
