@@ -14,7 +14,11 @@ class FavPostItem extends StatefulWidget {
 
 class _FavPostItemState extends State<FavPostItem> {
   void selectPost() {}
-
+  @override
+  void initState() {
+    widget.models.sort((a, b) => a.price.compareTo(b.price));
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +87,8 @@ class _FavPostItemState extends State<FavPostItem> {
                                     setState(() {
                                       widget.models[index].isFav =
                                           !widget.models[index].isFav;
-                                      CurrentSession().updateFavPosts(widget.models[index]);
+                                      CurrentSession()
+                                          .updateFavPosts(widget.models[index]);
                                     });
                                   },
                                   icon: Icon(
