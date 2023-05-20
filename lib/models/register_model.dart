@@ -13,6 +13,8 @@ class UserModel {
   String? email;
   String? password;
   PostFormModel? postForm;
+  String? image;
+
 
   UserModel({
     this.userid,
@@ -21,6 +23,7 @@ class UserModel {
     this.email,
     this.password,
     this.postForm,
+    this.image,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
@@ -32,6 +35,7 @@ class UserModel {
     postForm: json["postForm"] != null
         ? PostFormModel.fromMap(json["postForm"])
         : null,
+    image: json["image"],
   );
 
   Map<String, dynamic> toMap() => {
@@ -40,5 +44,6 @@ class UserModel {
     "fullname": fullname,
     "email": email,
     "postForm": postForm != null ? postForm!.toMap() : null,
+    "image": image,
   };
 }

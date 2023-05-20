@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:rent/home_screen.dart';
+// import 'package:rent/models/post_model.dart';
 
-// enum PostType{favorite,myPosts}
 class PostItem extends StatefulWidget {
-  // final PostType postType;
-  // final PostFormModel model
-  const PostItem({super.key});
+  // final PostFormModel model;
+  const PostItem({Key? key}) : super(key: key);
+
+
+  // const PostItem({Key? key, required this.model}) : super(key: key);
 
   @override
   _PostItemState createState() => _PostItemState();
 }
 
 class _PostItemState extends State<PostItem> {
-  bool _isFavorite = false;
+  // bool _isFavorite = false;
 
   void selectPost() {}
 
-  void _toggleFavorite() {
-    setState(() {
-      _isFavorite = !_isFavorite;
-    });
-  }
+  // void _toggleFavorite() {
+  //   setState(() {
+  //     _isFavorite = !_isFavorite;
+  //   });
+  // }
 
-  // where city = Amman  // filter
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +53,7 @@ class _PostItemState extends State<PostItem> {
         child: ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 6,
+            itemCount: 1,
             itemBuilder: (context, _) {
               return InkWell(
                 onTap: selectPost,
@@ -76,29 +77,30 @@ class _PostItemState extends State<PostItem> {
                                 topRight: Radius.circular(15),
                               ),
                               child: Container(
+
                                 height: 250,
                                 width: double.infinity,
                                 color: Colors.grey,
                               ),
                             ),
-                            Positioned(
-                              top: 10,
-                              right: 10,
-                              child: Transform.scale(
-                                scale: 2.0,
-                                child: IconButton(
-                                  onPressed: _toggleFavorite,
-                                  icon: Icon(
-                                    _isFavorite
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    color: _isFavorite
-                                        ? const Color(0xff79698e)
-                                        : null,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // Positioned(
+                            //   top: 10,
+                            //   right: 10,
+                            //   child: Transform.scale(
+                            //     scale: 2.0,
+                            //     child: IconButton(
+                            //       onPressed: _toggleFavorite,
+                            //       icon: Icon(
+                            //         _isFavorite
+                            //             ? Icons.favorite
+                            //             : Icons.favorite_border,
+                            //         color: _isFavorite
+                            //             ? const Color(0xff79698e)
+                            //             : null,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
 
@@ -114,49 +116,50 @@ class _PostItemState extends State<PostItem> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
-                                      children: const [
-                                        Icon(
+                                      children: [
+                                        const Icon(
                                           Icons.home_outlined,
                                           size: 40,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 10,
                                         ),
-                                        Text(
-                                          "Home",
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
+                                        // Text(
+                                        //   widget.model.propertyType ?? '',
+                                        //   style: const TextStyle(
+                                        //     fontSize: 20,
+                                        //     fontWeight: FontWeight.bold,
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
-                                    Row(children: const [
-                                      Icon(
+                                    Row(children:  [
+                                      const Icon(
                                         Icons.event_seat_outlined,
                                         size: 40,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
-                                      Text(
-                                        'Status',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
+                                      // Text(
+                                      //   widget.model.furnishingStatus ?? '',
+                                      //   style: const TextStyle(
+                                      //     fontSize: 20,
+                                      //     fontWeight: FontWeight.bold,
+                                      //   ),
+                                      // ),
+
+                                      const SizedBox(width: 10),
                                     ]),
                                     Row(
-                                      children: const [
-                                        Text(
-                                          'Rooms',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
+                                      children:  [
+                                        // Text(
+                                        //   widget.model.rooms.toString() ?? '' ,
+                                        //   style: const TextStyle(
+                                        //     fontSize: 20,
+                                        //     fontWeight: FontWeight.bold,
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                   ],
@@ -165,38 +168,38 @@ class _PostItemState extends State<PostItem> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(children: const [
-                                      Icon(
+                                    Row(children:  [
+                                      const Icon(
                                         Icons.location_on_outlined,
                                         size: 40,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
-                                      Text(
-                                        "Location",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
+                                      // Text(
+                                      //   widget.model.neighborhood ?? '' ,
+                                      //   style: const TextStyle(
+                                      //     fontSize: 20,
+                                      //     fontWeight: FontWeight.bold,
+                                      //   ),
+                                      // ),
                                     ]),
-                                    Row(children: const [
-                                      Icon(
+                                    Row(children:  [
+                                      const Icon(
                                         Icons.attach_money,
                                         size: 40,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
-                                      Text(
-                                        'Price',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(width: 5),
+                                      // Text(
+                                      //   widget.model.price ?? '',
+                                      //   style: const TextStyle(
+                                      //     fontSize: 20,
+                                      //     fontWeight: FontWeight.bold,
+                                      //   ),
+                                      // ),
+                                      const SizedBox(width: 5),
                                     ]),
                                   ],
                                 ),

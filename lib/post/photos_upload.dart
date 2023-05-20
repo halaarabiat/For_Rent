@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as path;
+import 'package:rent/config/current_session.dart';
 import 'package:rent/models/post_model.dart';
+import 'package:rent/post/details/post_details_screen.dart';
 import 'package:rent/utils/upload_images.dart';
-
-
 
 class ImageUploadForm extends StatefulWidget {
   final PostFormModel model;
+
   const ImageUploadForm({Key? key, required this.model}) : super(key: key);
 
   @override
@@ -33,7 +34,6 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
       setState(() {
         _selectedImages.addAll(images as Iterable<XFile>);
       });
-      // Display a message indicating that the maximum limit has been reached
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
@@ -42,16 +42,6 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
       );
     }
   }
-  // upload image method
-  // Future<String> uploadImage(File file)
-  // async{
-  //   String fileName=path.basename(file.path);
-  //   Reference ref=FirebaseStorage.instance.ref().child("images/$fileName");
-  //   UploadTask task=ref.putFile(file);
-  //   TaskSnapshot snapshot = await task.whenComplete(() => null);
-  //   String url = await snapshot.ref.getDownloadURL();
-  //   return url;
-  // }
 
   void _takePhoto() async {
     XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -62,15 +52,6 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
     }
   }
 
-  Future<String> uploadImage(File file) async {
-    String fileName = path.basename(file.path);
-    Reference ref = FirebaseStorage.instance.ref().child("images/$fileName");
-    UploadTask task = ref.putFile(file);
-    TaskSnapshot snapshot = await task.whenComplete(() => null);
-    String url = await snapshot.ref.getDownloadURL();
-    return url;
-  } // utils imageHelper
-
   String? _validateImages(List<XFile> images) {
     if (images.length < 5) {
       return 'Please select at least 5 images.';
@@ -79,22 +60,35 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
   }
 
   void _submitForm() async {
-    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
-      String? validationResult = _validateImages(_selectedImages);
-      List<String> imageUrl=[];
-      if (validationResult == null) {
-        for(var value in _selectedImages){
-        imageUrl.add(await uploadImage(File(value.path)));}
+    try {
+      if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+        String? validationResult = _validateImages(_selectedImages);
+        List<String> imageUrl = [];
+        if (validationResult == null) {
+          for (var value in _selectedImages) {
+            imageUrl.add(await uploadImage(File(value.path)));
+          }
 
-          widget.model.images=imageUrl;
-        CollectionReference postRef =
-        FirebaseFirestore.instance.collection("post");
-      } else {
-        // Display validation error message
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(validationResult)),
-        );
+          widget.model.images = imageUrl;
+          CollectionReference postRef =
+              FirebaseFirestore.instance.collection("post");
+          widget.model.userId = CurrentSession().user?.userid ?? '';
+          await postRef.add(widget.model.toMap());
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PostDetails(
+                        model: widget.model,
+                      )));
+        } else {
+          // Display validation error message
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(validationResult)),
+          );
+        }
       }
+    } catch (e) {
+      print(e);
     }
   }
 

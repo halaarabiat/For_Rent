@@ -1,12 +1,12 @@
 import 'dart:io';
-import 'package:flutter/services.dart';
-import 'package:path/path.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rent/config/current_session.dart';
 import 'package:rent/register/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rent/utils/upload_images.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -17,18 +17,48 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   XFile? image;
-
   final ImagePicker imagePicker = ImagePicker();
+  String imgUrl = '';
+  User? user = FirebaseAuth.instance.currentUser;
 
-  getImageFromGallery() async {
-    image = await imagePicker.pickImage(source: ImageSource.gallery);
-    //upload storage
-    // get photo link ()
-    // FirebaseAuth.instance.currentUser.photoURL =
-    //     'https://firebasestorage.googleapis.com/v0/b/rent-4.appspot.com/o/profilepic.jpg?alt=media&token=940aefba-fd08-4e7c-a430-e396f20faf8c';
-    setState(() {
-      image;
-    });
+  Future<void> getImageFromGallery() async {
+    final pickedImage =
+        await imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      setState(() {
+        image = pickedImage;
+      });
+
+      final file = File(pickedImage.path);
+      final fileName = path.basename(file.path);
+
+      try {
+        if (user != null) {
+          final storageRef =
+              FirebaseStorage.instance.ref().child('profile_images/$fileName');
+          final uploadTask = storageRef.putFile(file);
+
+          await uploadTask;
+
+          final imageUrl = await storageRef.getDownloadURL();
+
+          await user!.updatePhotoURL(imageUrl);
+          imgUrl = imageUrl;
+          setState(() {});
+        }
+      } catch (e) {
+        print('Error uploading image to Firebase: $e');
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    if (user != null) {
+      imgUrl = user?.photoURL ?? '';
+    }
+    super.initState();
   }
 
   @override
@@ -37,22 +67,21 @@ class _NavBarState extends State<NavBar> {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color(0xff79698e),
             ),
             child: Stack(
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: CircleAvatar(
-                    backgroundImage:
-                        image == null ? null : FileImage(File(image!.path)),
-                    // child:image==null? Icon(Icons.add_photo_alternate_outlined,
-                    // color: Colors.grey,
-                    // size: MediaQuery.of(context).size.width*0.10,):null,
+                  child: imgUrl.isNotEmpty? CircleAvatar(
+                    backgroundImage: NetworkImage(imgUrl),
                     backgroundColor: Colors.white70,
                     radius: 50.0,
-                  ),
+                  ): CircleAvatar(
+                    backgroundColor: Colors.white70,
+                    radius: 50.0,
+                  ),//todo
                 ),
                 Positioned(
                     bottom: 5,
@@ -61,7 +90,7 @@ class _NavBarState extends State<NavBar> {
                       onPressed: () {
                         getImageFromGallery();
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.add_a_photo_outlined,
                         color: Colors.white,
                       ),
@@ -70,14 +99,14 @@ class _NavBarState extends State<NavBar> {
                   alignment: Alignment.centerRight,
                   child: Text(
                     CurrentSession().user?.fullname ?? 'User',
-                    style: TextStyle(color: Colors.white, fontSize: 20.0),
+                    style: const TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
                 ),
                 Align(
-                  alignment: Alignment.centerRight + Alignment(0, .3),
+                  alignment: Alignment.centerRight + const Alignment(0, .3),
                   child: Text(
                     CurrentSession().user?.username ?? 'Username',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white70,
                     ),
                   ),
@@ -87,27 +116,27 @@ class _NavBarState extends State<NavBar> {
           ),
 
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.favorite,
               color: Color(0xff79698e),
             ),
-            title: Text('Favorite'),
+            title: const Text('Favorite'),
             onTap: () => null,
           ),
           //Divider(),
 
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.wysiwyg,
               color: Color(0xff79698e),
             ),
-            title: Text('Post'),
+            title: const Text('Post'),
             onTap: () => {},
           ),
 
-          Divider(),
+          const Divider(),
 
-          ListTile(
+          const ListTile(
             leading: Icon(
               Icons.warning_amber,
             ),
@@ -127,7 +156,7 @@ class _NavBarState extends State<NavBar> {
                   (route) => false,
                 );
               },
-              child: Text(
+              child: const Text(
                 "Log Out",
                 style: TextStyle(color: Color(0xff79698e)),
               ),
@@ -138,10 +167,3 @@ class _NavBarState extends State<NavBar> {
     );
   }
 }
-// void PickImage(){
-// var image= ImagePicker().pickImage(source:ImageSource.gallery);
-//
-// setState((){
-//   _image =image;
-// });
-// }
