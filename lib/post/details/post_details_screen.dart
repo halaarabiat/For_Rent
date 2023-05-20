@@ -531,7 +531,7 @@ class _PostDetailsState extends State<PostDetails> {
                         Icons.attach_money_outlined,
                         size: 40,
                       ),
-                      Text(widget.model.price ?? '',
+                      Text(widget.model.price.toString() ?? '',
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,

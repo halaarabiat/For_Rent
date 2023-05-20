@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:rent/config/current_session.dart';
 import 'package:rent/home_screen.dart';
 import 'package:rent/models/post_model.dart';
 
 class FavPostItem extends StatefulWidget {
-  final PostFormModel model;
+  final List<PostFormModel> models;
 
-  const FavPostItem({Key? key, required this.model}) : super(key: key);
+  const FavPostItem({Key? key, required this.models}) : super(key: key);
 
   @override
   _FavPostItemState createState() => _FavPostItemState();
 }
 
 class _FavPostItemState extends State<FavPostItem> {
-  bool _isFavorite = false;
-
   void selectPost() {}
-
-  void _toggleFavorite() {
-    setState(() {
-      _isFavorite = !_isFavorite;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +44,8 @@ class _FavPostItemState extends State<FavPostItem> {
         child: ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 1,
-            itemBuilder: (context, _) {
+            itemCount: widget.models.length,
+            itemBuilder: (context, index) {
               return InkWell(
                 onTap: selectPost,
                 child: Card(
@@ -75,7 +68,6 @@ class _FavPostItemState extends State<FavPostItem> {
                                 topRight: Radius.circular(15),
                               ),
                               child: Container(
-
                                 height: 250,
                                 width: double.infinity,
                                 color: Colors.grey,
@@ -87,12 +79,18 @@ class _FavPostItemState extends State<FavPostItem> {
                               child: Transform.scale(
                                 scale: 2.0,
                                 child: IconButton(
-                                  onPressed: _toggleFavorite,
+                                  onPressed: () {
+                                    setState(() {
+                                      widget.models[index].isFav =
+                                          !widget.models[index].isFav;
+                                      CurrentSession().updateFavPosts(widget.models[index]);
+                                    });
+                                  },
                                   icon: Icon(
-                                    _isFavorite
+                                    widget.models[index].isFav
                                         ? Icons.favorite
                                         : Icons.favorite_border,
-                                    color: _isFavorite
+                                    color: widget.models[index].isFav
                                         ? const Color(0xff79698e)
                                         : null,
                                   ),
@@ -111,7 +109,7 @@ class _FavPostItemState extends State<FavPostItem> {
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -123,7 +121,8 @@ class _FavPostItemState extends State<FavPostItem> {
                                           width: 10,
                                         ),
                                         Text(
-                                          widget.model.propertyType ?? '',
+                                          widget.models[index].propertyType ??
+                                              '',
                                           style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
@@ -131,7 +130,7 @@ class _FavPostItemState extends State<FavPostItem> {
                                         ),
                                       ],
                                     ),
-                                    Row(children:  [
+                                    Row(children: [
                                       const Icon(
                                         Icons.event_seat_outlined,
                                         size: 40,
@@ -140,19 +139,21 @@ class _FavPostItemState extends State<FavPostItem> {
                                         width: 10,
                                       ),
                                       Text(
-                                        widget.model.furnishingStatus ?? '',
+                                        widget.models[index].furnishingStatus ??
+                                            '',
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-
                                       const SizedBox(width: 10),
                                     ]),
                                     Row(
-                                      children:  [
+                                      children: [
                                         Text(
-                                          widget.model.rooms.toString() ?? '' ,
+                                          widget.models[index].rooms
+                                                  .toString() ??
+                                              '',
                                           style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
@@ -164,9 +165,9 @@ class _FavPostItemState extends State<FavPostItem> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(children:  [
+                                    Row(children: [
                                       const Icon(
                                         Icons.location_on_outlined,
                                         size: 40,
@@ -175,14 +176,14 @@ class _FavPostItemState extends State<FavPostItem> {
                                         width: 5,
                                       ),
                                       Text(
-                                        widget.model.neighborhood ?? '' ,
+                                        widget.models[index].neighborhood ?? '',
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ]),
-                                    Row(children:  [
+                                    Row(children: [
                                       const Icon(
                                         Icons.attach_money,
                                         size: 40,
@@ -191,7 +192,8 @@ class _FavPostItemState extends State<FavPostItem> {
                                         width: 5,
                                       ),
                                       Text(
-                                        widget.model.price ?? '',
+                                        widget.models[index].price.toString() ??
+                                            '',
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
