@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rent/models/post_model.dart';
-import 'package:rent/post/details/fav_post_details.dart';
 import 'package:rent/post/list/fav_post_screen.dart';
 import 'NavBar.dart';
 import 'post/form_post_screen.dart';
@@ -120,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           TextEditingController textEditingController,
                           FocusNode focusNode,
                           VoidCallback onFieldSubmitted) {
-                        // _searchController.value = textEditingController.value;
+                        //  _searchController.value = textEditingController.value;
                         return TextFormField(
                           controller: textEditingController,
                           focusNode: focusNode,
@@ -180,35 +179,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ))));
                       },
                     ),
-                    // child: TextFormField(
-                    //   decoration: InputDecoration(
-                    //     border: const OutlineInputBorder(
-                    //       borderSide: BorderSide(
-                    //         color: Color(0xff79698e),
-                    //         width: 3,
-                    //       ),
-                    //     ),
-                    //     focusedBorder: const OutlineInputBorder(
-                    //       borderSide: BorderSide(
-                    //         color: Color(0xff79698e),
-                    //         width: 3,
-                    //       ),
-                    //     ),
-                    //     enabled: true,
-                    //     fillColor: Colors.white70,
-                    //     filled: true,
-                    //     hintText: "search by city or neighborhood",
-                    //     contentPadding: const EdgeInsets.all(5.0),
-                    //     hintStyle: const TextStyle(fontSize: 15),
-                    //     suffixIcon: IconButton(
-                    //       onPressed: () {},
-                    //       icon: const Icon(
-                    //         Icons.search,
-                    //         color: Color(0xff79698e),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ),
                 ),
                 Positioned(
@@ -247,19 +217,14 @@ class _HomeScreenState extends State<HomeScreen> {
   void _getData(String selectedOption) async {
     CollectionReference postRef = FirebaseFirestore.instance.collection("post");
     var result =
-        await postRef.where("governorate", isEqualTo: _selectedOption).get();
+    await postRef.where("governorate", isEqualTo: _selectedOption).get();
     List<PostFormModel> models = [];
     for (var item in result.docs) {
-      var postFormModel =
-          PostFormModel.fromMap(item.data() as Map<String, dynamic>);
-      postFormModel.documentId = item.reference.id.toString();
-      models.add(postFormModel);
+      models.add(PostFormModel.fromMap(item.data() as Map<String, dynamic>));
     }
     if (models.isNotEmpty) {
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => FavPostItem(
-                models: models,
-              )));
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => FavPostItem(models: models)));
     }
   }
 }

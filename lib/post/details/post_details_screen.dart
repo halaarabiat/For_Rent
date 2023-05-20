@@ -87,16 +87,7 @@ class _PostDetailsState extends State<PostDetails> {
                   viewportFraction: 0.70,
                 ),
                 items: widget.model.images!.map((image) {
-                  return Container(
-                    color: Colors.grey,
-                    child: PinchZoom(child: Image.network(image),
-                        resetDuration: const Duration(milliseconds: 100),
-                    maxScale: 2.5,
-                    onZoomStart: (){print('Start zooming');},
-                    onZoomEnd: (){print('Stop zooming');},
-
-                    ),
-                  );
+                  return Image.network(image);
                 }).toList(),
               ),
 
@@ -153,7 +144,7 @@ class _PostDetailsState extends State<PostDetails> {
                           children: [
                             const Icon(
                               Icons.event_seat_outlined,
-                              size: 35,
+                              size: 30,
                             ),
                             const SizedBox(
                               width: 10,
@@ -204,7 +195,7 @@ class _PostDetailsState extends State<PostDetails> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  widget.model.flat.toString() ?? 'm²',
+                                  widget.model.flat.toString() ?? '',
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -299,192 +290,218 @@ class _PostDetailsState extends State<PostDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 70,
-                      width: 55,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.local_parking_outlined,
-                            size: 30,
+                  Column(
+                    children: [
+                      Text("parking",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 7,
+                        margin: const EdgeInsets.all(10),
+                        child: SizedBox(
+                          height: 70,
+                          width: 55,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.local_parking_outlined,
+                                size: 30,
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              widget.model.parking
+                                  ? const Icon(
+                                      Icons.check,
+                                      color: Colors.green,
+                                    )
+                                  : const Icon(
+                                      Icons.close,
+                                      color: Colors.red,
+                                    ),
+                            ],
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          widget.model.parking
-                              ? const Icon(
-                                  Icons.check,
-                                  color: Colors.green,
-                                )
-                              : const Icon(
-                                  Icons.close,
-                                  color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text("Garden",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 7,
+                        margin: const EdgeInsets.all(10),
+                        child: SizedBox(
+                          height: 70,
+                          width: 55,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: Column(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.park_outlined,
+                                  size: 30,
                                 ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 70,
-                      width: 55,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.park_outlined,
-                              size: 30,
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                widget.model.garden
+                                    ? const Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                      )
+                                    : const Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                              ],
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            widget.model.garden
-                                ? const Icon(
-                                    Icons.check,
-                                    color: Colors.green,
-                                  )
-                                : const Icon(
-                                    Icons.close,
-                                    color: Colors.red,
-                                  ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 70,
-                      width: 55,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.balcony_outlined,
-                              size: 30,
+                  Column(
+                    children: [
+                      Text("Balcony",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 7,
+                        margin: const EdgeInsets.all(10),
+                        child: SizedBox(
+                          height: 70,
+                          width: 55,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.balcony_outlined,
+                                  size: 30,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                widget.model.balcony
+                                    ? const Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                      )
+                                    : const Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                              ],
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            widget.model.balcony
-                                ? const Icon(
-                                    Icons.check,
-                                    color: Colors.green,
-                                  )
-                                : const Icon(
-                                    Icons.close,
-                                    color: Colors.red,
-                                  ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 70,
-                      width: 55,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.elevator_outlined,
-                              size: 30,
+                  Column(
+                    children: [
+                      Text("Elevator",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 7,
+                        margin: const EdgeInsets.all(10),
+                        child: SizedBox(
+                          height: 70,
+                          width: 55,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.elevator_outlined,
+                                  size: 30,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                widget.model.elevator
+                                    ? const Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                      )
+                                    : const Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                              ],
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            widget.model.elevator
-                                ? const Icon(
-                                    Icons.check,
-                                    color: Colors.green,
-                                  )
-                                : const Icon(
-                                    Icons.close,
-                                    color: Colors.red,
-                                  ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 70,
-                      width: 55,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.wheelchair_pickup_outlined,
-                              size: 30,
+                  Column(
+                    children: [
+                      Text("Facilities",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 7,
+                        margin: const EdgeInsets.all(10),
+                        child: SizedBox(
+                          height: 70,
+                          width: 55,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.wheelchair_pickup_outlined,
+                                  size: 30,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                widget.model.facilities
+                                    ? const Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                      )
+                                    : const Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                              ],
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            widget.model.facilities
-                                ? const Icon(
-                                    Icons.check,
-                                    color: Colors.green,
-                                  )
-                                : const Icon(
-                                    Icons.close,
-                                    color: Colors.red,
-                                  ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   )
                 ],
               ),

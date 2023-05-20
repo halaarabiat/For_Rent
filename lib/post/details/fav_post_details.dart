@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:rent/home_screen.dart';
 import 'package:ionicons/ionicons.dart';
-// import 'package:rent/models/post_model.dart';
+import 'package:rent/models/post_model.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import '../../config/current_session.dart';
 
-class FavPostDetails extends StatefulWidget {
-  // final PostFormModel model;
-  const FavPostDetails({Key? key}) : super(key: key);
-  // const PostDetails({Key? key, required this.model}) : super(key: key);
+class PostDetails extends StatefulWidget {
+  final PostFormModel models;
+
+  const PostDetails({Key? key, required this.models}) : super(key: key);
 
   @override
-  State<FavPostDetails> createState() => _FavPostDetailsState();
+  State<PostDetails> createState() => _PostDetailsState();
 }
 
-class _FavPostDetailsState extends State<FavPostDetails> {
-  bool _isFavorite = false;
-  void _toggleFavorite() {
-    setState(() {
-      _isFavorite = !_isFavorite;
-    });
-  }
-
+class _PostDetailsState extends State<PostDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,20 +40,21 @@ class _FavPostDetailsState extends State<FavPostDetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      CurrentSession().user?.fullname ?? 'User',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
+
                   IconButton(
-                    onPressed: _toggleFavorite,
+                    onPressed: () {
+                      setState(() {
+                        widget.models.isFav =
+                        !widget.models.isFav;
+                        CurrentSession()
+                            .updateFavPosts(widget.models);
+                      });
+                    },
                     icon: Icon(
-                      _isFavorite
+                      widget.models.isFav
                           ? Icons.favorite
                           : Icons.favorite_border,
-                      color: _isFavorite
+                      color: widget.models.isFav
                           ? const Color(0xff79698e)
                           : null,
                     ),
@@ -67,28 +62,18 @@ class _FavPostDetailsState extends State<FavPostDetails> {
                 ],
               ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.arrow_circle_left_outlined,
-                        size: 30,
-                      )),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.305,
-                    width: MediaQuery.of(context).size.width * 0.70,
-                    color: Colors.grey,
-                  ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.arrow_circle_right_outlined,
-                        size: 30,
-                      ))
-                ],
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: MediaQuery.of(context).size.height * 0.305,
+                  enlargeCenterPage: true,
+                  enableInfiniteScroll: false,
+                  viewportFraction: 0.70,
+                ),
+                items: widget.models.images!.map((image) {
+                  return Image.network(image);
+                }).toList(),
               ),
+
               const SizedBox(
                 height: 14,
               ),
@@ -107,19 +92,21 @@ class _FavPostDetailsState extends State<FavPostDetails> {
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Row(
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Icons.home_outlined,
-                              size: 40,
+                              size: 35,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            // Text(  widget.model.propertyType ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            Text(
+                              widget.models.propertyType ?? '',
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -137,19 +124,21 @@ class _FavPostDetailsState extends State<FavPostDetails> {
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Row(
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Icons.event_seat_outlined,
-                              size: 40,
+                              size: 30,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            // Text( widget.model.furnishingStatus ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            Text(
+                              widget.models.furnishingStatus ?? '',
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -174,20 +163,36 @@ class _FavPostDetailsState extends State<FavPostDetails> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Icons.space_bar_outlined,
                               size: 40,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
-                            // SizedBox(height: 5 ,),
-                            // Text( widget.model.flat.toString() ?? 'm²',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  widget.models.flat.toString() ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const Text(
+                                  ' m²',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -206,21 +211,23 @@ class _FavPostDetailsState extends State<FavPostDetails> {
                         width: MediaQuery.of(context).size.width * 0.5,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Ionicons.bed_outline,
                               size: 40,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
-                            // Text(  widget.model.rooms.toString() ??'',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
+                            Text(
+                              widget.models.rooms.toString() ?? '',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             // SizedBox(height: 5 ,),
-                            Text("Room"),
+                            const Text("Room"),
                           ],
                         ),
                       ),
@@ -237,18 +244,22 @@ class _FavPostDetailsState extends State<FavPostDetails> {
                       width: 100,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
+                        children: [
+                          const Icon(
                             Icons.bathtub,
                             size: 40,
                           ),
-                          // SizedBox(height: 5 ,),
-                          //  Text(  widget.model.bathrooms.toString() ?? '',
-                          //    style: const TextStyle(
-                          //      fontSize: 20,
-                          //      fontWeight: FontWeight.bold,
-                          //    ),),
-                          Text("bathroom"),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            widget.models.bathrooms.toString() ?? '',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Text("bathroom"),
                         ],
                       ),
                     ),
@@ -260,176 +271,220 @@ class _FavPostDetailsState extends State<FavPostDetails> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 45,
-                      width: 45,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              Icons.local_parking_outlined,
-                              size: 30,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            // Text( widget.model.parking.toString() ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
-                          ],
+                  Column(
+                    children: [
+                      Text("parking",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 7,
+                        margin: const EdgeInsets.all(10),
+                        child: SizedBox(
+                          height: 70,
+                          width: 55,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.local_parking_outlined,
+                                size: 30,
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              widget.models.parking
+                                  ? const Icon(
+                                Icons.check,
+                                color: Colors.green,
+                              )
+                                  : const Icon(
+                                Icons.close,
+                                color: Colors.red,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 45,
-                      width: 45,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:  const [
-                            Icon(
-                              Icons.park_outlined,
-                              size: 30,
+                  Column(
+                    children: [
+                      Text("Garden",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 7,
+                        margin: const EdgeInsets.all(10),
+                        child: SizedBox(
+                          height: 70,
+                          width: 55,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: Column(
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.park_outlined,
+                                  size: 30,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                widget.models.garden
+                                    ? const Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                )
+                                    : const Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            // Text( widget.model.garden.toString() ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 45,
-                      width: 45,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:  const [
-                            Icon(
-                              Icons.balcony_outlined,
-                              size: 30,
+                  Column(
+                    children: [
+                      Text("Balcony",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 7,
+                        margin: const EdgeInsets.all(10),
+                        child: SizedBox(
+                          height: 70,
+                          width: 55,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.balcony_outlined,
+                                  size: 30,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                widget.models.balcony
+                                    ? const Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                )
+                                    : const Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            // Text( widget.model.balcony.toString() ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 45,
-                      width: 45,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:  const [
-                            Icon(
-                              Icons.elevator_outlined,
-                              size: 30,
+                  Column(
+                    children: [
+                      Text("Elevator",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 7,
+                        margin: const EdgeInsets.all(10),
+                        child: SizedBox(
+                          height: 70,
+                          width: 55,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.elevator_outlined,
+                                  size: 30,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                widget.models.elevator
+                                    ? const Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                )
+                                    : const Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            // Text( widget.model.elevator.toString() ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 45,
-                      width: 45,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:  const [
-                            Icon(
-                              Icons.wheelchair_pickup_outlined,
-                              size: 30,
+                  Column(
+                    children: [
+                      Text("Facilities",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        elevation: 7,
+                        margin: const EdgeInsets.all(10),
+                        child: SizedBox(
+                          height: 70,
+                          width: 55,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.wheelchair_pickup_outlined,
+                                  size: 30,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                widget.models.facilities
+                                    ? const Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                )
+                                    : const Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            // Text( widget.model.facilities.toString() ?? '',
-                            //   style: const TextStyle(
-                            //     fontSize: 20,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   )
                 ],
               ),
@@ -444,32 +499,32 @@ class _FavPostDetailsState extends State<FavPostDetails> {
                   height: 70,
                   width: double.infinity,
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Icons.location_on_outlined,
                         size: 40,
                       ),
-                      // Text(
-                      //   widget.model.neighborhood ?? '',
-                      //   style: const TextStyle(
-                      //     fontSize: 20,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      // Text(
-                      //   widget.model.governorate ?? '',
-                      //   style: const TextStyle(
-                      //     fontSize: 20,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
-                      // Text(
-                      //   widget.model.country ?? '',
-                      //   style: const TextStyle(
-                      //     fontSize: 20,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
+                      Text(
+                        widget.models.neighborhood ?? '',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        widget.models.governorate ?? '',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        widget.models.country ?? '',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -488,15 +543,16 @@ class _FavPostDetailsState extends State<FavPostDetails> {
                   height: 70,
                   width: double.infinity,
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Icons.attach_money_outlined,
                         size: 40,
                       ),
-                      // Text(widget.model.price ?? '',
-                      //   style: const TextStyle(
-                      //     fontSize: 20,
-                      //     fontWeight: FontWeight.bold,))
+                      Text(widget.models.price.toString() ?? '',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ))
                     ],
                   ),
                 ),
@@ -515,15 +571,16 @@ class _FavPostDetailsState extends State<FavPostDetails> {
                   height: 70,
                   width: double.infinity,
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Icons.phone_outlined,
                         size: 40,
                       ),
-                      // Text(widget.model.phoneNumber ?? '',
-                      //     style: const TextStyle(
-                      //       fontSize: 20,
-                      //       fontWeight: FontWeight.bold,))
+                      Text(widget.models.phoneNumber ?? '',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ))
                     ],
                   ),
                 ),
@@ -550,14 +607,13 @@ class _FavPostDetailsState extends State<FavPostDetails> {
                 child: SizedBox(
                   height: 200,
                   width: double.infinity,
-                  child: Row(
-                    children: const [
-                      // Text(widget.model.description ?? '',
-                      //     style: const TextStyle(
-                      //       fontSize: 20,
-                      //       fontWeight: FontWeight.bold,))
-                    ],
-                  ),
+                  child: Text(widget.models.description ?? '',
+                      maxLines: 6,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeight.bold,
+                      )),
                 ),
               ),
             ],

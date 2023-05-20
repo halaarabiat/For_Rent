@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rent/config/current_session.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:rent/home_screen.dart';
 import 'package:rent/models/post_model.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
+import '../details/fav_post_details.dart';
+
 
 class FavPostItem extends StatefulWidget {
   final List<PostFormModel> models;
@@ -13,7 +18,14 @@ class FavPostItem extends StatefulWidget {
 }
 
 class _FavPostItemState extends State<FavPostItem> {
-  void selectPost() {}
+  void selectPost(PostFormModel post) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PostDetails( models: post),
+      ),
+    );
+  }
   @override
   void initState() {
     widget.models.sort((a, b) => a.price.compareTo(b.price));
@@ -51,7 +63,7 @@ class _FavPostItemState extends State<FavPostItem> {
             itemCount: widget.models.length,
             itemBuilder: (context, index) {
               return InkWell(
-                onTap: selectPost,
+                onTap:()=> selectPost(widget.models[index]),
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -71,10 +83,21 @@ class _FavPostItemState extends State<FavPostItem> {
                                 topLeft: Radius.circular(15),
                                 topRight: Radius.circular(15),
                               ),
-                              child: Container(
-                                height: 250,
-                                width: double.infinity,
-                                color: Colors.grey,
+                              child:
+                              CarouselSlider(
+                                options: CarouselOptions(
+                                  height: MediaQuery.of(context).size.height * 0.305,
+                                  enlargeCenterPage: true,
+                                  enableInfiniteScroll: false,
+                                  viewportFraction: 1.00,
+                                  autoPlay: true,
+                                  autoPlayInterval: Duration(seconds: 4),
+                                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                  autoPlayCurve: Curves.fastOutSlowIn,
+                                ),
+                                items: widget.models[index].images!.map((image) {
+                                  return Image.network(image);
+                                }).toList(),
                               ),
                             ),
                             Positioned(
@@ -120,7 +143,7 @@ class _FavPostItemState extends State<FavPostItem> {
                                       children: [
                                         const Icon(
                                           Icons.home_outlined,
-                                          size: 40,
+                                          size: 30,
                                         ),
                                         const SizedBox(
                                           width: 10,
@@ -129,16 +152,16 @@ class _FavPostItemState extends State<FavPostItem> {
                                           widget.models[index].propertyType ??
                                               '',
                                           style: const TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 15,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Row(children: [
+                                    Row(children:  [
                                       const Icon(
                                         Icons.event_seat_outlined,
-                                        size: 40,
+                                        size: 30,
                                       ),
                                       const SizedBox(
                                         width: 10,
@@ -147,20 +170,26 @@ class _FavPostItemState extends State<FavPostItem> {
                                         widget.models[index].furnishingStatus ??
                                             '',
                                         style: const TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
+
                                       const SizedBox(width: 10),
                                     ]),
                                     Row(
-                                      children: [
+                                      children:  [
+                                        const Icon(
+                                          Ionicons.bed_outline,
+                                          size: 30,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
                                         Text(
-                                          widget.models[index].rooms
-                                                  .toString() ??
-                                              '',
+                                          widget.models[index].rooms.toString() ?? '' ,
                                           style: const TextStyle(
-                                            fontSize: 20,
+                                            fontSize:15,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
