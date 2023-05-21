@@ -6,7 +6,7 @@ import 'package:rent/home_screen.dart';
 import 'package:rent/register/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:rent/models/register_model.dart';
+import 'package:rent/models/user_model.dart';
 import 'package:rent/utils/common_views.dart';
 
 class SignUpScreen extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rent/config/current_session.dart';
-import 'package:rent/models/register_model.dart';
+import 'package:rent/models/user_model.dart';
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
