@@ -5,7 +5,7 @@ import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rent/config/current_session.dart';
-import 'package:rent/liked_post_screen.dart';
+import 'package:rent/post/liked_post_screen.dart';
 import 'package:rent/register/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rent/utils/upload_images.dart';

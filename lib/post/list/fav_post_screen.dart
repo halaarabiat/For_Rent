@@ -5,20 +5,22 @@ import 'package:rent/home_screen.dart';
 import 'package:rent/models/post_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-import '../../liked_post_screen.dart';
+import '../liked_post_screen.dart';
 import '../details/fav_post_details.dart';
 
 
 class FavPostItem extends StatefulWidget {
-  final List<PostFormModel> models;
+   List<PostFormModel> models;
 
-  const FavPostItem({Key? key, required this.models}) : super(key: key);
+   FavPostItem({Key? key, required this.models}) : super(key: key);
 
   @override
   _FavPostItemState createState() => _FavPostItemState();
 }
 
 class _FavPostItemState extends State<FavPostItem> {
+  bool isSwatch= false;
+
   void selectPost(PostFormModel post) {
     Navigator.push(
       context,
@@ -37,10 +39,10 @@ class _FavPostItemState extends State<FavPostItem> {
 
   }
   @override
-  void initState() {
-    widget.models.sort((a, b) => a.price.compareTo(b.price));
-    super.initState();
-  }
+  // void initState() {
+  //   widget.models.sort((a, b) => a.price.compareTo(b.price));
+  //   super.initState();
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,10 +81,16 @@ class _FavPostItemState extends State<FavPostItem> {
               Padding(
                 padding: const EdgeInsets.only(left: 3.0,right: 3.0),
                 child: Switch(
-                  value: false, // Replace with your own logic to control the switch state
+                  value: isSwatch, // Replace with your own logic to control the switch state
                   onChanged: (value) {
                     setState(() {
-                      // Handle the switch state change here
+                      isSwatch=value;
+                      if(isSwatch) {
+                        widget.models.sort((a, b) =>
+                            a.price.compareTo(b.price));
+                      }else {
+                        widget.models=widget.models.reversed.toList();
+                      }
                     });
                   },
                 ),
