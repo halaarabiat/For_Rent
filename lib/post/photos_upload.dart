@@ -77,7 +77,7 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => PostDetails(
+                  builder: (context) => PostDetailsUser(
                         model: widget.model,
                       )));
         } else {

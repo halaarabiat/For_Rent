@@ -223,7 +223,7 @@ class _LikedPostsScreenState extends State<LikedPostsScreen> {
     Navigator.push(
       context as BuildContext,
       MaterialPageRoute(
-        builder: (context) => PostDetails(model: post),
+        builder: (context) => PostDetailsUser(model: post),
       ),
     );
   }

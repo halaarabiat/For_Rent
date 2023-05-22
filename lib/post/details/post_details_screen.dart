@@ -6,16 +6,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 import '../../config/current_session.dart';
 
-class PostDetails extends StatefulWidget {
+class PostDetailsUser extends StatefulWidget {
   final PostFormModel model;
 
-  const PostDetails({Key? key, required this.model}) : super(key: key);
+  const PostDetailsUser({Key? key, required this.model}) : super(key: key);
 
   @override
-  State<PostDetails> createState() => _PostDetailsState();
+  State<PostDetailsUser> createState() => _PostDetailsUserState();
 }
 
-class _PostDetailsState extends State<PostDetails> {
+class _PostDetailsUserState extends State<PostDetailsUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
