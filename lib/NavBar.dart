@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rent/config/current_session.dart';
+import 'package:rent/models/post_model.dart';
 import 'package:rent/post/liked_post_screen.dart';
 import 'package:rent/register/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,6 +24,7 @@ class _NavBarState extends State<NavBar> {
   final ImagePicker imagePicker = ImagePicker();
   String imgUrl = '';
   User? user = FirebaseAuth.instance.currentUser;
+  CollectionReference postRef = FirebaseFirestore.instance.collection("post");
 
   Future<void> getImageFromGallery() async {
     final pickedImage =
@@ -76,14 +79,16 @@ class _NavBarState extends State<NavBar> {
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: imgUrl.isNotEmpty? CircleAvatar(
-                    backgroundImage: NetworkImage(imgUrl),
-                    backgroundColor: Colors.white70,
-                    radius: 50.0,
-                  ): CircleAvatar(
-                    backgroundColor: Colors.white70,
-                    radius: 50.0,
-                  ),//todo
+                  child: imgUrl.isNotEmpty
+                      ? CircleAvatar(
+                          backgroundImage: NetworkImage(imgUrl),
+                          backgroundColor: Colors.white70,
+                          radius: 50.0,
+                        )
+                      : CircleAvatar(
+                          backgroundColor: Colors.white70,
+                          radius: 50.0,
+                        ), //todo
                 ),
                 Positioned(
                     bottom: 5,
@@ -104,7 +109,9 @@ class _NavBarState extends State<NavBar> {
                     style: const TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
                 ),
-                SizedBox(height: 5,),
+                SizedBox(
+                  height: 5,
+                ),
                 Align(
                   alignment: Alignment.centerRight + const Alignment(0, .4),
                   child: Text(
@@ -124,10 +131,24 @@ class _NavBarState extends State<NavBar> {
               color: Color(0xff79698e),
             ),
             title: const Text('Favorite'),
-            onTap: () {
+            onTap: () async {
+              // load data
+              var result = await postRef.get();
+              List<PostFormModel> models = [];
+              for (var item in result.docs) {
+                models.add(
+                    PostFormModel.fromMap(item.data() as Map<String, dynamic>));
+              }
+              models = models
+                  .where((element) => element.usersFavs!
+                      .contains(CurrentSession().user!.userid))
+                  .toList();
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LikedPostsScreen(likedPosts: [],)),
+                MaterialPageRoute(
+                    builder: (context) => LikedPostsScreen(
+                          likedPosts: models,
+                        )),
               );
             },
           ),
@@ -139,7 +160,16 @@ class _NavBarState extends State<NavBar> {
               color: Color(0xff79698e),
             ),
             title: const Text('Post'),
-            onTap: () => {},
+            onTap: () async {
+              var result = await postRef
+                  .where("userId", isEqualTo: CurrentSession().user!.userid)
+                  .get();
+              List<PostFormModel> models = [];
+              for (var item in result.docs) {
+                models.add(
+                    PostFormModel.fromMap(item.data() as Map<String, dynamic>));
+              }
+            },
           ),
 
           const Divider(),
@@ -155,47 +185,52 @@ class _NavBarState extends State<NavBar> {
             alignment: Alignment.bottomCenter,
             child: TextButton(
               onPressed: () {
-                showDialog(context: context,
+                showDialog(
+                    context: context,
                     builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Row(
-                      children: [
-                        Padding(
-                            padding:
-                            const EdgeInsets.only(right: 6.0),
-                          child: Icon(Icons.logout),
+                      return AlertDialog(
+                        title: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 6.0),
+                              child: Icon(Icons.logout),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(right: 8.0),
+                              child: Text("Log Out"),
+                            )
+                          ],
                         ),
-                        Padding(padding: EdgeInsets.only(right: 8.0),
-                        child: Text("Log Out"),)
-
-                      ],
-                    ),
-                    content: Text("Do you wanna log out?"),
-                    actions: [
-                      TextButton(
-                        onPressed: (){
-                          Navigator.of(context).pop();
-                        },
-                        child: Text("Cancle",
-                      style: TextStyle(color: Color(0xff79698e)),),
-
-                      ),
-                      TextButton(
-                        onPressed: (){
-                          CurrentSession().user = null;
-                          FirebaseAuth.instance.signOut();
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const BottomSheetApp()),
-                            (route) => false,
-                          );
-                        }, child: Text("Ok",
-                        style: TextStyle(color: Color(0xff79698e)),),
-
-                      ),
-                    ],
-                  );
+                        content: Text("Do you wanna log out?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "Cancle",
+                              style: TextStyle(color: Color(0xff79698e)),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              CurrentSession().user = null;
+                              FirebaseAuth.instance.signOut();
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const BottomSheetApp()),
+                                (route) => false,
+                              );
+                            },
+                            child: Text(
+                              "Ok",
+                              style: TextStyle(color: Color(0xff79698e)),
+                            ),
+                          ),
+                        ],
+                      );
                     });
                 // CurrentSession().user = null;
                 // FirebaseAuth.instance.signOut();
