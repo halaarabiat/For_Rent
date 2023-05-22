@@ -129,9 +129,12 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
                           PasswordReset(context);
                         },
                         style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: const Color(0xff79698e),
+                          // Text Color (Foreground color)
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32.0)),
-                          minimumSize: const Size(250, 50),
+                          minimumSize: const Size(300, 40),
                         ),
                         child: const Text(
                           "Reset Password",

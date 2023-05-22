@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rent/models/post_model.dart';
 import 'package:rent/post/list/fav_post_screen.dart';
 import 'NavBar.dart';
+import 'models/post_model.dart';
 import 'post/form_post_screen.dart';
 
 class HomeScreen extends StatefulWidget {

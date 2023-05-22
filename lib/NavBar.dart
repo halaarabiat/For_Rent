@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -102,8 +103,9 @@ class _NavBarState extends State<NavBar> {
                     style: const TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
                 ),
+                SizedBox(height: 5,),
                 Align(
-                  alignment: Alignment.centerRight + const Alignment(0, .3),
+                  alignment: Alignment.centerRight + const Alignment(0, .4),
                   child: Text(
                     CurrentSession().user?.username ?? 'Username',
                     style: const TextStyle(
@@ -147,14 +149,56 @@ class _NavBarState extends State<NavBar> {
             alignment: Alignment.bottomCenter,
             child: TextButton(
               onPressed: () {
-                CurrentSession().user = null;
-                FirebaseAuth.instance.signOut();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const BottomSheetApp()),
-                  (route) => false,
-                );
+                showDialog(context: context,
+                    builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Row(
+                      children: [
+                        Padding(
+                            padding:
+                            const EdgeInsets.only(right: 6.0),
+                          child: Icon(Icons.logout),
+                        ),
+                        Padding(padding: EdgeInsets.only(right: 8.0),
+                        child: Text("Log Out"),)
+
+                      ],
+                    ),
+                    content: Text("Do you wanna log out?"),
+                    actions: [
+                      TextButton(
+                        onPressed: (){
+                          Navigator.of(context).pop();
+                        },
+                        child: Text("Cancle",
+                      style: TextStyle(color: Color(0xff79698e)),),
+
+                      ),
+                      TextButton(
+                        onPressed: (){
+                          CurrentSession().user = null;
+                          FirebaseAuth.instance.signOut();
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const BottomSheetApp()),
+                            (route) => false,
+                          );
+                        }, child: Text("Ok",
+                        style: TextStyle(color: Color(0xff79698e)),),
+
+                      ),
+                    ],
+                  );
+                    });
+                // CurrentSession().user = null;
+                // FirebaseAuth.instance.signOut();
+                // Navigator.pushAndRemoveUntil(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => const BottomSheetApp()),
+                //   (route) => false,
+                // );
               },
               child: const Text(
                 "Log Out",

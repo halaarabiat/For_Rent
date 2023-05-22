@@ -261,7 +261,6 @@ class _LogInScreenState extends State<LogInScreen> {
                                     "Something went wrong please try again later",
                                     type: TBAlertType.error);
                               }
-                              //todo handle sign in errors  https://stackoverflow.com/questions/67617502/what-are-the-error-codes-for-flutter-firebase-auth-exception
                             }
                           }
                         },
