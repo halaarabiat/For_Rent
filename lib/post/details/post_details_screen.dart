@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:rent/home_screen.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:rent/models/post_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
+import 'package:rent/utils/progress_hud.dart';
 import '../../config/current_session.dart';
 
 class PostDetailsUser extends StatefulWidget {
@@ -56,7 +58,7 @@ class _PostDetailsUserState extends State<PostDetailsUser> {
                             shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(20))),
-                            builder: (context) {
+                            builder: (localContext) {
                               return Wrap(
                                 children: [
                                   Column(
@@ -67,7 +69,24 @@ class _PostDetailsUserState extends State<PostDetailsUser> {
                                           Icons.delete,
                                           color: Color(0xff79698e),
                                         ),
-                                        onTap: () => null,
+                                        onTap: () {
+                                          try {
+                                            ProgressHud.shared
+                                                .startLoading(context);
+                                            CollectionReference postRef =
+                                                FirebaseFirestore.instance
+                                                    .collection("post");
+                                            postRef
+                                                .doc(widget.model.documentId)
+                                                .delete();
+                                            ProgressHud.shared.stopLoading();
+                                            Navigator.of(localContext).pop();
+                                            Navigator.of(context).pop(true);
+                                          } catch (e) {
+                                            ProgressHud.shared.stopLoading();
+                                            print(e);
+                                          }
+                                        },
                                       ),
                                     ],
                                   ),
@@ -292,8 +311,9 @@ class _PostDetailsUserState extends State<PostDetailsUser> {
                 children: [
                   Column(
                     children: [
-                      Text("parking",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
-
+                      Text("parking",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700)),
                       Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -333,7 +353,9 @@ class _PostDetailsUserState extends State<PostDetailsUser> {
                   ),
                   Column(
                     children: [
-                      Text("Garden",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+                      Text("Garden",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700)),
                       Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -376,7 +398,9 @@ class _PostDetailsUserState extends State<PostDetailsUser> {
                   ),
                   Column(
                     children: [
-                      Text("Balcony",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+                      Text("Balcony",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700)),
                       Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -419,7 +443,9 @@ class _PostDetailsUserState extends State<PostDetailsUser> {
                   ),
                   Column(
                     children: [
-                      Text("Elevator",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+                      Text("Elevator",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700)),
                       Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -462,7 +488,9 @@ class _PostDetailsUserState extends State<PostDetailsUser> {
                   ),
                   Column(
                     children: [
-                      Text("Facilities",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
+                      Text("Facilities",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700)),
                       Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),

@@ -1,46 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-import 'package:rent/config/current_session.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:rent/config/current_session.dart';
 import 'package:rent/home_screen.dart';
 import 'package:rent/models/post_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:rent/post/details/post_details_screen.dart';
+import 'package:rent/register/login_screen.dart';
 
-import '../liked_post_screen.dart';
-import '../details/fav_post_details.dart';
+import '../details/post_details_screen.dart';
 
 class UserPost extends StatefulWidget {
-  final List<PostFormModel> models;
+  List<PostFormModel> models;
 
   UserPost({Key? key, required this.models}) : super(key: key);
-
-  void selectPost(PostFormModel post) {
-    // Navigate to a new screen to display the selected post
-    Navigator.push(
-      context as BuildContext,
-      MaterialPageRoute(
-        builder: (context) => PostDetailsUser(model: post),
-      ),
-    );
-  }
 
   @override
   _UserPostState createState() => _UserPostState();
 }
 
 class _UserPostState extends State<UserPost> {
-  bool isSwatch = false;
-
-  void selectPost(PostFormModel post) {
-    Navigator.push(
-      context as BuildContext,
-      MaterialPageRoute(
-        builder: (context) => PostDetailsUser(model: post),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +55,33 @@ class _UserPostState extends State<UserPost> {
                   itemCount: widget.models.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-                      onTap: () => selectPost(widget.models[index]),
+                      onTap: () async {
+                        var navResult = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PostDetailsUser(model: widget.models[index]),
+                          ),
+                        );
+                        if (navResult != null && navResult == true) {
+                          CollectionReference postRef =
+                              FirebaseFirestore.instance.collection("post");
+                          var result = await postRef
+                              .where("userId",
+                                  isEqualTo: CurrentSession().user!.userid)
+                              .get();
+                          List<PostFormModel> models = [];
+                          for (var item in result.docs) {
+                            var model = PostFormModel.fromMap(
+                                item.data() as Map<String, dynamic>);
+                            model.documentId = item.reference.id;
+                            models.add(model);
+                          }
+                          setState(() {
+                            widget.models = models;
+                          });
+                        }
+                      },
                       child: Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
