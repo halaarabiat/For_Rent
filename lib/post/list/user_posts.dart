@@ -10,11 +10,11 @@ import 'package:rent/post/details/post_details_screen.dart';
 import '../liked_post_screen.dart';
 import '../details/fav_post_details.dart';
 
-
 class UserPost extends StatefulWidget {
   final List<PostFormModel> models;
 
   UserPost({Key? key, required this.models}) : super(key: key);
+
   void selectPost(PostFormModel post) {
     // Navigate to a new screen to display the selected post
     Navigator.push(
@@ -30,26 +30,16 @@ class UserPost extends StatefulWidget {
 }
 
 class _UserPostState extends State<UserPost> {
-  bool isSwatch= false;
+  bool isSwatch = false;
 
   void selectPost(PostFormModel post) {
     Navigator.push(
       context as BuildContext,
       MaterialPageRoute(
-        builder: (context) => PostDetailsUser( model: post),
+        builder: (context) => PostDetailsUser(model: post),
       ),
     );
-    void selectPost(PostFormModel post) {
-      Navigator.push(
-        context as BuildContext,
-        MaterialPageRoute(
-          builder: (context) => LikedPostsScreen(likedPosts: widget.models),
-        ),
-      );
-    }
-
   }
-  @override
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +68,6 @@ class _UserPostState extends State<UserPost> {
       ),
       body: Column(
         children: [
-
           Expanded(
             child: SingleChildScrollView(
               child: ListView.builder(
@@ -87,7 +76,7 @@ class _UserPostState extends State<UserPost> {
                   itemCount: widget.models.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-                      onTap:()=> selectPost(widget.models[index]),
+                      onTap: () => selectPost(widget.models[index]),
                       child: Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
@@ -107,19 +96,23 @@ class _UserPostState extends State<UserPost> {
                                       topLeft: Radius.circular(15),
                                       topRight: Radius.circular(15),
                                     ),
-                                    child:
-                                    CarouselSlider(
+                                    child: CarouselSlider(
                                       options: CarouselOptions(
-                                        height: MediaQuery.of(context).size.height * 0.305,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.305,
                                         enlargeCenterPage: true,
                                         enableInfiniteScroll: false,
                                         viewportFraction: 1.00,
                                         autoPlay: true,
-                                        autoPlayInterval: const Duration(seconds: 4),
-                                        autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                                        autoPlayInterval:
+                                            const Duration(seconds: 4),
+                                        autoPlayAnimationDuration:
+                                            const Duration(milliseconds: 800),
                                         autoPlayCurve: Curves.fastOutSlowIn,
                                       ),
-                                      items: widget.models[index].images!.map((image) {
+                                      items: widget.models[index].images!
+                                          .map((image) {
                                         return Image.network(image);
                                       }).toList(),
                                     ),
@@ -155,13 +148,15 @@ class _UserPostState extends State<UserPost> {
                               // second row
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Row(
                                             children: [
@@ -173,7 +168,8 @@ class _UserPostState extends State<UserPost> {
                                                 width: 10,
                                               ),
                                               Text(
-                                                widget.models[index].propertyType ??
+                                                widget.models[index]
+                                                        .propertyType ??
                                                     '',
                                                 style: const TextStyle(
                                                   fontSize: 15,
@@ -182,7 +178,7 @@ class _UserPostState extends State<UserPost> {
                                               ),
                                             ],
                                           ),
-                                          Row(children:  [
+                                          Row(children: [
                                             const Icon(
                                               Icons.event_seat_outlined,
                                               size: 30,
@@ -191,18 +187,18 @@ class _UserPostState extends State<UserPost> {
                                               width: 10,
                                             ),
                                             Text(
-                                              widget.models[index].furnishingStatus ??
+                                              widget.models[index]
+                                                      .furnishingStatus ??
                                                   '',
                                               style: const TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold,
                                               ),
                                             ),
-
                                             const SizedBox(width: 10),
                                           ]),
                                           Row(
-                                            children:  [
+                                            children: [
                                               const Icon(
                                                 Ionicons.bed_outline,
                                                 size: 30,
@@ -211,9 +207,11 @@ class _UserPostState extends State<UserPost> {
                                                 width: 10,
                                               ),
                                               Text(
-                                                widget.models[index].rooms.toString() ?? '' ,
+                                                widget.models[index].rooms
+                                                        .toString() ??
+                                                    '',
                                                 style: const TextStyle(
-                                                  fontSize:15,
+                                                  fontSize: 15,
                                                   fontWeight: FontWeight.bold,
                                                 ),
                                               ),
@@ -223,7 +221,7 @@ class _UserPostState extends State<UserPost> {
                                       ),
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Row(children: [
                                             const Icon(
@@ -234,7 +232,9 @@ class _UserPostState extends State<UserPost> {
                                               width: 5,
                                             ),
                                             Text(
-                                              widget.models[index].neighborhood ?? '',
+                                              widget.models[index]
+                                                      .neighborhood ??
+                                                  '',
                                               style: const TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
@@ -250,7 +250,8 @@ class _UserPostState extends State<UserPost> {
                                               width: 5,
                                             ),
                                             Text(
-                                              widget.models[index].price.toString() ??
+                                              widget.models[index].price
+                                                      .toString() ??
                                                   '',
                                               style: const TextStyle(
                                                 fontSize: 20,
