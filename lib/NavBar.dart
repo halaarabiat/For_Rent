@@ -85,7 +85,7 @@ class _NavBarState extends State<NavBar> {
                           backgroundColor: Colors.white70,
                           radius: 50.0,
                         )
-                      : CircleAvatar(
+                      : const CircleAvatar(
                           backgroundColor: Colors.white70,
                           radius: 50.0,
                         ), //todo
@@ -109,7 +109,7 @@ class _NavBarState extends State<NavBar> {
                     style: const TextStyle(color: Colors.white, fontSize: 20.0),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Align(
@@ -136,8 +136,10 @@ class _NavBarState extends State<NavBar> {
               var result = await postRef.get();
               List<PostFormModel> models = [];
               for (var item in result.docs) {
-                models.add(
-                    PostFormModel.fromMap(item.data() as Map<String, dynamic>));
+                var model =
+                    PostFormModel.fromMap(item.data() as Map<String, dynamic>);
+                model.documentId = item.reference.id;
+                models.add(model);
               }
               models = models
                   .where((element) => element.usersFavs!
@@ -166,8 +168,10 @@ class _NavBarState extends State<NavBar> {
                   .get();
               List<PostFormModel> models = [];
               for (var item in result.docs) {
-                models.add(
-                    PostFormModel.fromMap(item.data() as Map<String, dynamic>));
+                var model =
+                PostFormModel.fromMap(item.data() as Map<String, dynamic>);
+                model.documentId = item.reference.id;
+                models.add(model);
               }
             },
           ),
@@ -190,25 +194,25 @@ class _NavBarState extends State<NavBar> {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 6.0),
+                          children:const [
+                             Padding(
+                              padding: EdgeInsets.only(right: 6.0),
                               child: Icon(Icons.logout),
                             ),
-                            Padding(
+                             Padding(
                               padding: EdgeInsets.only(right: 8.0),
                               child: Text("Log Out"),
                             )
                           ],
                         ),
-                        content: Text("Do you wanna log out?"),
+                        content: const Text("Do you wanna log out?"),
                         actions: [
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text(
-                              "Cancle",
+                            child: const Text(
+                              "Cancel",
                               style: TextStyle(color: Color(0xff79698e)),
                             ),
                           ),
@@ -224,7 +228,7 @@ class _NavBarState extends State<NavBar> {
                                 (route) => false,
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               "Ok",
                               style: TextStyle(color: Color(0xff79698e)),
                             ),

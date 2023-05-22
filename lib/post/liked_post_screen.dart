@@ -2,24 +2,21 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+import 'package:rent/config/current_session.dart';
 import 'package:rent/models/post_model.dart';
 import 'package:rent/post/details/post_details_screen.dart';
 
-class LikedPostsScreen extends StatelessWidget {
+class LikedPostsScreen extends StatefulWidget {
   final List<PostFormModel> likedPosts;
 
-  const LikedPostsScreen({Key? key, required this.likedPosts}) : super(key: key);
-  void selectPost(PostFormModel post) {
-    // Navigate to a new screen to display the selected post
-    Navigator.push(
-      context as BuildContext,
-      MaterialPageRoute(
-        builder: (context) => PostDetails(model: post),
-      ),
-    );
-  }
+  const LikedPostsScreen({Key? key, required this.likedPosts})
+      : super(key: key);
 
+  @override
+  State<LikedPostsScreen> createState() => _LikedPostsScreenState();
+}
 
+class _LikedPostsScreenState extends State<LikedPostsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +24,9 @@ class LikedPostsScreen extends StatelessWidget {
         title: const Text('Favorite Posts'),
       ),
       body: ListView.builder(
-        itemCount: likedPosts.length,
+        itemCount: widget.likedPosts.length,
         itemBuilder: (context, index) {
-          final post = likedPosts[index];
+          final post = widget.likedPosts[index];
 
           return InkWell(
             onTap: () => selectPost(post),
@@ -54,13 +51,15 @@ class LikedPostsScreen extends StatelessWidget {
                           ),
                           child: CarouselSlider(
                             options: CarouselOptions(
-                              height: MediaQuery.of(context).size.height * 0.305,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.305,
                               enlargeCenterPage: true,
                               enableInfiniteScroll: false,
                               viewportFraction: 1.00,
                               autoPlay: true,
                               autoPlayInterval: const Duration(seconds: 4),
-                              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                              autoPlayAnimationDuration:
+                                  const Duration(milliseconds: 800),
                               autoPlayCurve: Curves.fastOutSlowIn,
                             ),
                             items: post.images!.map((image) {
@@ -75,11 +74,20 @@ class LikedPostsScreen extends StatelessWidget {
                             scale: 2.0,
                             child: IconButton(
                               onPressed: () {
-                                // Handle favorite button press
+                                setState(() {
+                                  widget.likedPosts[index].isFav = false;
+                                  CurrentSession()
+                                      .updateFavPosts(widget.likedPosts[index]);
+                                  widget.likedPosts
+                                      .remove(widget.likedPosts[index]);
+                                });
                               },
                               icon: Icon(
-                                post.isFav ? Icons.favorite : Icons.favorite_border,
-                                color: post.isFav ? const Color(0xff79698e) : null,
+                                post.isFav
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color:
+                                    post.isFav ? const Color(0xff79698e) : null,
                               ),
                             ),
                           ),
@@ -206,6 +214,16 @@ class LikedPostsScreen extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+
+  void selectPost(PostFormModel post) {
+    // Navigate to a new screen to display the selected post
+    Navigator.push(
+      context as BuildContext,
+      MaterialPageRoute(
+        builder: (context) => PostDetails(model: post),
       ),
     );
   }

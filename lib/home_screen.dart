@@ -217,10 +217,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void _getData(String selectedOption) async {
     CollectionReference postRef = FirebaseFirestore.instance.collection("post");
     var result =
-    await postRef.where("governorate", isEqualTo: _selectedOption).get();
+        await postRef.where("governorate", isEqualTo: _selectedOption).get();
     List<PostFormModel> models = [];
     for (var item in result.docs) {
-      models.add(PostFormModel.fromMap(item.data() as Map<String, dynamic>));
+      var model = PostFormModel.fromMap(item.data() as Map<String, dynamic>);
+      model.documentId = item.reference.id;
+      models.add(model);
     }
     if (models.isNotEmpty) {
       Navigator.of(context).push(
