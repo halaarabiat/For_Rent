@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Material(
                                 elevation: 2.0,
                                 child: Container(
-                                    width: double.infinity,
+                                    width:280,
                                     color: Colors.white,
                                     child: ListView(
                                       padding: EdgeInsets.zero,

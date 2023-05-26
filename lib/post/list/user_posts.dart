@@ -12,6 +12,7 @@ import 'package:shimmer_animation/shimmer_animation.dart';
 import '../details/post_details_screen.dart';
 
 class UserPost extends StatefulWidget {
+
   List<PostFormModel> models;
 
   UserPost({Key? key, required this.models}) : super(key: key);

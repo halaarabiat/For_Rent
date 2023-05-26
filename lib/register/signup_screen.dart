@@ -308,7 +308,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             await usersRef.add(model.toMap());
                             ProgressHud.shared.stopLoading();
                             CommonViews()
-                                .showToast(context, "تم تسجيل الحساب بنجاح");
+                                .showToast(context, "signed up successfully ");
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -397,7 +397,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       case "invalid-email":
         return "Invalid Email";
       case "operation-not-allowed":
-        return "Please call us on 079511111";
+        return "Please call us on +96298124493 or +96277174495";
       default:
         return "Something Went Wrong, please try again later";
     }

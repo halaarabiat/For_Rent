@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:rent/about_app.dart';
 import 'package:rent/config/current_session.dart';
 import 'package:rent/models/post_model.dart';
-import 'package:rent/post/liked_post_screen.dart';
+import 'package:rent/post/list/liked_post_screen.dart';
 import 'package:rent/post/list/user_posts.dart';
 import 'package:rent/register/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';

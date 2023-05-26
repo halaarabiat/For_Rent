@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:rent/config/current_session.dart';
 import 'package:rent/models/user_model.dart';
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rent/register/forget_pass_screen.dart';
 import 'package:rent/register/signup_screen.dart';
@@ -190,7 +188,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                       TextButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
@@ -333,7 +331,7 @@ class _LogInScreenState extends State<LogInScreen> {
       case"user-not-found":
         return "User not found ";
       case"user-disabled":
-        return "u";
+        return "user disable";
       case "wrong-password":
         return "The password is wrong ";
       default:
