@@ -13,6 +13,7 @@ class CurrentSession {
 
   void updateFavPosts(PostFormModel post) async {
     try {
+
       DocumentReference documentReference =
           FirebaseFirestore.instance.collection("post").doc(post.documentId);
       if (post.isFav) {

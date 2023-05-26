@@ -3,6 +3,7 @@ import 'package:rent/home_screen.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:rent/models/post_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 import '../../config/current_session.dart';
 
 class PostDetails extends StatefulWidget {
@@ -37,31 +38,6 @@ class _PostDetailsState extends State<PostDetails> {
         child: Center(
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        widget.models.isFav =
-                        !widget.models.isFav;
-                        CurrentSession()
-                            .updateFavPosts(widget.models);
-                      });
-                    },
-                    icon: Icon(
-                      widget.models.isFav
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      color: widget.models.isFav
-                          ? const Color(0xff79698e)
-                          : null,
-                    ),
-                  ),
-                ],
-              ),
-
               CarouselSlider(
                 options: CarouselOptions(
                   height: MediaQuery.of(context).size.height * 0.305,
@@ -80,66 +56,76 @@ class _PostDetailsState extends State<PostDetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 50,
-                      width: 150,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.home_outlined,
-                              size: 35,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              widget.models.propertyType ?? '',
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
+                  Shimmer(
+                    color: Color(0xff79698e),
+                    duration: Duration(seconds: 3),
+                    interval: Duration(seconds: 5),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 7,
+                      margin: const EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 50,
+                        width: 150,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.home_outlined,
+                                size: 35,
                               ),
-                            ),
-                          ],
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                widget.models.propertyType ?? '',
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 50,
-                      width: 150,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.event_seat_outlined,
-                              size: 30,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              widget.models.furnishingStatus ?? '',
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
+                  Shimmer(
+                    color: Color(0xff79698e),
+                    duration: Duration(seconds: 3),
+                    interval: Duration(seconds: 5),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 7,
+                      margin: const EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 50,
+                        width: 150,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.event_seat_outlined,
+                                size: 30,
                               ),
-                            ),
-                          ],
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                widget.models.furnishingStatus ?? '',
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -150,117 +136,126 @@ class _PostDetailsState extends State<PostDetails> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.space_bar_outlined,
-                              size: 40,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  widget.models.flat.toString() ?? '',
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                  Shimmer(
+                    color: Color(0xff79698e),
+                    duration: Duration(seconds: 3),
+                    interval: Duration(seconds: 5),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 7,
+                      margin: const EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.space_bar_outlined,
+                                size: 40,
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                widget.models.flat.toString() ?? '',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                const Text(
-                                  ' m²',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              ),
+                              const Text(
+                                ' m²',
+                                style: TextStyle(
+                                  fontSize: 15,
                                 ),
-                              ],
-                            ),
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                  Shimmer(
+                    color: Color(0xff79698e),
+                    duration: Duration(seconds: 3),
+                    interval: Duration(seconds: 5),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 7,
+                      margin: const EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Ionicons.bed_outline,
+                                size: 40,
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                widget.models.rooms.toString() ?? '',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              // SizedBox(height: 5 ,),
+                              const Text("Room"),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
+                  ),
+                  Shimmer(
+                    color: Color(0xff79698e),
+                    duration: Duration(seconds: 3),
+                    interval: Duration(seconds: 5),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      elevation: 7,
+                      margin: const EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 100,
+                        width: 100,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(
-                              Ionicons.bed_outline,
+                              Icons.bathtub,
                               size: 40,
                             ),
                             const SizedBox(
                               height: 5,
                             ),
                             Text(
-                              widget.models.rooms.toString() ?? '',
+                              widget.models.bathrooms.toString() ?? '',
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            // SizedBox(height: 5 ,),
-                            const Text("Room"),
+                            const Text("bathroom"),
                           ],
                         ),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    elevation: 7,
-                    margin: const EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.bathtub,
-                            size: 40,
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            widget.models.bathrooms.toString() ?? '',
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Text("bathroom"),
-                        ],
                       ),
                     ),
                   )
@@ -275,64 +270,27 @@ class _PostDetailsState extends State<PostDetails> {
                 children: [
                   Column(
                     children: [
-                      Text("parking",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
-
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        elevation: 7,
-                        margin: const EdgeInsets.all(10),
-                        child: SizedBox(
-                          height: 70,
-                          width: 55,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.local_parking_outlined,
-                                size: 30,
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              widget.models.parking
-                                  ? const Icon(
-                                Icons.check,
-                                color: Colors.green,
-                              )
-                                  : const Icon(
-                                Icons.close,
-                                color: Colors.red,
-                              ),
-                            ],
+                      Text("parking",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700)),
+                      Shimmer(
+                        color: Color(0xff79698e),
+                        duration: Duration(seconds: 3),
+                        interval: Duration(seconds: 5),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text("Garden",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        elevation: 7,
-                        margin: const EdgeInsets.all(10),
-                        child: SizedBox(
-                          height: 70,
-                          width: 55,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.5,
+                          elevation: 7,
+                          margin: const EdgeInsets.all(10),
+                          child: SizedBox(
+                            height: 70,
+                            width: 55,
                             child: Column(
-                              // mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Icon(
-                                  Icons.park_outlined,
+                                  Icons.local_parking_outlined,
                                   size: 30,
                                 ),
                                 const SizedBox(
@@ -341,15 +299,15 @@ class _PostDetailsState extends State<PostDetails> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                widget.models.garden
+                                widget.models.parking
                                     ? const Icon(
-                                  Icons.check,
-                                  color: Colors.green,
-                                )
+                                        Icons.check,
+                                        color: Colors.green,
+                                      )
                                     : const Icon(
-                                  Icons.close,
-                                  color: Colors.red,
-                                ),
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
                               ],
                             ),
                           ),
@@ -359,41 +317,48 @@ class _PostDetailsState extends State<PostDetails> {
                   ),
                   Column(
                     children: [
-                      Text("Balcony",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        elevation: 7,
-                        margin: const EdgeInsets.all(10),
-                        child: SizedBox(
-                          height: 70,
-                          width: 55,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.balcony_outlined,
-                                  size: 30,
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                widget.models.balcony
-                                    ? const Icon(
-                                  Icons.check,
-                                  color: Colors.green,
-                                )
-                                    : const Icon(
-                                  Icons.close,
-                                  color: Colors.red,
-                                ),
-                              ],
+                      Text("Garden",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700)),
+                      Shimmer(
+                        color: Color(0xff79698e),
+                        duration: Duration(seconds: 3),
+                        interval: Duration(seconds: 5),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          elevation: 7,
+                          margin: const EdgeInsets.all(10),
+                          child: SizedBox(
+                            height: 70,
+                            width: 55,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              child: Column(
+                                // mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.park_outlined,
+                                    size: 30,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  widget.models.garden
+                                      ? const Icon(
+                                          Icons.check,
+                                          color: Colors.green,
+                                        )
+                                      : const Icon(
+                                          Icons.close,
+                                          color: Colors.red,
+                                        ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -402,41 +367,48 @@ class _PostDetailsState extends State<PostDetails> {
                   ),
                   Column(
                     children: [
-                      Text("Elevator",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        elevation: 7,
-                        margin: const EdgeInsets.all(10),
-                        child: SizedBox(
-                          height: 70,
-                          width: 55,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.elevator_outlined,
-                                  size: 30,
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                widget.models.elevator
-                                    ? const Icon(
-                                  Icons.check,
-                                  color: Colors.green,
-                                )
-                                    : const Icon(
-                                  Icons.close,
-                                  color: Colors.red,
-                                ),
-                              ],
+                      Text("Balcony",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700)),
+                      Shimmer(
+                        color: Color(0xff79698e),
+                        duration: Duration(seconds: 3),
+                        interval: Duration(seconds: 5),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          elevation: 7,
+                          margin: const EdgeInsets.all(10),
+                          child: SizedBox(
+                            height: 70,
+                            width: 55,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.balcony_outlined,
+                                    size: 30,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  widget.models.balcony
+                                      ? const Icon(
+                                          Icons.check,
+                                          color: Colors.green,
+                                        )
+                                      : const Icon(
+                                          Icons.close,
+                                          color: Colors.red,
+                                        ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -445,41 +417,98 @@ class _PostDetailsState extends State<PostDetails> {
                   ),
                   Column(
                     children: [
-                      Text("Facilities",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700)),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
+                      Text("Elevator",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700)),
+                      Shimmer(
+                        color: Color(0xff79698e),
+                        duration: Duration(seconds: 3),
+                        interval: Duration(seconds: 5),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          elevation: 7,
+                          margin: const EdgeInsets.all(10),
+                          child: SizedBox(
+                            height: 70,
+                            width: 55,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.elevator_outlined,
+                                    size: 30,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  widget.models.elevator
+                                      ? const Icon(
+                                          Icons.check,
+                                          color: Colors.green,
+                                        )
+                                      : const Icon(
+                                          Icons.close,
+                                          color: Colors.red,
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
-                        elevation: 7,
-                        margin: const EdgeInsets.all(10),
-                        child: SizedBox(
-                          height: 70,
-                          width: 55,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.wheelchair_pickup_outlined,
-                                  size: 30,
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                widget.models.facilities
-                                    ? const Icon(
-                                  Icons.check,
-                                  color: Colors.green,
-                                )
-                                    : const Icon(
-                                  Icons.close,
-                                  color: Colors.red,
-                                ),
-                              ],
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text("Facilities",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700)),
+                      Shimmer(
+                        color: Color(0xff79698e),
+                        duration: Duration(seconds: 3),
+                        interval: Duration(seconds: 5),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          elevation: 7,
+                          margin: const EdgeInsets.all(10),
+                          child: SizedBox(
+                            height: 70,
+                            width: 55,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.wheelchair_pickup_outlined,
+                                    size: 30,
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  widget.models.facilities
+                                      ? const Icon(
+                                          Icons.check,
+                                          color: Colors.green,
+                                        )
+                                      : const Icon(
+                                          Icons.close,
+                                          color: Colors.red,
+                                        ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -489,43 +518,48 @@ class _PostDetailsState extends State<PostDetails> {
                 ],
               ),
 
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                elevation: 7,
-                margin: const EdgeInsets.all(10),
-                child: SizedBox(
-                  height: 70,
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.location_on_outlined,
-                        size: 40,
-                      ),
-                      Text(
-                        widget.models.neighborhood ?? '',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+              Shimmer(
+                color: Color(0xff79698e),
+                duration: Duration(seconds: 3),
+                interval: Duration(seconds: 5),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  elevation: 7,
+                  margin: const EdgeInsets.all(10),
+                  child: SizedBox(
+                    height: 70,
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.location_on_outlined,
+                          size: 40,
                         ),
-                      ),
-                      Text(
-                        widget.models.governorate ?? '',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                        Text(
+                          widget.models.neighborhood ?? '',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Text(
-                        widget.models.country ?? '',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                        Text(
+                          widget.models.governorate ?? '',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                        Text(
+                          widget.models.country ?? '',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -533,27 +567,32 @@ class _PostDetailsState extends State<PostDetails> {
               const SizedBox(
                 height: 10,
               ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                elevation: 7,
-                margin: const EdgeInsets.all(10),
-                child: SizedBox(
-                  height: 70,
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.attach_money_outlined,
-                        size: 40,
-                      ),
-                      Text(widget.models.price.toString() ?? '',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ))
-                    ],
+              Shimmer(
+                color: Color(0xff79698e),
+                duration: Duration(seconds: 3),
+                interval: Duration(seconds: 5),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  elevation: 7,
+                  margin: const EdgeInsets.all(10),
+                  child: SizedBox(
+                    height: 70,
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.attach_money_outlined,
+                          size: 40,
+                        ),
+                        Text(widget.models.price.toString() ?? '',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ))
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -561,27 +600,32 @@ class _PostDetailsState extends State<PostDetails> {
               const SizedBox(
                 height: 10,
               ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                elevation: 7,
-                margin: const EdgeInsets.all(10),
-                child: SizedBox(
-                  height: 70,
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.phone_outlined,
-                        size: 40,
-                      ),
-                      Text(widget.models.phoneNumber ?? '',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ))
-                    ],
+              Shimmer(
+                color: Color(0xff79698e),
+                duration: Duration(seconds: 3),
+                interval: Duration(seconds: 5),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  elevation: 7,
+                  margin: const EdgeInsets.all(10),
+                  child: SizedBox(
+                    height: 70,
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.phone_outlined,
+                          size: 40,
+                        ),
+                        Text(widget.models.phoneNumber ?? '',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ))
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -598,22 +642,27 @@ class _PostDetailsState extends State<PostDetails> {
                   ),
                 ),
               ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                elevation: 7,
-                margin: const EdgeInsets.all(10),
-                child: SizedBox(
-                  height: 200,
-                  width: double.infinity,
-                  child: Text(widget.models.description ?? '',
-                      maxLines: 6,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.bold,
-                      )),
+              Shimmer(
+                color: Color(0xff79698e),
+                duration: Duration(seconds: 3),
+                interval: Duration(seconds: 5),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  elevation: 7,
+                  margin: const EdgeInsets.all(10),
+                  child: SizedBox(
+                    height: 200,
+                    width: double.infinity,
+                    child: Text(widget.models.description ?? '',
+                        maxLines: 6,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ),
                 ),
               ),
             ],

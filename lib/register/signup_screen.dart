@@ -9,6 +9,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rent/models/user_model.dart';
 import 'package:rent/utils/common_views.dart';
 
+import '../utils/progress_hud.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -288,6 +290,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onPressed: () async {
                         if (_key.currentState!.validate()) {
                           try {
+                            ProgressHud.shared.startLoading(context);
+
                             final userCredential = await FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
                                     email: _EmailController.text.trim(),
@@ -302,6 +306,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 userid: userId,
                                 username: _UserNameController.text);
                             await usersRef.add(model.toMap());
+                            ProgressHud.shared.stopLoading();
                             CommonViews()
                                 .showToast(context, "تم تسجيل الحساب بنجاح");
                             Navigator.pushReplacement(
@@ -309,6 +314,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 MaterialPageRoute(
                                     builder: (context) => const LogInScreen()));
                           } catch (e) {
+                            ProgressHud.shared.stopLoading();
                             if (e is FirebaseAuthException) {
                               String msg = _getAuthErrorMessage(e.code);
                               CommonViews().showToast(context, msg,

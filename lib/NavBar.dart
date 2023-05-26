@@ -5,13 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rent/about_app.dart';
 import 'package:rent/config/current_session.dart';
 import 'package:rent/models/post_model.dart';
 import 'package:rent/post/liked_post_screen.dart';
 import 'package:rent/post/list/user_posts.dart';
 import 'package:rent/register/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rent/utils/progress_hud.dart';
 import 'package:rent/utils/upload_images.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -40,6 +43,8 @@ class _NavBarState extends State<NavBar> {
       final fileName = path.basename(file.path);
 
       try {
+        ProgressHud.shared.startLoading(context);
+
         if (user != null) {
           final storageRef =
               FirebaseStorage.instance.ref().child('profile_images/$fileName');
@@ -52,8 +57,10 @@ class _NavBarState extends State<NavBar> {
           await user!.updatePhotoURL(imageUrl);
           imgUrl = imageUrl;
           setState(() {});
+          ProgressHud.shared.stopLoading();
         }
       } catch (e) {
+        ProgressHud.shared.stopLoading();
         print('Error uploading image to Firebase: $e');
       }
     }
@@ -81,11 +88,16 @@ class _NavBarState extends State<NavBar> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: imgUrl.isNotEmpty
-                      ? CircleAvatar(
-                          backgroundImage: NetworkImage(imgUrl),
-                          backgroundColor: Colors.white70,
-                          radius: 50.0,
-                        )
+                      ? Shimmer(
+                    color: Color(0xff79698e),
+                    duration: Duration(seconds: 3),
+                    interval: Duration(seconds: 8),
+                        child: CircleAvatar(
+                            backgroundImage: NetworkImage(imgUrl),
+                            // backgroundColor: Colors.white70,
+                            radius: 50.0,
+                          ),
+                      )
                       : const CircleAvatar(
                           backgroundColor: Colors.white70,
                           radius: 50.0,
@@ -150,7 +162,7 @@ class _NavBarState extends State<NavBar> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => LikedPostsScreen(
-                          likedPosts: models,
+                          models: models,
                         )),
               );
             },
@@ -186,12 +198,21 @@ class _NavBarState extends State<NavBar> {
 
           const Divider(),
 
-          const ListTile(
+           ListTile(
             leading: Icon(
               Icons.warning_amber,
             ),
             title: Text('About app'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AboutApp(),
+                ),
+              );
+            },
           ),
+
 
           Align(
             alignment: Alignment.bottomCenter,

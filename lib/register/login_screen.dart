@@ -11,6 +11,8 @@ import 'package:rent/utils/common_views.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rent/home_screen.dart';
 
+import '../utils/progress_hud.dart';
+
 class LogInScreen extends StatefulWidget {
   const LogInScreen({Key? key}) : super(key: key);
 
@@ -209,6 +211,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         onPressed: () async {
                           if (_key.currentState!.validate()) {
                             try {
+                              ProgressHud.shared.startLoading(context);
                               final QuerySnapshot usernameSnapshot =
                               await FirebaseFirestore.instance
                                   .collection("users")
@@ -231,6 +234,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                     if (response != null &&
                                         response.user != null) {
                                       CurrentSession().user = model;
+                                      ProgressHud.shared.stopLoading();
                                       Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
@@ -242,11 +246,13 @@ class _LogInScreenState extends State<LogInScreen> {
                                   }
                                 }
                               } else {
+                                ProgressHud.shared.stopLoading();
                                 CommonViews().showToast(
                                     context, "User Not Registered",
                                     type: TBAlertType.error);
                               }
                             } catch (e) {
+                              ProgressHud.shared.stopLoading();
                               if (e is FirebaseAuthException) {
                                 String msg = _getAuthMessage(e.code);
                                 CommonViews().showToast(
@@ -335,58 +341,4 @@ class _LogInScreenState extends State<LogInScreen> {
     }
   }
 }
-// if(_UserNameController.text.isEmpty){
-//     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:
-//     Text("user is still empty "),
-//     ));
-//   }else if (_PasswordController.text.isEmpty){
-//     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:
-//     Text("password is still empty "),
-//     ));
-//   } else{
-//     QuerySnapshot snap =await FirebaseFirestore .instance.collection("users").
-//     where("username",isEqualTo:_UserNameController.text.trim() ).get();
-//
-//     try {
-//       if(_PasswordController.text == snap.docs[0]['password']){
-//         sharedPreferences =await SharedPreferences.getInstance();
-//         sharedPreferences.setString('username', _UserNameController.text).
-//         then((_) => {
-//           Navigator.pushReplacement(
-//               context,
-//               MaterialPageRoute(
-//                   builder: (context) => const  HomeScreen()))
-//         });
-//
-//       }
-//       else{
-//         ScaffoldMessenger.of(context).showSnackBar( SnackBar(content:
-//         Text("password is not correct "),
-//         ));
-//       }
-//     }
-//     catch(e){
-//
-//       String error="";
-//       print(e.toString());
-//       if(e.toString() =="RangeError (index): Invalid value: Valid value range is empty: 0"){
-//         setState(() {
-//           error = "user name does not exists";
-//         });
-//
-//       }else {
-//
-//         setState(() {
-//           error = "error occured";
-//         });
-//       }
-//       ScaffoldMessenger.of(context).showSnackBar(
-//           SnackBar(content:
-//           Text(error),
-//           ));
-//
-//     }
-//
-//   }
-//
-// }
+

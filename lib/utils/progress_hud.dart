@@ -12,7 +12,7 @@ class ProgressHud {
   }) {
     return Stack(
       children: <Widget>[
-        getCircularProgressIndicator(color: Colors.blue, size: size),
+        getCircularProgressIndicator(color: const Color(0xff79698e), size: size),
       ],
     );
   }

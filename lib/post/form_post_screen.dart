@@ -5,6 +5,8 @@ import 'package:rent/post/photos_upload.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+import '../utils/progress_hud.dart';
+
 //void main() => runApp(const PostScreen());
 
 class FormPostScreen extends StatefulWidget {
@@ -367,7 +369,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                     options: [
                       'Fully Furnished',
                       'Unfurnished',
-                      'Partially Furnished',
+                      'Semi Furnished',
                     ]
                         .map((lang) => FormBuilderFieldOption(value: lang))
                         .toList(growable: false),
@@ -649,11 +651,11 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                 return 'This field is required.';
                               }
 
-                              final RegExp regex =
-                                  RegExp(r'^(?=.*[\d\w]).{25,}$');
-                              if (!regex.hasMatch(value)) {
-                                return 'Please enter full Description';
-                              }
+                              // final RegExp regex =
+                              //     RegExp(r'^(?=.*[\d\w]).{25,}$');
+                              // if (!regex.hasMatch(value)) {
+                              //   return 'Please enter full Description';
+                              // }
 
                               return null;
                             },
@@ -781,6 +783,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               try {
+                                ProgressHud.shared.startLoading(context);
                                 PostFormModel post = PostFormModel(
                                     propertyType: _radioController1.text,
                                     flat: int.tryParse(_flatController.text),
@@ -800,7 +803,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                     phoneNumber: _phoneNumberController.text,
                                     price:
                                         int.tryParse(_priceController.text)!);
-                                // await postRef.add(post.toMap());
+                                ProgressHud.shared.stopLoading();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -809,6 +812,7 @@ class _FormPostScreenState extends State<FormPostScreen> {
                                           )),
                                 );
                               } catch (e) {
+                                ProgressHud.shared.stopLoading();
                                 print(e);
                               }
                             }

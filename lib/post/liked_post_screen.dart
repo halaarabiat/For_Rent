@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:rent/config/current_session.dart';
 import 'package:rent/models/post_model.dart';
+import 'package:rent/post/details/fav_post_details.dart';
 import 'package:rent/post/details/post_details_screen.dart';
 
 class LikedPostsScreen extends StatefulWidget {
-  final List<PostFormModel> likedPosts;
+  final List<PostFormModel> models;
 
-  const LikedPostsScreen({Key? key, required this.likedPosts})
+  const LikedPostsScreen({Key? key, required this.models})
       : super(key: key);
 
   @override
@@ -21,15 +22,24 @@ class _LikedPostsScreenState extends State<LikedPostsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xff79698e),
         title: const Text('Favorite Posts'),
       ),
       body: ListView.builder(
-        itemCount: widget.likedPosts.length,
+        itemCount: widget.models.length,
         itemBuilder: (context, index) {
-          final post = widget.likedPosts[index];
+          final post = widget.models[index];
 
           return InkWell(
-            onTap: () => selectPost(post),
+            onTap: ()
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PostDetails(models: widget.models[index]),
+                ),
+              );
+            },
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -75,11 +85,11 @@ class _LikedPostsScreenState extends State<LikedPostsScreen> {
                             child: IconButton(
                               onPressed: () {
                                 setState(() {
-                                  widget.likedPosts[index].isFav = false;
+                                  widget.models[index].isFav = false;
                                   CurrentSession()
-                                      .updateFavPosts(widget.likedPosts[index]);
-                                  widget.likedPosts
-                                      .remove(widget.likedPosts[index]);
+                                      .updateFavPosts(widget.models[index]);
+                                  widget.models
+                                      .remove(widget.models[index]);
                                 });
                               },
                               icon: Icon(
@@ -218,13 +228,13 @@ class _LikedPostsScreenState extends State<LikedPostsScreen> {
     );
   }
 
-  void selectPost(PostFormModel post) {
-    // Navigate to a new screen to display the selected post
-    Navigator.push(
-      context as BuildContext,
-      MaterialPageRoute(
-        builder: (context) => PostDetailsUser(model: post),
-      ),
-    );
-  }
+  // void selectPost(PostFormModel post) {
+  //   // Navigate to a new screen to display the selected post
+  //   Navigator.push(
+  //     context as BuildContext,
+  //     MaterialPageRoute(
+  //       builder: (context) => PostDetailsUser(model: post),
+  //     ),
+  //   );
+  // }
 }

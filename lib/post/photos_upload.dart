@@ -7,6 +7,7 @@ import 'package:path/path.dart' as path;
 import 'package:rent/config/current_session.dart';
 import 'package:rent/models/post_model.dart';
 import 'package:rent/post/details/post_details_screen.dart';
+import 'package:rent/utils/progress_hud.dart';
 import 'package:rent/utils/upload_images.dart';
 
 class ImageUploadForm extends StatefulWidget {
@@ -61,6 +62,8 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
 
   void _submitForm() async {
     try {
+      ProgressHud.shared
+          .startLoading(context);
       if (_formKey.currentState != null && _formKey.currentState!.validate()) {
         String? validationResult = _validateImages(_selectedImages);
         List<String> imageUrl = [];
@@ -74,11 +77,12 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
               FirebaseFirestore.instance.collection("post");
           widget.model.userId = CurrentSession().user?.userid ?? '';
           await postRef.add(widget.model.toMap());
+          ProgressHud.shared.stopLoading();
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => PostDetailsUser(
-                        model: widget.model,
+                        models: widget.model,
                       )));
         } else {
           // Display validation error message
@@ -88,6 +92,7 @@ class _ImageUploadFormState extends State<ImageUploadForm> {
         }
       }
     } catch (e) {
+      ProgressHud.shared.stopLoading();
       print(e);
     }
   }
